@@ -86,7 +86,10 @@
       <div class="bg-white py-2 collapse-inner rounded">
         <a class="collapse-item" href="{{ route('admin.slider.index') }}">{{ __('Slider Section') }}</a>
         <a class="collapse-item" href="{{ route('admin.feature.index') }}">{{ __('Feature Section') }}</a>
+        <a class="collapse-item" href="{{ route('admin.ps.about') }}">{{ __('About Us Section') }}</a>
+        <a class="collapse-item" href="{{ route('admin.ps.topservice') }}">{{ __('Service Top Section') }}</a>
         <a class="collapse-item" href="{{ route('admin.service.index') }}">{{ __('Service Section') }}</a>
+        <a class="collapse-item" href="{{ route('admin.ps.footertop') }}">{{ __('Footer Top Section') }}</a>
         <a class="collapse-item" href="{{ route('admin.ps.newsletter') }}">{{ __('Newsletter Section') }}</a>
       </div>
     </div>

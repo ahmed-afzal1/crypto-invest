@@ -18,10 +18,13 @@ use App\Models\Generalsetting;
 use App\Models\HomepageSetting;
 use App\Models\Item;
 use App\Models\OrderedItem;
+use App\Models\Page;
+use App\Models\Pagesetting;
 use App\Models\Partner;
 use App\Models\Product;
 use App\Models\Service;
 use App\Models\Slider;
+use App\Models\Socialsetting;
 use App\Models\Subscriber;
 use App\Models\Trending;
 use App\Models\User;
@@ -48,14 +51,53 @@ class FrontendController extends Controller
         $data['features'] = Feature::orderBy('id','desc')->orderBy('id','desc')->limit(3)->get();
         $data['services'] = Service::orderBy('id','desc')->orderBy('id','desc')->limit(6)->get();
         $data['plans'] = Product::orderBy('id','desc')->orderBy('id','desc')->limit(6)->get();
+        $data['ps'] = Pagesetting::first();
+
         return view('frontend.index',$data);
     }
 
     public function blog(){
-        $data['blogs'] = Blog::orderBy('id','desc')->paginate(4);
-        $data['admin']=Admin::First();
-        // $data['homepage'] = HomepageSetting::first();
+        $tags = null;
+        $tagz = '';
+        $name = Blog::pluck('tags')->toArray();
+        foreach($name as $nm)
+        {
+            $tagz .= $nm.',';
+        }
+        $tags = array_unique(explode(',',$tagz));
+
+        $archives= Blog::orderBy('created_at','desc')->get()->groupBy(function($item){ return $item->created_at->format('F Y'); })->take(5)->toArray();
+        $name = Blog::pluck('tags')->toArray();
+        foreach($name as $nm)
+        {
+            $tagz .= $nm.',';
+        }
+        $data['tags'] = array_unique(explode(',',$tagz));
+
+        $data['archives'] = Blog::orderBy('created_at','desc')->get()->groupBy(function($item){ return $item->created_at->format('F Y'); })->take(5)->toArray();
+		$data['blogs'] = Blog::orderBy('created_at','desc')->paginate(3);
+        $data['bcats'] = BlogCategory::all();
+
         return view('frontend.blog',$data);
+    }
+
+    public function blogcategory(Request $request, $slug)
+    {
+        $tags = null;
+        $tagz = '';
+        $name = Blog::pluck('tags')->toArray();
+        foreach($name as $nm)
+        {
+            $tagz .= $nm.',';
+        }
+        $tags = array_unique(explode(',',$tagz));
+
+        $archives= Blog::orderBy('created_at','desc')->get()->groupBy(function($item){ return $item->created_at->format('F Y'); })->take(5)->toArray();
+        $bcat = BlogCategory::where('slug', '=', str_replace(' ', '-', $slug))->first();
+        $blogs = $bcat->blogs()->orderBy('created_at','desc')->paginate(3);
+        $bcats = BlogCategory::all();
+
+        return view('frontend.blog',compact('bcat','blogs','bcats','tags','archives'));
     }
 
     public function blogdetails($slug){
@@ -72,30 +114,67 @@ class FrontendController extends Controller
         $blog->views = $blog->views + 1;
         $blog->update();
 
+        $name = Blog::pluck('tags')->toArray();
+        foreach($name as $nm)
+        {
+            $tagz .= $nm.',';
+        }
+        $data['tags'] = array_unique(explode(',',$tagz));
+
+        $data['archives'] = Blog::orderBy('created_at','desc')->get()->groupBy(function($item){ return $item->created_at->format('F Y'); })->take(5)->toArray();
+
         $data['data'] = $blog;
+        $data['rblogs'] = Blog::orderBy('id','desc')->orderBy('id','desc')->limit(3)->get();
         $data['bcats'] = BlogCategory::all();
 
         return view('frontend.blogdetails',$data);
     }
 
-     public function getCategoryItem($id)
+    public function blogarchive(Request $request,$slug)
     {
-        $trend=Trending::first();
-        $date=Carbon::now()->subDays($trend->day);
-        $trend_info = OrderedItem::where('created_at','>',$date)->groupBy('item_id')->select('item_id', DB::raw('count(*) as total'))->orderby('total','desc')->get();
-        foreach($trend_info as $tr){
-            $trend_items=Item::where('id',$tr->item_id)->get();
+        $tags = null;
+        $tagz = '';
+        $name = Blog::pluck('tags')->toArray();
+        foreach($name as $nm)
+        {
+            $tagz .= $nm.',';
         }
-        foreach($trend_items as $trend_item){
-           $trending=$trend_item;
-        }
+        $tags = array_unique(explode(',',$tagz));
 
-        if($id == 0){
-            $items = Item::inRandomOrder()->take(6)->get();
-        }else{
-            $items = Category::findOrFail($id)->products;
+        $archives= Blog::orderBy('created_at','desc')->get()->groupBy(function($item){ return $item->created_at->format('F Y'); })->take(5)->toArray();        
+        $bcats = BlogCategory::all();
+        $date = \Carbon\Carbon::parse($slug)->format('Y-m');
+        $blogs = Blog::where('created_at', 'like', '%' . $date . '%')->paginate(3);
+
+        return view('frontend.blog',compact('blogs','date','bcats','tags','archives'));
+    }
+
+    public function blogtags(Request $request, $slug)
+    {
+        $tags = null;
+        $tagz = '';
+        $name = Blog::pluck('tags')->toArray();
+        foreach($name as $nm)
+        {
+            $tagz .= $nm.',';
         }
-        return view('includes.items',compact('items','trend','trending'));
+        $tags = array_unique(explode(',',$tagz));
+
+        $archives= Blog::orderBy('created_at','desc')->get()->groupBy(function($item){ return $item->created_at->format('F Y'); })->take(5)->toArray();        
+        $bcats = BlogCategory::all();
+        $blogs = Blog::where('tags', 'like', '%' . $slug . '%')->paginate(3);
+
+        return view('frontend.blog',compact('blogs','slug','bcats','tags','archives'));
+    }
+
+    public function plan(){
+        $data['plans'] = Product::orderBy('id','desc')->orderBy('id','desc')->limit(9)->get();
+        return view('frontend.pricing_plan',$data);
+    }
+
+    public function services(){
+        $data['services'] = Service::orderBy('id','desc')->orderBy('id','desc')->get();
+        return view('frontend.services',$data);
     }
 
 
@@ -108,15 +187,17 @@ class FrontendController extends Controller
         return view('frontend.blog',$data);
     }
 
-    public function contact(){
-        $data['pagesettings'] = DB::table('pagesettings')->first();
-       $data2 = DB::table('generalsettings')->first();
-        if($data2->is_contact==1){
-             return view('frontend.contact',$data);
+    public function contact()
+    {
+        $data['ps'] = DB::table('pagesettings')->first();
+        $gs = DB::table('generalsettings')->first();
+        $data['social'] = Socialsetting::first();
+        if($gs->is_contact==1){
+            return view('frontend.contact',$data);
         }
         return view('errors.404');
-
     }
+
     public function faq(){
         $tags = null;
         $tagz = '';
@@ -131,18 +212,6 @@ class FrontendController extends Controller
         return view('frontend.faq',$data);
     }
 
-    public function author($slug){
-        $slug2=str_replace('-',' ',$slug);
-        $data['data']=User::where('username',$slug2)->first();
-        $data['author'] = 'user';
-        $data['follow']=Follow::where('following_id',$data['data']->id)->where('admin_id',0)->first();
-
-        $data['levels']=AuthorLevel::where('status',1)->orderBy('amount','DESC')->get();
-        $data['max']=DB::table('author_levels')->where('amount', DB::raw("(select max(`amount`) from author_levels)"))->where('status',1)->first();
-        $data['badges']=AuthorBadge::where('status',1)->orderBy('days','DESC')->orderBy('time','DESC')->get();
-
-       return view('frontend.author-portfolio',$data);
-    }
 
     public function page($slug)
     {
@@ -202,16 +271,17 @@ class FrontendController extends Controller
     }
     public function contactemail(Request $request)
     {
+        $ps = DB::table('pagesettings')->where('id','=',1)->first();
+        $subject = $request->subject;
         $gs = Generalsetting::findOrFail(1);
-        // Login Section
-        $ps = DB::table('pagesettings')->where('id', '=', 1)->first();
-        $subject = "Email From Of " . $request->name;
         $to = $request->to;
-        $name = $request->name;
-        $phone = $request->phone;
+        $fname = $request->firstname;
+        $lname = $request->lastname;
         $from = $request->email;
-        $msg = "Name: " . $name . "\nEmail: " . $from . "\nPhone: " . $phone . "\nMessage: " . $request->text;
-        if ($gs->is_smtp) {
+        $msg = "First Name: ".$fname."\nLast Name: ".$lname."\nEmail: ".$from."\nMessage: ".$request->message;
+ 
+        if($gs->is_smtp)
+        {
             $data = [
                 'to' => $to,
                 'subject' => $subject,
@@ -220,15 +290,14 @@ class FrontendController extends Controller
 
             $mailer = new GeniusMailer();
             $mailer->sendCustomMail($data);
-        } else {
-            $headers = "From: " . $gs->from_name . "<" . $gs->from_email . ">";
-            mail($to, $subject, $msg, $headers);
         }
-        // Login Section Ends
+        else
+        {
+            $headers = "From: ".$gs->from_name."<".$gs->from_email.">";
+            mail($to,$subject,$msg,$headers);
+        }
 
-        // Redirect Section
-        Session::flash('message', "Message Send Succssfully.");
-        return redirect()->back();
+        return response()->json($ps->contact_success); 
     }
 
     public function portfolio($slug){

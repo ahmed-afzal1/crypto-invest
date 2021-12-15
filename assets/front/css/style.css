@@ -3051,6 +3051,10 @@ section.contact {
   background: #3b5998;
 }
 
+.contact-page-info .social-contact ul li.linkedin a i {
+  background: #0A66C2;
+}
+
 .contact-page-info .social-contact ul li.twitter a i {
   background: #1da1f2;
 }

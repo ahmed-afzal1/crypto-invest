@@ -126,9 +126,7 @@ class GeniusMailer
 
     public function sendCustomMail(array $mailData)
     {
-
         try{
-
             //Recipients
             $this->mail->setFrom($this->gs->from_email, $this->gs->from_name);
             $this->mail->addAddress($mailData['to']);     // Add a recipient

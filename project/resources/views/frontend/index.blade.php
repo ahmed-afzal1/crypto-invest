@@ -57,106 +57,73 @@
 <section class="about-us">
     <div class="container">
         <div class="row text-center">
-            <h2 class="title-head">About <span>Us</span></h2>
+            <h2 class="title-head">{{__('About')}} <span>{{__('Us')}}</span></h2>
             <div class="title-head-subtitle">
                 <p>a commercial website that lists wallets, exchanges and other bitcoin related info</p>
             </div>
         </div>
         <div class="row about-content">
-            <!-- Image Starts -->
             <div class="col-sm-12 col-md-5 col-lg-6 text-center">
-                <img class="img-responsive img-about-us" src="images/about-us.png" alt="about us">
+                <img class="img-responsive img-about-us" src="{{asset('assets/images/'.$ps->about_photo)}}" alt="about us">
             </div>
-            <!-- Image Ends -->
-            <!-- Content Starts -->
             <div class="col-sm-12 col-md-7 col-lg-6">
-                <h3 class="title-about">WE ARE BAYYA</h3>
-                <p class="about-text">A place for everyone who wants to simply buy and sell Bitcoins. Deposit funds using your Visa/MasterCard or bank transfer. Instant buy/sell of Bitcoins at fair price is guaranteed. Nothing extra. Join over 700,000 users from all over the world satisfied with our services.</p>
-                <ul class="nav nav-tabs">
-                    <li class="active"><a data-toggle="tab" href="#menu1">Our Mission</a></li>
-                    <li><a data-toggle="tab" href="#menu2">Our advantages</a></li>
-                    <li><a data-toggle="tab" href="#menu3">Our guarantees</a></li>
-                </ul>
-                <div class="tab-content">
-                    <div id="menu1" class="tab-pane fade in active">
-                        <p>Bitcoin is based on a protocol known as the blockchain, which allows to create, transfer and verify ultra-secure financial data without interference of third parties.</p>
-                    </div>
-                    <div id="menu2" class="tab-pane fade">
-                        <p>Our mission as an official partner of Bitcoin Foundation is to help you enter and better understand the world of #1 cryptocurrency and avoid any issues you may encounter.</p>
-                    </div>
-                    <div id="menu3" class="tab-pane fade">
-                        <p>We are here because we are passionate about open, transparent markets and aim to be a major driving force in widespread adoption, we are the first and the best in cryptocurrency. </p>
-                    </div>
-                </div>
-                <a class="btn btn-primary" href="about.html">Read More</a>
+                <h3 class="title-about">{{$ps->about_title}}</h3>
+                <p class="about-text">{{$ps->about_text}}</p>
+                <a class="btn btn-primary mt-4" href="{{$ps->about_link}}">{{__('Read More')}}</a>
             </div>
-            <!-- Content Ends -->
         </div>
-        <!-- Section Content Ends -->
     </div>
 </section>
 
 <section class="image-block">
     <div class="container-fluid">
         <div class="row">
-            <!-- Features Starts -->
             <div class="col-md-8 ts-padding img-block-left">
-                <div class="gap-20"></div>
-                <div class="row">
-                    <!-- Feature Starts -->
-                    <div class="col-sm-6 col-md-6 col-xs-12">
-                        <div class="feature text-center">
-                            <span class="feature-icon">
-                                <img src="images/icons/orange/strong-security.png" alt="strong security"/>
-                            </span>
-                            <h3 class="feature-title">Strong Security</h3>
-                            <p>Protection against DDoS attacks, <br>full data encryption</p>
-                        </div>
+                @foreach ($services->chunk(2) as $servicechunks)
+                    <div class="gap-20"></div>
+                    <div class="row">
+                        @foreach ($servicechunks as $data)
+                            <div class="col-sm-6 col-md-6 col-xs-12">
+                                <div class="feature text-center">
+                                    <span class="feature-icon">
+                                        <img src="{{asset('assets/images/'.$data->photo)}}" alt="strong security"/>
+                                    </span>
+                                    <h3 class="feature-title">{{$data->title}}</h3>
+                                    <p>
+                                        @php
+                                            echo $data->details;
+                                        @endphp
+                                    </p>
+                                </div>
+                            </div>
+                            <div class="gap-20-mobile"></div>
+                        @endforeach
                     </div>
-
-                    <!-- Feature Ends -->
-                    <div class="gap-20-mobile"></div>
-                    <!-- Feature Starts -->
-                    <div class="col-sm-6 col-md-6 col-xs-12">
-                        <div class="feature text-center">
-                            <span class="feature-icon">
-                                <img src="images/icons/orange/world-coverage.png" alt="world coverage"/>
-                            </span>
-                            <h3 class="feature-title">World Coverage</h3>
-                            <p>Providing services in 99% countries<br> around all the globe</p>
-                        </div>
-                    </div>
-                    <!-- Feature Ends -->
-                </div>
+                @endforeach
             </div>
-            <!-- Features Ends -->
-            <!-- Video Starts -->
-            <div class="col-md-4 ts-padding bg-image-1">
+            <div class="col-md-4 ts-padding bg-image-1" style="background: url({{ $ps->service_photo ? asset('assets/images/'.$ps->service_photo):asset('assets/images/noimage.png') }});">
                 <div>
                     <div class="text-center">
-                        <a class="button-video mfp-youtube" href="https://www.youtube.com/watch?v=0gv7OC9L2s8"></a>
+                        <a class="button-video mfp-youtube" href="{{$ps->service_video}}"></a>
                     </div>
                 </div>
             </div>
-            <!-- Video Ends -->
+
         </div>
     </div>
 </section>
 
 <section class="pricing">
     <div class="container">
-        <!-- Section Title Starts -->
         <div class="row text-center">
             <h2 class="title-head">affordable <span>packages</span></h2>
             <div class="title-head-subtitle">
                 <p>Purchase Bitcoin using a credit card or with your linked bank account</p>
             </div>
         </div>
-        <!-- Section Title Ends -->
-        <!-- Section Content Starts -->
-        <div class="row">
-            @foreach($plans as $$key=>$data)
 
+        <div class="row">
+            @foreach($plans as $key=>$data)
                     <div class="col-lg-4 col-md-6">
                         <div class="single-pricebox">
                             <p class="plan-title">
@@ -346,7 +313,7 @@
 
     </div>
 </section>
-    @includeIf('partials.footer_top')
+@includeIf('partials.front.footer_top')
 @endsection
 
 @push('js')

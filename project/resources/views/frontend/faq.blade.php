@@ -94,7 +94,7 @@
                     </div>
                 </div>
             </section>
-            @includeIf('partials.faq')
+    @includeIf('partials.front.footer_top')
 @endsection
 
 @push('js')

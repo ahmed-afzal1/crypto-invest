@@ -17,43 +17,44 @@ class PageSettingController extends Controller
         $this->middleware('auth:admin');
     }
 
-
-    // Page Settings All post requests will be done in this method
     public function update(Request $request)
     {
-            //--- Validation Section
-            $rules = [
-                'newsletter_photo'      => 'mimes:jpeg,jpg,png,svg',
-                'hero_photo'      => 'mimes:jpeg,jpg,png,svg',
-            ];
-
-             $validator = Validator::make($request->all(), $rules);
-
-             if ($validator->fails()) {
-               return response()->json(array('errors' => $validator->getMessageBag()->toArray()));
-             }
-             //--- Validation Section Ends
-
-            $data = HomepageSetting::findOrFail(1);
+            $data = Pagesetting::findOrFail(1);
             $input = $request->all();
 
 
-
-
             if ($file = $request->file('newsletter_photo'))
-                {
-                    $name = time().str_replace(' ', '', $file->getClientOriginalName());
-                    $file->move('assets/images',$name);
-                    @unlink('assets/images/'.$data->newsletter_photo);
+            {
+                $name = time().str_replace(' ', '', $file->getClientOriginalName());
+                $file->move('assets/images',$name);
+                @unlink('assets/images/'.$data->newsletter_photo);
                 $input['newsletter_photo'] = $name;
-                }
-                if ($file = $request->file('hero_photo'))
-                {
-                    $name = time().str_replace(' ', '', $file->getClientOriginalName());
-                    $file->move('assets/images',$name);
-                    @unlink('assets/images/'.$data->hero_photo);
-                $input['hero_photo'] = $name;
-                }
+            }
+
+            if ($file = $request->file('about_photo'))
+            {
+                $name = time().str_replace(' ', '', $file->getClientOriginalName());
+                $file->move('assets/images',$name);
+                @unlink('assets/images/'.$data->about_photo);
+                $input['about_photo'] = $name;
+            }
+
+            if ($file = $request->file('service_photo'))
+            {
+                $name = time().str_replace(' ', '', $file->getClientOriginalName());
+                $file->move('assets/images',$name);
+                @unlink('assets/images/'.$data->service_photo);
+                $input['service_photo'] = $name;
+            }
+
+            if ($file = $request->file('footer_top_photo'))
+            {
+                $name = time().str_replace(' ', '', $file->getClientOriginalName());
+                $file->move('assets/images',$name);
+                @unlink('assets/images/'.$data->footer_top_photo);
+                $input['footer_top_photo'] = $name;
+            }
+
 
             $data->update($input);
             $msg = 'Data Updated Successfully.';
@@ -108,11 +109,25 @@ class PageSettingController extends Controller
         if ($request->featured_category == ""){
             $input['featured_category'] = 0;
         }
+
         $data->update($input);
         $msg = 'Data Updated Successfully.';
         return response()->json($msg);
     }
+    public function about(){
+        $data = Pagesetting::find(1);
+        return view('admin.pagesetting.about_section',compact('data'));
+    }
 
+    public function topservice(){
+        $data = Pagesetting::find(1);
+        return view('admin.pagesetting.topservice',compact('data'));
+    }
+
+    public function footertop(){
+        $data = Pagesetting::find(1);
+        return view('admin.pagesetting.footertop',compact('data'));
+    }
 
     public function contact()
     {

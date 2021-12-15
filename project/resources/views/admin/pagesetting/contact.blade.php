@@ -30,8 +30,8 @@
             {{ csrf_field() }}
 
             <div class="form-group">
-              <label for="inp-title">{{  __('Contact Page')  }} </label>
-              <div class="frm-btn btn-group mb-1">
+                <label for="inp-title">{{  __('Contact Page')  }} </label>
+                <div class="frm-btn btn-group mb-1">
                   <button type="button" class="btn btn-sm btn-rounded dropdown-toggle btn-{{ $gs->is_contact == 1 ? 'success' : 'danger' }}" data-toggle="dropdown"
                     aria-haspopup="true" aria-expanded="false">
                     {{ $gs->is_contact == 1 ? __('Activated') : __('Deactivated')}}
@@ -41,37 +41,49 @@
                     <a class="dropdown-item drop-change" href="javascript:;" data-status="0" data-val="{{ __('Deactivated') }}" data-href="{{ route('admin.gs.status',['is_contact',0]) }}">{{ __('Deactivate') }}</a>
                   </div>
                 </div>
+            </div>
+          
+          <div class="form-group">
+            <label for="side_title">{{ __('Contact Title') }} *</label>
+            <textarea class="form-control nic-edit"  id="side_title" name="side_title" required rows="3" placeholder="{{__('Contact title')}}">{{$data->side_title}}</textarea>
           </div>
-
-
-        <div class="form-group">
-            <label for="contact_email">{{ __('Contact Us Email Address') }} *</label>
-            <input type="text" class="form-control" id="contact_email" name="contact_email"  placeholder="{{ __('Contact Us Email Address') }}" value="{{$data->contact_email}}" required>
-        </div>
-
-        <div class="form-group">
-            <label for="email">{{ __('Email') }} *</label>
-            <input type="email" class="form-control" id="email" value="{{$data->email}}" name="email"  placeholder="{{ __('Email') }}" value="" required>
-        </div>
-        <div class="form-group">
-            <label for="site">{{ __('Website') }} *</label>
-            <input type="text" class="form-control" id="site" value="{{$data->site}}" name="site"  placeholder="{{ __('Website') }}" value="" required>
-        </div>
-        <div class="form-group">
-            <label for="phone">{{ __('Phone') }} *</label>
-            <input type="text" class="form-control" id="phone" value="{{$data->phone}}" name="phone"  placeholder="{{ __('Phone') }}" value="" required>
-        </div>
-        <div class="form-group">
-            <label for="fax">{{ __('Fax') }} *</label>
-            <input type="text" class="form-control" id="fax" value="{{$data->fax}}" name="fax"  placeholder="{{ __('Fax') }}" value="">
-        </div>
 
           <div class="form-group">
-              <label for="street">{{ __('Street Address') }} *</label>
-              <textarea class="form-control nic-edit"  id="street" name="street" required rows="3" placeholder="{{__('Street Address')}}">{{$data->street}}</textarea>
+            <label for="side_text">{{ __('Contact text') }} *</label>
+            <textarea class="form-control nic-edit"  id="side_text" name="side_text" required rows="3" placeholder="{{__('Contact Text')}}">{{$data->side_text}}</textarea>
           </div>
 
-            <button type="submit" id="submit-btn" class="btn btn-primary">{{ __('Submit') }}</button>
+          <div class="form-group">
+            <label for="contact_email">{{ __('Contact Us Email Address') }} *</label>
+            <input type="text" class="form-control" id="contact_email" name="contact_email"  placeholder="{{ __('Contact Us Email Address') }}" value="{{$data->contact_email}}" required>
+          </div>
+
+          <div class="form-group">
+            <label for="email">{{ __('Email') }} *</label>
+            <input type="email" class="form-control" id="email" value="{{$data->email}}" name="email"  placeholder="{{ __('Email') }}" value="" required>
+          </div>
+
+          <div class="form-group">
+            <label for="site">{{ __('Website') }} *</label>
+            <input type="text" class="form-control" id="site" value="{{$data->site}}" name="site"  placeholder="{{ __('Website') }}" value="" required>
+          </div>
+
+          <div class="form-group">
+            <label for="phone">{{ __('Phone') }} *</label>
+            <input type="text" class="form-control" id="phone" value="{{$data->phone}}" name="phone"  placeholder="{{ __('Phone') }}" value="" required>
+          </div>
+
+          <div class="form-group">
+            <label for="fax">{{ __('Fax') }} *</label>
+            <input type="text" class="form-control" id="fax" value="{{$data->fax}}" name="fax"  placeholder="{{ __('Fax') }}" value="">
+          </div>
+
+          <div class="form-group">
+            <label for="street">{{ __('Street Address') }} *</label>
+            <textarea class="form-control nic-edit"  id="street" name="street" required rows="3" placeholder="{{__('Street Address')}}">{{$data->street}}</textarea>
+          </div>
+
+          <button type="submit" id="submit-btn" class="btn btn-primary">{{ __('Submit') }}</button>
 
         </form>
       </div>

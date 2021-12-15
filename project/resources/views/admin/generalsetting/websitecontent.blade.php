@@ -130,9 +130,6 @@
             </div>
 
 
-     
-
-
             <div class="form-group">
               <label for="inp-title">{{  __('Website Title')  }}</label>
               <input type="text" class="form-control" id="inp-title" name="title"  placeholder="{{ __('Enter Website Title') }}" value="{{ $gs->title }}" required>

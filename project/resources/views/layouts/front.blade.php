@@ -52,7 +52,7 @@
             <div class="container">
                 <div class="row">
                     <div class="main-logo col-xs-12 col-md-3 col-md-2 col-lg-2 hidden-xs">
-                        <a href="index.html">
+                        <a href="{{route('front.index')}}">
 							<img class="img-responsive" src="{{asset('assets/images/'.$gs->logo)}}" alt="logo">
 						</a>
                     </div>
@@ -86,8 +86,8 @@
             <nav class="site-navigation navigation" id="site-navigation">
                 <div class="container">
                     <div class="site-nav-inner">
-                        <a class="logo-mobile" href="index.html">
-							<img class="img-responsive" src="images/logo.png" alt="">
+                        <a class="logo-mobile" href="{{route('front.index')}}">
+							<img class="img-responsive" src="{{asset('assets/images/'.$gs->logo)}}" alt="">
 						</a>
                         <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
 							<span class="sr-only">Toggle navigation</span>
@@ -99,33 +99,21 @@
                         <div class="collapse navbar-collapse navbar-responsive-collapse">
                             <ul class="nav navbar-nav">
                                 <li class="active"><a href="{{route('front.index')}}">{{__('Home')}}</a></li>
-                                <li><a href="about.html">About Us</a></li>
-                                <li><a href="services.html">Services</a></li>
-                                <li><a href="pricing.html">Pricing</a></li>
-                                <li class="dropdown">
-                                    <a href="#" class="dropdown-toggle" data-toggle="dropdown">Blog <i class="fa fa-angle-down"></i></a>
-                                    <ul class="dropdown-menu" role="menu">
-                                        <li><a href="blog-right-sidebar.html">Right Sidebar</a></li>
-                                        <li><a href="blog-left-sidebar.html">Left Sidebar</a></li>
-										<li><a href="blog-grid-no-sidebar.html">Grid No Sidebar</a></li>
-                                        <li><a href="blog-post.html">Single Post</a></li>
-                                    </ul>
-                                </li>
-                                <li class="dropdown">
-                                    <a href="#" class="dropdown-toggle" data-toggle="dropdown">pages <i class="fa fa-angle-down"></i></a>
-                                    <ul class="dropdown-menu" role="menu">
-                                        <li><a href="register.html">Register page</a></li>
-                                        <li><a href="login.html">Login page</a></li>
-										<li><a href="shopping-cart.html">Shopping cart</a></li>
-                                        <li><a href="shopping-checkout.html">shopping checkout</a></li>
-                                        <li><a href="faq.html">FAQ page</a></li>
-                                        <li><a href="404.html">404 Page</a></li>
-										<li><a href="503.html">Server Error Page</a></li>
-                                        <li><a href="terms-of-services.html">Terms of Services</a></li>
-										<li><a href="coming-soon.html">Coming Soon</a></li>
-                                    </ul>
-                                </li>
-                                <li><a href="contact.html">Contact</a></li>
+                                <li><a href="{{route('front.services')}}">{{__('Services')}}</a></li>
+                                <li><a href="{{route('front.pricing')}}">{{__('Invest plan')}}</a></li>
+                                <li><a href="{{route('front.blog')}}">{{__('Blog')}}</a></li>
+
+                                @if (count($pages) > 0)
+                                    <li class="dropdown">
+                                        <a href="#" class="dropdown-toggle" data-toggle="dropdown">{{__('pages')}} <i class="fa fa-angle-down"></i></a>
+                                        <ul class="dropdown-menu" role="menu">
+                                            @foreach ($pages as $key=>$data)
+                                                <li><a href="{{route('front.page',$data->slug)}}">{{$data->title}}</a></li>
+                                            @endforeach
+                                        </ul>
+                                    </li>
+                                @endif
+                                <li><a href="{{route('front.contact')}}">{{(__('Contact'))}}</a></li>
 								<li class="cart"><a href="shopping-cart.html"><i class="fa fa-shopping-cart"></i></a></li>
                                 <li class="search"><button class="fa fa-search"></button></li>
                             </ul>
@@ -268,6 +256,7 @@
         <script src="{{asset('assets/front/js/bootstrap.min.js')}}"></script>
         <script src="{{asset('assets/front/js/select2.min.js')}}"></script>
         <script src="{{asset('assets/front/js/jquery.magnific-popup.min.js')}}"></script>
+        <script src="{{asset('assets/front/js/notify.min.js')}}"></script>
         <script src="{{asset('assets/front/js/custom.js')}}"></script>
 		@stack('js')
     </div>

@@ -199,6 +199,9 @@ Route::get('/cache/clear', function() {
 
   //------------ ADMIN MENU PAGE SETTINGS SECTION ------------
   Route::get('/page-settings/contact', [PageSettingController::class,'contact'])->name('admin.ps.contact');
+  Route::get('/page-settings/about', [PageSettingController::class,'about'])->name('admin.ps.about');
+  Route::get('/page-settings/top/service', [PageSettingController::class,'topservice'])->name('admin.ps.topservice');
+  Route::get('/page-settings/top/footer', [PageSettingController::class,'footertop'])->name('admin.ps.footertop');
   Route::post('/page-settings/contact/update', [PageSettingController::class,'contactupdate'])->name('admin.ps.contactupdate');
   Route::post('/page-settings/update/all', [PageSettingController::class,'update'])->name('admin.ps.update');
   Route::get('/homepage-settings/hero-section', [PageSettingController::class,'herosection'])->name('admin.ps.hero');
@@ -492,53 +495,26 @@ Route::prefix('user')->group(function(){
 
 
     Route::get('/', 'Frontend\FrontendController@index')->name('front.index');
-    Route::get('/prod-search', 'Frontend\FrontendController@search')->name('search');
+   
     Route::get('blogs', 'Frontend\FrontendController@blog')->name('front.blog');
-    Route::get('/currency/{id}', 'Frontend\FrontendController@currency')->name('front.currency');
-    Route::get('/language/{id}', 'Frontend\FrontendController@language')->name('front.language');
     Route::get('blog/{slug}', 'Frontend\FrontendController@blogdetails')->name('blog.details');
     Route::get('/blog-search','Frontend\FrontendController@blogsearch')->name('front.blogsearch');
     Route::get('/blog/category/{slug}','Frontend\FrontendController@blogcategory')->name('front.blogcategory');
     Route::get('/blog/tag/{slug}','Frontend\FrontendController@blogtags')->name('front.blogtags');
+    Route::get('/blog/archive/{slug}','Frontend\FrontendController@blogarchive')->name('front.blogarchive');
+
+
+    Route::get('/pricing-plan','Frontend\FrontendController@plan')->name('front.pricing');
+    Route::get('/services','Frontend\FrontendController@services')->name('front.services');
+
 
     Route::get('/user/portfolio/{slug}','Frontend\FrontendController@portfolio')->name('user.portfolio');
-    Route::get('/following/item/{id}','Frontend\FrontendController@followings')->name('item.user.followings');
-    Route::get('/follower/item/{id}','Frontend\FrontendController@follower')->name('item.user.follower');
-    Route::get('/contact', 'Frontend\FrontendController@contact')->name('front.contact')->middleware('banuser');
+    Route::get('/contact', 'Frontend\FrontendController@contact')->name('front.contact');
     Route::post('/contact','Frontend\FrontendController@contactemail')->name('front.contact.submit');
-    Route::get('/contact/refresh_code','Frontend\FrontendController@refresh_code');
-    Route::get('/items', 'Frontend\ItemController@item')->name('front.item');
-    Route::get('/item/{slug}', 'Frontend\ItemController@details')->name('item.details');
-    Route::post('/review/submit','Frontend\ItemController@reviewsubmit')->name('front.review.submit');
-    Route::get('/item/view/review/{id}','Frontend\ItemController@reviews')->name('front.reviews');
-
-
-    // Comment Section Start
-    Route::post('/item/comment/store', 'Frontend\ItemController@comment')->name('item.comment');
-    Route::post('/item/comment/edit/{id}', 'Frontend\ItemController@commentedit')->name('item.comment.edit');
-    Route::get('/item/comment/delete/{id}', 'Frontend\ItemController@commentdelete')->name('item.comment.delete');
-    Route::post('/item/reply/{id}', 'Frontend\ItemController@reply')->name('item.reply');
-    Route::post('/item/reply/edit/{id}', 'Frontend\ItemController@replyedit')->name('item.reply.edit');
-    Route::get('/item/reply/delete/{id}', 'Frontend\ItemController@replydelete')->name('item.reply.delete');
-
-
-    //Comment Section End
-    route::get('/category/wise/item/{id}','Frontend\FrontendController@getcategoryitem')->name('get.catetegory.item');
     Route::get('/faq', 'Frontend\FrontendController@faq')->name('front.faq');
-    Route::get('/author/{slug}', 'Frontend\FrontendController@author')->name('author.portfolio');
-    Route::get('/add-to-cart', 'Frontend\CartController@index')->name('front.add.cart');
-    Route::post('/cart/add-to-cart', 'Frontend\CartController@addToCart')->name('front.addToCart');
-    Route::get('/cart/remove/{cartItemId}', 'Frontend\CartController@remove')->name('front.cart.remove');
-    Route::get('/load/cart', 'Frontend\CartController@loadCart')->name('front.load.cart');
-    Route::get('/coupon', 'Frontend\CartController@coupon')->name('front.coupon');
-    Route::post('/subscribe', 'Frontend\FrontendController@subscribe')->name('front.subscribe');
-    Route::get('/follower/create/{id}','Frontend\FollowController@followerCreate')->name('front.followerCreate');
-
-    Route::get('/load/{itemid}/{cartItemId}/cartpopup', 'Frontend\CartController@loadCartPopup')->name('front.load.cartpopup');
-    Route::get('/load/{itemid}/{cartItemId}/item-details', 'Frontend\CartController@loadItemDetails')->name('front.load.itemdetails');
-    Route::post('/cart/update-support/{cartItemId}', 'Frontend\CartController@updateSupport')->name('front.cart.updatesupport');
-    Route::post('/cart/update-selection', 'Frontend\CartController@updateSelection')->name('front.cart.updateselection');
-
     Route::get('/{slug}','Frontend\FrontendController@page')->name('front.page');
-    Route::get('/products', 'Frontend\FrontendController@index')->name('front.category');
+ 
+
+    Route::get('/currency/{id}', 'Frontend\FrontendController@currency')->name('front.currency');
+    Route::get('/language/{id}', 'Frontend\FrontendController@language')->name('front.language');
 

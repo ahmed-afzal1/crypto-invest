@@ -35,6 +35,8 @@ class AppServiceProvider extends ServiceProvider
 
         view()->composer('*',function($settings){
             $settings->with('gs', DB::table('generalsettings')->find(1));
+            $settings->with('pages', DB::table('pages')->get());
+            $settings->with('ps', DB::table('pagesettings')->first());
 
         });
         Paginator::useBootstrap();

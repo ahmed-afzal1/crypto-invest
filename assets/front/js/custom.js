@@ -476,7 +476,48 @@
 		$("[data-toggle='tooltip']").tooltip()
 
 	});
+
+	$(document).on('submit','#contactform',function(e){
+		e.preventDefault();
+		$('.gocover').show();
+		$('button.btn-contact').prop('disabled',true);
+			$.ajax({
+			 method:"POST",
+			 url:$(this).prop('action'),
+			 data:new FormData(this),
+			 contentType: false,
+			 cache: false,
+			 processData: false,
+			 success:function(data)
+			 {
+				 console.log();
+				if ((data.errors)) {
+				$('.alert-success').hide();
+				$('.alert-danger').show();
+				$('.alert-danger ul').html('');
+				  for(var error in data.errors)
+				  {
+					$('.alert-danger ul').append('<li>'+ data.errors[error] +'</li>')
+				  }
+				  $('#contactform input[type=text], #contactform input[type=email], #contactform textarea').eq(0).focus();
+				}
+				else
+				{
+				  $('.alert-danger').hide();
+				  $('.alert-success').show();
+				  $('.alert-success p').html(data);
+				  $.notify("Message Sent Successfully.", "success");
+				  $('#contactform input[type=text], #contactform input[type=email], #contactform textarea').eq(0).focus();
+				  $('#contactform input[type=text], #contactform input[type=email], #contactform textarea').val('');
+
+				}
+				$('.gocover').hide();
+				$('button.btn-contact').prop('disabled',false);
+			 }
+  
+			});
+	  });
 		
-		/* ----------------------------------------------------------- */
+	/* ----------------------------------------------------------- */
 
 })(jQuery);
