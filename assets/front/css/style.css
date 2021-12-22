@@ -773,13 +773,17 @@ ul.user li.sign-in a {
 
 .site-navigation {
   position: relative;
-  padding-bottom: 48px;
+  
 }
 
 .site-navigation,
 .site-navigation.fixed ul.navbar-nav {
   border-bottom: 1px solid #222;
 }
+.new-nav{
+  background: #050505;
+}
+
 
 .site-navigation.fixed {
   z-index: 111111;
@@ -801,16 +805,21 @@ ul.user li.sign-in a {
   margin-bottom: 0;
 }
 
-.navbar-toggle {
-  float: right;
-  border-radius: 0;
-  margin-right: 0;
-}
 
-.navbar-toggle .icon-bar {
-  background: #fff;
-}
 
+
+
+.navbar-toggler-icon {
+  background: #fd7e14;
+  color: white;
+  height: 40px;
+  width: 47px;
+
+}
+i.fa.fa-bars {
+  margin-top: 6px;
+  font-size: 30px;
+}
 .nav>li>a:focus, 
 .nav>li>a:hover {
   background: none;
@@ -823,14 +832,6 @@ ul.user li.sign-in a {
 ul.navbar-nav {
   float: none;
   display: block;
-}
-
-.site-navigation.fixed ul.navbar-nav {
-  position: fixed;
-  top: 0;
-  background: #111;
-  width: 100%;
-  left: 0;
 }
 
 ul.navbar-nav > li {
@@ -942,6 +943,7 @@ ul.nav.nav-tabs li a:hover, ul.nav.nav-tabs li.active a:hover {
   text-transform: uppercase;
 }
 
+
 .dropdown-menu li a {
   display: block;
   font-size: 12px;
@@ -951,9 +953,13 @@ ul.nav.nav-tabs li a:hover, ul.nav.nav-tabs li.active a:hover {
   padding: 15px 20px;
   color: #999;
 }
+.dropdown:hover .dropdown-menu {
+  display: block;
+}
 
 .dropdown-menu li a:hover, .dropdown-menu li.active a:hover, .dropdown-menu li.active a {
   background: #111;
+ 
 }
 
 .dropdown-menu li:last-child > a {
@@ -1389,6 +1395,21 @@ ul.nav.nav-tabs li a:hover, ul.nav.nav-tabs li.active a:hover {
 
 .banner-area .breadcrumb>li+li:before {
   color: #fff;
+}
+.breadcrumb {
+  padding: 8px 15px;
+  margin-bottom: 20px;
+  list-style: none;
+  background-color: #f5f5f5;
+  border-radius: 4px;
+}
+.breadcrumb>li {
+  display: inline-block;
+}
+.breadcrumb>li+li:before {
+  padding: 0 5px;
+  color: #ccc;
+  content: "/\00a0";
 }
 
 /* [ SECTIONS ] */
@@ -3051,10 +3072,6 @@ section.contact {
   background: #3b5998;
 }
 
-.contact-page-info .social-contact ul li.linkedin a i {
-  background: #0A66C2;
-}
-
 .contact-page-info .social-contact ul li.twitter a i {
   background: #1da1f2;
 }
@@ -4433,6 +4450,7 @@ h4.panel-title a.collapsed:before {
 
   ul.navbar-nav > li {
     display: block;
+    padding: 10px;
   }
 
   ul.navbar-nav > li.search {
@@ -4879,6 +4897,8 @@ h4.panel-title a.collapsed:before {
   }
 }
 
+
+
 @media (max-width : 767px) and (min-width:571px) {
   .btcwdgt-headlines.btcwdgt-clean {
     max-width: 510px !important;
@@ -5185,9 +5205,7 @@ Pricing Area Start
     display: block;
     font-size: 30px;
     line-height: 30px;
-    color: #fff;
-    border: 1px solid #2d2d2d;
-    background: #181818;
+    border: 1px solid rgba(31, 113, 212, 0.05);
     border-radius: 0px;
     height: 35px;
     padding: 0px 0px 0px 20px;
@@ -5195,24 +5213,24 @@ Pricing Area Start
  }
 
 
+.pricing .single-pricebox .price-range-area .invest-get .left span {
+  font-weight: 600;
+  display: block;
+  font-size: 30px;
+  line-height: 30px;
+}
 
+.pricing .single-pricebox .price-range-area .invest-get .right {
+  text-align: right; 
+  width:50%;
+}
 
-
-          .pricing .single-pricebox .price-range-area .invest-get .left span {
-            font-weight: 600;
-            display: block;
-            font-size: 30px;
-            line-height: 30px;
-             }
-        .pricing .single-pricebox .price-range-area .invest-get .right {
-          text-align: right; 
-          width:50%;
-        }
-          .pricing .single-pricebox .price-range-area .invest-get .right span {
-            font-weight: 600;
-            display: block;
-            font-size: 30px;
-            line-height: 30px; }
+.pricing .single-pricebox .price-range-area .invest-get .right span {
+  font-weight: 600;
+  display: block;
+  font-size: 30px;
+  line-height: 30px; 
+}
     .pricing .single-pricebox .invest-button {
       text-align: center; }
       .pricing .single-pricebox .invest-button .mybtn1 {
@@ -5284,3 +5302,7 @@ Pricing Area Start
 /*-------------------------------
 Pricing Area End
 --------------------------------*/
+
+p {
+  margin: 0 0 10px;
+}

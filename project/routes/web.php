@@ -31,6 +31,15 @@ use App\Http\Controllers\Admin\SeoToolController;
 use App\Http\Controllers\Admin\SocialSettingController;
 use App\Http\Controllers\Admin\StaffController;
 
+use App\Http\Controllers\Deposit\AuthorizeController;
+use App\Http\Controllers\Deposit\InstamojoController;
+use App\Http\Controllers\Deposit\MollieController;
+use App\Http\Controllers\Deposit\PaypalController;
+use App\Http\Controllers\Deposit\PaytmController;
+use App\Http\Controllers\Deposit\RazorpayController;
+use App\Http\Controllers\Deposit\StripeController;
+use App\Http\Controllers\User\DepositController;
+
 use App\Http\Controllers\Admin\RefundController;
 use App\Http\Controllers\Admin\ServiceController;
 use App\Http\Controllers\Admin\SitemapController;
@@ -38,6 +47,12 @@ use App\Http\Controllers\Admin\SliderController;
 use App\Http\Controllers\Admin\SubCategoryController;
 use App\Http\Controllers\Admin\SubscriberController;
 use App\Http\Controllers\User\DashboardController as AppDashboardController;
+use App\Http\Controllers\User\KYCController;
+use App\Http\Controllers\User\LoginController as UserLoginController;
+use App\Http\Controllers\User\OTPController;
+use App\Http\Controllers\User\RegisterController;
+use App\Http\Middleware\KYC;
+use App\Http\Middleware\Otp;
 use App\Models\Childcategory;
 use Illuminate\Support\Facades\Route;
 
@@ -392,97 +407,95 @@ Route::get('/cache/clear', function() {
 
 });
 
-// user controller start
+Route::prefix('user')->group(function() {
 
-Route::prefix('user')->group(function(){
+  Route::get('/login', [UserLoginController::class,'showLoginForm'])->name('user.login');
+  Route::post('/login', [UserLoginController::class,'login'])->name('user.login.submit');
 
-  Route::get('/forgot', 'User\ForgotController@showforgotform')->name('user.forgot');
-  Route::post('/forgot', 'User\ForgotController@forgot')->name('user.forgot.submit');
+  Route::get('/otp', [OTPController::class,'showotpForm'])->name('user.otp');
+  Route::post('/otp', [OTPController::class,'otp'])->name('user.otp.submit');
 
-  Route::group(['middleware' => 'guest'], function() {
-    Route::get('/loginform','User\LoginController@loginform')->name('user.login');
-    Route::post('/login','User\LoginController@login')->name('user.login.submit');
-    Route::get('/registerform','User\RegisterController@registerform')->name('user.register');
-    Route::post('/register','User\RegisterController@register')->name('user.register.submit');
-    Route::get('/register/verify/{token}', 'User\RegisterController@token')->name('user.register.token');
+  Route::get('/register', [RegisterController::class,'showRegisterForm'])->name('user.register');
+  Route::post('/register', [RegisterController::class,'register'])->name('user.register.submit');
+  Route::get('/register/verify/{token}', [RegisterController::class,'token'])->name('user.register.token');  
 
+  Route::middleware([Otp::class])->group(function () {
+
+    Route::get('/dashboard', 'User\UserController@index')->name('user-dashboard');
+    Route::get('/transactions', 'User\UserController@trans')->name('user-trans'); 
+
+    Route::get('/two-factor', 'User\UserController@showTwoFactorForm')->name('user-show2faForm');
+    Route::post('/createTwoFactor', 'User\UserController@createTwoFactor')->name('user-createTwoFactor');
+    Route::post('/disableTwoFactor', 'User\UserController@disableTwoFactor')->name('user-disableTwoFactor');
+
+    Route::get('/profile', 'User\UserController@profile')->name('user-profile'); 
+    Route::post('/profile', 'User\UserController@profileupdate')->name('user-profile-update'); 
+
+    Route::get('/forgot', 'User\ForgotController@showforgotform')->name('user-forgot');
+    Route::post('/forgot', 'User\ForgotController@forgot')->name('user-forgot-submit');  
+
+    Route::get('/kyc-form', [KYCController::class,'kycform'])->name('user.kyc.form');
+    Route::post('/kyc-form', [KYCController::class,'kyc'])->name('user.kyc.submit');
+
+    Route::get('/withdraw', 'User\WithdrawController@index')->name('user-wwt-index');
+    Route::get('/withdraw/create', 'User\WithdrawController@create')->name('user-wwt-create')->middleware(KYC::class);
+    Route::post('/withdraw/create', 'User\WithdrawController@store')->name('user-wwt-store')->middleware(KYC::class);
+
+    Route::get('/invests', 'User\OrderController@orders')->name('user-invests'); 
+    Route::get('/investment/{id}', 'User\OrderController@order')->name('user-order');
+    Route::get('/payouts', 'User\OrderController@payouts')->name('user-payouts'); 
+
+    Route::get('/balance-transfer','User\SendController@index')->name('balance.transfer.index');
+    Route::post('/balance-transfer','User\SendController@store')->name('balance.transfer.store');
+
+    Route::get('/deposits',[DepositController::class,'index'])->name('user.deposit.index');
+    Route::get('/deposit/create',[DepositController::class,'create'])->name('user.deposit.create');
+
+    Route::post('/stripe-submit', [StripeController::class,'store'])->name('deposit.stripe.submit');
+
+    Route::post('/paypal-submit', [PaypalController::class,'store'])->name('deposit.paypal.submit');
+    Route::get('/paypal/deposit/notify', [PaypalController::class,'notify'])->name('deposit.paypal.notify');
+    Route::get('/paypal/deposit/cancle', [PaypalController::class,'cancle'])->name('deposit.paypal.cancle');
+
+    Route::post('/instamojo-submit',[InstamojoController::class,'store'])->name('deposit.instamojo.submit');
+    Route::get('/instamojo-notify',[InstamojoController::class,'notify'])->name('deposit.instamojo.notify');
+
+    Route::post('/deposit/paytm-submit', [PaytmController::class,'store'])->name('deposit.paytm.submit');
+    Route::post('/deposit/paytm-callback', [PaytmController::class,'paytmCallback'])->name('deposit.paytm.notify');
+
+    Route::post('/deposit/razorpay-submit', [RazorpayController::class,'store'])->name('deposit.razorpay.submit');
+    Route::post('/deposit/razorpay-notify', [RazorpayController::class,'notify'])->name('deposit.razorpay.notify');
+
+    Route::post('/deposit/molly-submit', [MollieController::class,'store'])->name('deposit.molly.submit');
+    Route::get('/deposit/molly-notify', [MollieController::class,'notify'])->name('deposit.molly.notify');
+
+    Route::post('/authorize-submit', [AuthorizeController::class,'store'])->name('deposit.authorize.submit');
+
+
+    Route::get('/plan','User\PlanController@planChoose')->name('user.plan');
+
+
+    Route::get('/affilate/code', 'User\UserController@affilate_code')->name('user-affilate-code');
+
+
+    Route::get('/notf/show', 'User\NotificationController@user_notf_show')->name('customer-notf-show');
+    Route::get('/notf/count','User\NotificationController@user_notf_count')->name('customer-notf-count');
+    Route::get('/notf/clear','User\NotificationController@user_notf_clear')->name('customer-notf-clear');
+
+
+    Route::get('admin/messages', 'User\MessageController@adminmessages')->name('user-message-index');
+    Route::get('admin/message/{id}', 'User\MessageController@adminmessage')->name('user-message-show');
+    Route::post('admin/message/post', 'User\MessageController@adminpostmessage')->name('user-message-store');
+    Route::get('admin/message/{id}/delete', 'User\MessageController@adminmessagedelete')->name('user-message-delete1');   
+    Route::post('admin/user/send/message', 'User\MessageController@adminusercontact')->name('user-send-message');
+    Route::get('admin/message/load/{id}', 'User\MessageController@messageload')->name('user-message-load');
+
+    Route::get('/reset', 'User\UserController@resetform')->name('user-reset');
+    Route::post('/reset', 'User\UserController@reset')->name('user-reset-submit');
   });
 
-  Route::get('/wishlist/add/{slug}','User\WishlistController@addwish')->name('user.wishlist.add')->middleware('banuser');
 
-  Route::group(['middleware' => 'auth'], function() {
-    Route::get('/Dashboard','User\DashboardController@index')->name('user.dashboard')->middleware('banuser');;
-    Route::post('dashboard/update/{id}', 'User\DashboardController@dashboard')->name('user.dashboard.update');
-
-    Route::post('/contact',[AppDashboardController::class,'contact'])->name('user.contact');
-
-    Route::post('/social-setting/{id}','User\DashboardController@social')->name('user.social');
-
-
-    // Ticke Route User
-    Route::post('admin/user/send/message', 'User\MessageController@adminusercontact')->name('user.send.message');
-    Route::get('/ticket', 'User\MessageController@adminmessages')->name('user.ticket');
-    Route::get('admin/message/{id}', 'User\MessageController@adminmessage')->name('user.message.show');
-    Route::get('admin/message/{id}/delete', 'User\MessageController@adminmessagedelete')->name('user.message.delete1');
-    Route::get('admin/message/load/{id}', 'User\MessageController@messageload')->name('user.message.load');
-    Route::post('admin/message/post', 'User\MessageController@adminpostmessage')->name('user.message.store');
-    // Ticket route user end
-
-    Route::post('/changepassword', 'User\DashboardController@changepassword')->name('user.change.password');
-    Route::get('/wishlists', 'User\WishlistController@wishlists')->name('user.wishlists');
-    Route::get('/wishlist/remove/{id}','User\WishlistController@removewish')->name('user.wishlist.remove');
-    //User Dashboard
-    Route::get('/logout','User\LoginController@logout')->name('user.logout.submit');
-    Route::get('/followers','User\DashboardController@followers')->name('user.followers');
-    Route::get('/following','User\DashboardController@following')->name('user.following');
-    Route::get('/settings','User\DashboardController@setting')->name('user.setting');
-    Route::get('/downloads','User\DashboardController@download')->name('user.download');
-    Route::post('/download', 'User\DashboardController@getfile')->name('user.file');
-    Route::get('/hidden-items','User\DashboardController@hiddenitem')->name('user.hidden.items');
-    Route::get('/reviews','User\DashboardController@reviews')->name('user.reviews');
-
-    //User Product Purchase History Start
-    Route::get('/purchase/history','User\DashboardController@purchasehistory')->name('user.history');
-    Route::get('/purchase/details/{id}','User\DashboardController@purchasedetails')->name('user.purchase.details');
-    Route::post('/refund/{id}','User\DashboardController@refund')->name('user.refund');
-    //User Product Purchase History
-
-    //User Refund Request Start
-
-    Route::get('/refunds','User\DashboardController@refundlist')->name('user.allrefund');
-    Route::get('/refund/details/{id}','User\DashboardController@refunddetails')->name('user.refund.details');
-    Route::get('/refund/approve/{id}','User\DashboardController@refund_approve')->name('user.refund.approve');
-    Route::get('/refund/decline/{id}','User\DashboardController@refund_decline')->name('user.refund.decline');
-    Route::post('/refund-reply/{id}','User\DashboardController@refund_reply')->name('user.refund.reply');
-    //User Refund Request End
-    Route::get('/withdraw','User\WithdrawController@index')->name('user.withdraw');
-    Route::get('/withdraw/request', 'User\WithdrawController@request')->name('user.withdraw.request');
-    Route::post('/withdraw/request/send', 'User\WithdrawController@sendRequest')->name('user.withdraw.request.send');
-    Route::get('/statements','User\DashboardController@statements')->name('user.statements');
-    Route::get('/order/{id}/invoice', 'User\DashboardController@invoice')->name('user.invoice');
-    Route::get('/order/{id}/print','User\DashboardController@printpage')->name('user.invoice.print');
-    Route::post('/update/{id}', 'User\DashboardController@update')->name('user.profile.update');
-
-
-    Route::get('/become/author','User\DashboardController@become_author')->name('user.become.author');
-    Route::post('/author/store/', 'User\DashboardController@author')->name('user.author.submit');
-
-    Route::get('/checkout', 'Frontend\CheckoutController@index')->name('front.checkout.index')->middleware('banuser');
-
-    Route::get('/checkout/payment/{slug1}/{slug2}','Frontend\CheckoutController@loadpayment')->name('front.load.payment');
-    Route::get('/checkout/payment/return', 'Frontend\CheckoutController@payreturn')->name('front.payment.return');
-    Route::get('/checkout/payment/cancle', 'Frontend\CheckoutController@paycancle')->name('front.payment.cancle');
-
-    Route::post('/checkout/payment/paypal-submit', 'Checkout\PaypalController@store')->name('front.paypal.submit');
-    Route::get('/checkout/payment/paypal-notify', 'Checkout\PaypalController@notify')->name('front.paypal.notify');
-
-
-    Route::post('/checkout/payment/instamojo-submit', 'Checkout\InstamojoController@store')->name('front.instamojo.submit');
-    Route::get('/checkout/payment/instamojo-notify', 'Checkout\InstamojoController@notify')->name('front.instamojo.notify');
-
-    Route::post('/checkout/payment/stripe-submit', 'Checkout\StripeController@store')->name('front.stripe.submit');
-
-  });
+  Route::get('/logout', 'User\LoginController@logout')->name('user-logout');
 
 });
 

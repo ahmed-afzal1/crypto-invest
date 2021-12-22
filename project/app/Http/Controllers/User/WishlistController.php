@@ -2,86 +2,85 @@
 
 namespace App\Http\Controllers\User;
 
-use App\Http\Controllers\Controller;
-use App\Models\Admin;
-use App\Models\Item;
-use App\Models\Wishlist;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Auth;
-use Illuminate\Support\Facades\Session;
+use App\Http\Controllers\Controller;
+use App\Models\Wishlist;
+use App\Models\Product;
+use Auth;
 
 class WishlistController extends Controller
 {
     public function __construct()
     {
-       $this->middleware('auth')->except('addwish');
-       //here what u asked, you can remove middleware in route
-       //$this->middleware('admin')->only('home');
+        $this->middleware('auth');
     }
 
     public function wishlists(Request $request)
     {
-        $user = Auth::guard('web')->user();
-       $data['admin']=Admin::first();
-        $data['favourite'] = Wishlist::where('user_id','=',$user->id)->paginate(12);
-        return view('user.wishlists', $data);
-    }
-
-    public function addwish($slug)
-    {
-
-
+        $sort = '';
         $user = Auth::guard('web')->user();
 
-        Session::put('wishlist',url()->current());
+        // Search By Sort
 
-        if(!$user){
-            return response()->json(['error'=>1]);
+        if(!empty($request->sort))
+        {
+        $sort = $request->sort;
+        $wishes = Wishlist::where('user_id','=',$user->id)->pluck('product_id');
+        if($sort == "new")
+        {
+        $wishlists = Product::where('status','=',1)->whereIn('id',$wishes)->orderBy('id','desc')->paginate(8);
+        }
+        else if($sort == "old")
+        {
+        $wishlists = Product::where('status','=',1)->whereIn('id',$wishes)->paginate(8);
+        }
+        else if($sort == "low")
+        {
+        $wishlists = Product::where('status','=',1)->whereIn('id',$wishes)->orderBy('price','asc')->paginate(8);
+        }
+        else if($sort == "high")
+        {
+        $wishlists = Product::where('status','=',1)->whereIn('id',$wishes)->orderBy('price','desc')->paginate(8);
+        }
+        if($request->ajax())
+        {
+            return view('front.pagination.wishlist',compact('user','wishlists','sort'));            
+        }
+        return view('user.wishlist',compact('user','wishlists','sort'));
         }
 
-            $data = 0;
-            $item=Item::where('slug',$slug)->first();
-            $ck = Wishlist::where('user_id','=',$user->id)->where('item_id','=',$item->id)->get();
 
-            $isUserProduct = Item::where('user_id','=',$user->id)->where('id','=',$item->id)->exists();
-
-
-            if($ck->count() > 0)
-            {
-                if(request()->ajax()){
-                    return response()->json(['status' => 0]);
-                }else{
-                    return redirect()->back();
-                }
-
-            }
-
-            if($isUserProduct){
-                if(request()->ajax()){
-                return response()->json(['status' => 1]);
-                }else{
-                    return redirect()->back();
-                }
-            }
-
-            $wish = new Wishlist();
-            $wish->user_id = $user->id;
-            $wish->item_id = $item->id;
-            $wish->save();
-            $data = 1;
-            $count = Wishlist::where('user_id','=',$user->id)->count();
-            if(request()->ajax()){
-                return response()->json(['status' => 2, 'count' => $count]);
-            }else{
-                return redirect()->back();
-            }
-
+        $wishlists = Wishlist::where('user_id','=',$user->id)->paginate(8);
+        if($request->ajax())
+        {
+            return view('front.pagination.wishlist',compact('user','wishlists','sort'));            
+        }
+        return view('user.wishlist',compact('user','wishlists','sort'));
     }
+
+    public function addwish($id)
+    {      
+        $user = Auth::guard('web')->user();
+        $data = 0;
+        $ck = Wishlist::where('user_id','=',$user->id)->where('product_id','=',$id)->get()->count();
+        if($ck > 0)
+        {
+            return response()->json($data); 
+        }
+        $wish = new Wishlist();
+        $wish->user_id = $user->id;
+        $wish->product_id = $id;
+        $wish->save();
+        $data = 1; 
+        return response()->json($data);      
+    }
+
     public function removewish($id)
     {
         $wish = Wishlist::findOrFail($id);
-        $wish->delete();
-        $count = Wishlist::where('user_id', Auth::user()->id)->count();
-        return response()->json($count);
+        $wish->delete();        
+        $data = 1; 
+        return response()->json($data);      
     }
+
 }

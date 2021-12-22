@@ -10,7 +10,7 @@
     <!-- Favicon -->
     <link rel="shortcut icon" href="{{asset('assets/images/'.$gs->favicon)}}">
     <link rel="stylesheet" href="{{asset('assets/front/css/font-awesome.min.css')}}">
-    <link rel="stylesheet" href="{{asset('assets/front/css/bootstrap.min.css')}}">
+    <link rel="stylesheet" href="{{asset('assets/front/css/bootstrap/bootstrap.min.css')}}">
     <link rel="stylesheet" href="{{asset('assets/front/css/magnific-popup.css')}}">
     <link rel="stylesheet" href="{{asset('assets/front/css/select2.min.css')}}">
     <link rel="stylesheet" href="{{asset('assets/front/css/style.css')}}">
@@ -47,87 +47,78 @@
     </div>
 
     <div class="wrapper">
-    
         <header class="header">
             <div class="container">
                 <div class="row">
-                    <div class="main-logo col-xs-12 col-md-3 col-md-2 col-lg-2 hidden-xs">
+                    <div class="main-logo col-12 col-lg-3 col-lg-2 col-xl-2 hidden-xsd-none d-sm-block"> 
                         <a href="{{route('front.index')}}">
 							<img class="img-responsive" src="{{asset('assets/images/'.$gs->logo)}}" alt="logo">
 						</a>
                     </div>
 
-                    <div class="col-md-7 col-lg-7">
+                    <div class="col-lg-7 col-xl-7">
                         <ul class="unstyled bitcoin-stats text-center">
                             <li>
-                                <h6>9,450 USD</h6><span>Last trade price</span></li>
+                                <h6>9,450 USD</h6><span>Last trade price</span>
+                            </li>
                             <li>
-                                <h6>+5.26%</h6><span>24 hour price</span></li>
+                                <h6>+5.26%</h6><span>24 hour price</span>
+                            </li>
                             <li>
-                                <h6>12.820 BTC</h6><span>24 hour volume</span></li>
+                                <h6>12.820 BTC</h6><span>24 hour volume</span>
+                            </li>
                             <li>
-                                <h6>2,231,775</h6><span>active traders</span></li>
+                                <h6>2,231,775</h6><span>active traders</span>
+                            </li>
                             <li>
-                                <div class="btcwdgt-price" data-bw-theme="light" data-bw-cur="usd"></div>
-                                <span>Live Bitcoin price</span>
-							</li>
-                        </ul>
-                    </div>
-                    <div class="col-md-3 col-lg-3">
-                        <ul class="unstyled user">
-                            <li class="sign-in"><a href="login.html" class="btn btn-primary"><i class="fa fa-user"></i> sign in</a></li>
-                            <li class="sign-up"><a href="register.html" class="btn btn-primary"><i class="fa fa-user-plus"></i> register</a></li>
+                                <div class="btcwdgt-price" data-bw-theme="light" data-bw-cur="usd"></div> <span>Live Bitcoin price</span>
+                            </li>
                         </ul>
                     </div>
 
+                    <div class="col-lg-3 col-xl-3 mx-auto">
+                        <ul class="unstyled user">
+                            <li class="sign-in"><a href="{{route('user.login')}}" class="btn btn-primary"><i class="fa fa-user"></i> {{__('sign in')}}</a></li>
+                            <li class="sign-up"><a href="{{route('user.register')}}" class="btn btn-primary"><i class="fa fa-user-plus"></i> {{__('register')}}</a></li>
+                        </ul>
+                    </div>
                 </div>
             </div>
 
-            <nav class="site-navigation navigation" id="site-navigation">
-                <div class="container">
-                    <div class="site-nav-inner">
-                        <a class="logo-mobile" href="{{route('front.index')}}">
-							<img class="img-responsive" src="{{asset('assets/images/'.$gs->logo)}}" alt="">
-						</a>
-                        <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
-							<span class="sr-only">Toggle navigation</span>
-							<span class="icon-bar"></span>
-							<span class="icon-bar"></span>
-							<span class="icon-bar"></span>
-						</button>
-
-                        <div class="collapse navbar-collapse navbar-responsive-collapse">
-                            <ul class="nav navbar-nav">
-                                <li class="active"><a href="{{route('front.index')}}">{{__('Home')}}</a></li>
-                                <li><a href="{{route('front.services')}}">{{__('Services')}}</a></li>
-                                <li><a href="{{route('front.pricing')}}">{{__('Invest plan')}}</a></li>
-                                <li><a href="{{route('front.blog')}}">{{__('Blog')}}</a></li>
-
-                                @if (count($pages) > 0)
-                                    <li class="dropdown">
-                                        <a href="#" class="dropdown-toggle" data-toggle="dropdown">{{__('pages')}} <i class="fa fa-angle-down"></i></a>
-                                        <ul class="dropdown-menu" role="menu">
-                                            @foreach ($pages as $key=>$data)
-                                                <li><a href="{{route('front.page',$data->slug)}}">{{$data->title}}</a></li>
-                                            @endforeach
-                                        </ul>
-                                    </li>
-                                @endif
-                                <li><a href="{{route('front.contact')}}">{{(__('Contact'))}}</a></li>
-								<li class="cart"><a href="shopping-cart.html"><i class="fa fa-shopping-cart"></i></a></li>
-                                <li class="search"><button class="fa fa-search"></button></li>
+            <nav class="navbar navigation navbar-expand-lg new-nav " id="site-navigation">
+                <button class="navbar-toggler ml-auto" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+                    <span class="navbar-toggler-icon"><i class="fa fa-bars"></i></span>
+                  </button>
+              
+                <div class="collapse navbar-collapse" id="navbarSupportedContent">
+                  <ul class="navbar-nav mx-auto text-center">
+                    <li class="active"><a href="{{route('front.index')}}">{{__('Home')}}</a></li>
+                    <li><a href="{{route('front.services')}}">{{__('Services')}}</a></li>
+                    <li><a href="{{route('front.pricing')}}">{{__('Invest plan')}}</a></li>
+                    <li><a href="{{route('front.blog')}}">{{__('Blog')}}</a></li>
+                    @if (count($pages) > 0)
+                        <li class="dropdown">
+                            <a href="#" class="" data-toggle="dropdown">{{__('pages')}} <i class="fa fa-angle-down"></i></a>
+                            <ul class="dropdown-menu" role="menu">
+                                @foreach ($pages as $key=>$data)
+                                    <li><a href="{{route('front.page',$data->slug)}}">{{$data->title}}</a></li>
+                                @endforeach
                             </ul>
-                        </div>
-                    </div>
+                        </li>
+                    @endif
+                    <li><a href="{{route('front.contact')}}">{{(__('Contact'))}}</a></li>
+                    <li class="cart"><a href="shopping-cart.html"><i class="fa fa-shopping-cart"></i></a></li>
+                    <li class="search"><button class="fa fa-search"></button></li>
+                  </ul>
+                  
                 </div>
-
                 <div class="site-search">
                     <div class="container">
                         <input type="text" placeholder="type your keyword and hit enter ...">
                         <span class="close">×</span>
                     </div>
                 </div>
-            </nav>
+              </nav>
         </header>
 
 		@yield('contents')
@@ -138,97 +129,109 @@
                 <div class="container">
                     <div class="row">
                         <!-- Footer Widget Starts -->
-                        <div class="col-sm-4 col-md-2">
+                        <div class="col-md-4 col-lg-2">
                             <h4>Our Company</h4>
                             <div class="menu">
                                 <ul>
-                                    <li><a href="index.html">Home</a></li>
-                                    <li><a href="about.html">About</a></li>
-                                    <li><a href="services.html">Services</a></li>
-                                    <li><a href="pricing.html">Pricing</a></li>
-                                    <li><a href="blog-right-sidebar.html">Blog</a></li>
-                                    <li><a href="contact.html">Contact</a></li>
+                                    <li><a href="index.html">Home</a>
+                                    </li>
+                                    <li><a href="about.html">About</a>
+                                    </li>
+                                    <li><a href="services.html">Services</a>
+                                    </li>
+                                    <li><a href="pricing.html">Pricing</a>
+                                    </li>
+                                    <li><a href="blog-right-sidebar.html">Blog</a>
+                                    </li>
+                                    <li><a href="contact.html">Contact</a>
+                                    </li>
                                 </ul>
                             </div>
                         </div>
                         <!-- Footer Widget Ends -->
                         <!-- Footer Widget Starts -->
-                        <div class="col-sm-4 col-md-2">
-                            <h4>Help & Support</h4>
+                        <div class="col-md-4 col-lg-2">
+                            <h4>Help &amp; Support</h4>
                             <div class="menu">
                                 <ul>
-                                    <li><a href="faq.html">FAQ</a></li>
-                                    <li><a href="terms-of-services.html">Terms of Services</a></li>
-                                    <li><a href="404.html">404</a></li>
-                                    <li><a href="register.html">Register</a></li>
-                                    <li><a href="login.html">Login</a></li>
-                                    <li><a href="coming-soon.html">Coming Soon</a></li>
+                                    <li><a href="faq.html">FAQ</a>
+                                    </li>
+                                    <li><a href="terms-of-services.html">Terms of Services</a>
+                                    </li>
+                                    <li><a href="404.html">404</a>
+                                    </li>
+                                    <li><a href="register.html">Register</a>
+                                    </li>
+                                    <li><a href="login.html">Login</a>
+                                    </li>
+                                    <li><a href="coming-soon.html">Coming Soon</a>
+                                    </li>
                                 </ul>
                             </div>
                         </div>
                         <!-- Footer Widget Ends -->
                         <!-- Footer Widget Starts -->
-                        <div class="col-sm-4 col-md-3">
+                        <div class="col-md-4 col-lg-3">
                             <h4>Contact Us </h4>
                             <div class="contacts">
-                                <div>
-                                    <span>contact@website.com</span>
+                                <div> <span>contact@website.com</span>
                                 </div>
-                                <div>
-                                    <span>00216 21 184 010</span>
+                                <div> <span>00216 21 184 010</span>
                                 </div>
-                                <div>
-                                    <span>London, England</span>
+                                <div> <span>London, England</span>
                                 </div>
-                                <div>
-                                    <span>mon-sat 08am &#x21FE; 05pm</span>
+                                <div> <span>mon-sat 08am &#x21FE; 05pm</span>
                                 </div>
                             </div>
-							<!-- Social Media Profiles Starts -->
+                            <!-- Social Media Profiles Starts -->
                             <div class="social-footer">
                                 <ul>
-                                    <li><a href="#" target="_blank"><i class="fa fa-facebook"></i></a></li>
-                                    <li><a href="#" target="_blank"><i class="fa fa-twitter"></i></a></li>
-                                    <li><a href="#" target="_blank"><i class="fa fa-google-plus"></i></a></li>
-                                    <li><a href="#" target="_blank"><i class="fa fa-linkedin"></i></a></li>
+                                    <li><a href="#" target="_blank"><i class="fa fa-facebook"></i></a>
+                                    </li>
+                                    <li><a href="#" target="_blank"><i class="fa fa-twitter"></i></a>
+                                    </li>
+                                    <li><a href="#" target="_blank"><i class="fa fa-google-plus"></i></a>
+                                    </li>
+                                    <li><a href="#" target="_blank"><i class="fa fa-linkedin"></i></a>
+                                    </li>
                                 </ul>
                             </div>
-							<!-- Social Media Profiles Ends -->
+                            <!-- Social Media Profiles Ends -->
                         </div>
                         <!-- Footer Widget Ends -->
-						<!-- Footer Widget Starts -->
-                        <div class="col-sm-12 col-md-5">
-							<!-- Facts Starts -->
-							<div class="facts-footer">
-								<div>
-									<h5>$198.76B</h5>
-									<span>Market cap</span>
-								</div>
-								<div>
-									<h5>243K</h5>
-									<span>daily transactions</span>
-								</div>
-								<div>
-									<h5>369K</h5>
-									<span>active accounts</span>
-								</div>
-								<div>
-									<h5>127</h5>
-									<span>supported countries</span>
-								</div>
-							</div>
-							<!-- Facts Ends -->
-							<hr>
-							<!-- Supported Payment Cards Logo Starts -->
-							<div class="payment-logos">
-								<h4 class="payment-title">supported payment methods</h4>
-								<img src="images/icons/payment/american-express.png" alt="american-express">
-								<img src="images/icons/payment/mastercard.png" alt="mastercard">
-								<img src="images/icons/payment/visa.png" alt="visa">
-								<img src="images/icons/payment/paypal.png" alt="paypal">
-								<img class="last" src="images/icons/payment/maestro.png" alt="maestro">
-							</div>
-							<!-- Supported Payment Cards Logo Ends -->
+                        <!-- Footer Widget Starts -->
+                        <div class="col-md-12 col-lg-5">
+                            <!-- Facts Starts -->
+                            <div class="facts-footer">
+                                <div>
+                                        <h5>$198.76B</h5>
+            <span>Market cap</span>
+                                </div>
+                                <div>
+                                        <h5>243K</h5>
+            <span>daily transactions</span>
+                                </div>
+                                <div>
+                                        <h5>369K</h5>
+            <span>active accounts</span>
+                                </div>
+                                <div>
+                                        <h5>127</h5>
+            <span>supported countries</span>
+                                </div>
+                            </div>
+                            <!-- Facts Ends -->
+                            <hr>
+                            <!-- Supported Payment Cards Logo Starts -->
+                            <div class="payment-logos">
+                                    <h4 class="payment-title">supported payment methods</h4>
+                                <img src="images/icons/payment/american-express.png" alt="american-express">
+                                <img src="images/icons/payment/mastercard.png" alt="mastercard">
+                                <img src="images/icons/payment/visa.png" alt="visa">
+                                <img src="images/icons/payment/paypal.png" alt="paypal">
+                                <img class="last" src="images/icons/payment/maestro.png" alt="maestro">
+                            </div>
+                            <!-- Supported Payment Cards Logo Ends -->
                         </div>
                         <!-- Footer Widget Ends -->
                     </div>
@@ -239,9 +242,12 @@
             <div class="bottom-footer">
                 <div class="container">
                     <div class="row">
-                        <div class="col-xs-12">
+                        <div class="col-12">
                             <!-- Copyright Text Starts -->
-                            <p class="text-center">Copyright © 2018 Bayya All Rights Reserved | Created with Love by <a href="https://themeforest.net/user/celtano" target="_blank">celtano</a></p>
+                            <p class="text-center">Copyright &#xA9; 2018 Bayya All Rights Reserved | Created with Love by
+                                <a
+                                href="https://themeforest.net/user/celtano" target="_blank">celtano</a>
+                            </p>
                             <!-- Copyright Text Ends -->
                         </div>
                     </div>
@@ -249,10 +255,10 @@
             </div>
             <!-- Footer Bottom Area Ends -->
         </footer>
-
         <a href="#" id="back-to-top" class="back-to-top fa fa-arrow-up"></a>
 
-        <script src="{{asset('assets/front/js/jquery-2.2.4.min.js')}}"></script>
+        <script src="{{asset('assets/front/js/jquery-3.6.0.min.js')}}"></script>
+        <script src="{{asset('assets/front/js/jquery-migrate-3.3.2.js')}}"></script>
         <script src="{{asset('assets/front/js/bootstrap.min.js')}}"></script>
         <script src="{{asset('assets/front/js/select2.min.js')}}"></script>
         <script src="{{asset('assets/front/js/jquery.magnific-popup.min.js')}}"></script>

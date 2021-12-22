@@ -9,7 +9,7 @@
 			<div class="banner-overlay">
 				<div class="banner-text text-center">
 					<div class="container">
-						<div class="row text-center">
+						<div class=" text-center">
 							<div class="col-xs-12">
 								<h2 class="title-head">{{__('our')}} <span>{{__('services')}}</span></h2>
 								<hr>
