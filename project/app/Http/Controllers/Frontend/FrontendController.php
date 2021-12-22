@@ -226,6 +226,15 @@ class FrontendController extends Controller
         return view('frontend.page',compact('page'));
     }
 
+    public function setdata()
+    {
+        Session::put('product_id', $_GET['pid']);
+        Session::put('payprice', $_GET['payprice']);
+        Session::put('getprice', $_GET['getprice']);
+        $redirectRoute = isset($_GET['redirectroute']) ? $_GET['redirectroute'] : '';
+        Session::put('setredirectroute', $redirectRoute);
+    }
+
     public function currency($id)
     {
         if (Session::has('coupon')) {
@@ -241,12 +250,12 @@ class FrontendController extends Controller
         cache()->forget('session_currency');
         return redirect()->back();
     }
+
     public function language($id){
-
-           Session::put('language', $id);
-
-           return redirect()->back();
+        Session::put('language', $id);
+        return redirect()->back();
     }
+
     public function subscribe(Request $request){
 
         $validator = Validator::make($request->all(), [
@@ -269,6 +278,7 @@ class FrontendController extends Controller
             return response()->json($id);
         }
     }
+    
     public function contactemail(Request $request)
     {
         $ps = DB::table('pagesettings')->where('id','=',1)->first();
@@ -300,62 +310,6 @@ class FrontendController extends Controller
         return response()->json($ps->contact_success); 
     }
 
-    public function portfolio($slug){
-        $slug2=str_replace('-',' ',$slug);
-        $data['data']=User::where('username',$slug2)->first();
-        $data['author'] = 'user';
-        $data['follow']=Follow::where('following_id',$data['data']->id)->where('admin_id',0)->first();
-        $data['items']=Item::where('user_id',$data['data']->id)->get();
-
-        $data['levels']=AuthorLevel::where('status',1)->orderBy('amount','DESC')->get();
-        $data['max']=DB::table('author_levels')->where('amount', DB::raw("(select max(`amount`) from author_levels)"))->where('status',1)->first();
-        $data['badges']=AuthorBadge::where('status',1)->orderBy('days','DESC')->orderBy('time','DESC')->get();
-
-        return view('frontend.portfolio',$data);
-    }
-    public function followings($id){
-        if($id == 'admin'){
-            $data['data'] =Admin::findOrFail(1);
-            $data['author'] = 'admin';
-            $data['follow']=Follow::where('following_id',0)->where('admin_id',1)->first();
-        }else{
-            $data['data'] =User::findOrFail($id);
-            $data['author'] = 'user';
-            $data['follow']=Follow::where('following_id',$id)->where('admin_id',0)->first();
-        }
-        $data['levels']=AuthorLevel::where('status',1)->orderBy('amount','DESC')->get();
-        $data['max']=DB::table('author_levels')->where('amount', DB::raw("(select max(`amount`) from author_levels)"))->where('status',1)->first();
-         $data['badges']=AuthorBadge::where('status',1)->orderBy('days','DESC')->orderBy('time','DESC')->get();
-
-        $data['items']=Item::where('user_id',$id)->get();
-        $data['followers']=Follow::where('follower_id',$id)->paginate(6);
-        $data['admin']=Admin::first();
-
-        return view('frontend.followings',$data);
-
-    }
-
-    public function follower($id){
-        if($id == 'admin'){
-            $data['data'] =Admin::findOrFail(1);
-            $data['author'] = 'admin';
-            $data['follow']=Follow::where('following_id',0)->where('admin_id',1)->first();
-        }else{
-            $data['data'] =User::findOrFail($id);
-            $data['author'] = 'user';
-            $data['follow']=Follow::where('following_id',$id)->where('admin_id',0)->first();
-        }
-        $data['levels']=AuthorLevel::where('status',1)->orderBy('amount','DESC')->get();
-        $data['max']=DB::table('author_levels')->where('amount', DB::raw("(select max(`amount`) from author_levels)"))->where('status',1)->first();
-         $data['badges']=AuthorBadge::where('status',1)->orderBy('days','DESC')->orderBy('time','DESC')->get();
-
-         $data['followers']=Follow::where('following_id',$id)->paginate(6);
-        $data['admin']=Admin::first();
-        $data['badges']=AuthorBadge::where('status',1)->orderBy('days','DESC')->orderBy('time','DESC')->get();
-
-
-        return view('frontend.follower',$data);
-    }
 
     function finalize(){
         $actual_path = str_replace('project','',base_path());

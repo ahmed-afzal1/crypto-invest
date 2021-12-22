@@ -23,14 +23,41 @@
                         <span class="menu-items">{{ __('Home') }}</span>
                         <a data-title="{{ __('Home') }}" data-dropdown="no" data-href="ROUTE HERE" data-target="self" class="btn btn-primary btn-sm btn-rounded addToMenu" href="javascript:;">{{ __('Add To Menu') }}</a>
                      </li>
+
                      <li class="list-group-item d-flex justify-content-between">
-                        <span class="menu-items">{{ ('Categories') }}</span>
-                        <a data-title="{{ ('Categories') }}" data-dropdown="yes" data-href=""  data-target="self" class="btn btn-primary btn-sm btn-rounded addToMenu" href="javascript:;">{{ __('Add To Menu') }}</a>
+                        <span class="menu-items">{{ __('Services') }}</span>
+                        <a data-title="{{ __('Services') }}" data-dropdown="yes" data-href=""  data-target="self" class="btn btn-primary btn-sm btn-rounded addToMenu" href="javascript:;">{{ __('Add To Menu') }}</a>
                      </li>
+
+                     <li class="list-group-item d-flex justify-content-between">
+                        <span class="menu-items">{{ __('Invest Plan') }}</span>
+                        <a data-title="{{ __('Invest Plan') }}" data-dropdown="yes" data-href=""  data-target="self" class="btn btn-primary btn-sm btn-rounded addToMenu" href="javascript:;">{{ __('Add To Menu') }}</a>
+                     </li>
+
+                     <li class="list-group-item d-flex justify-content-between">
+                        <span class="menu-items">{{ __('Blog') }}</span>
+                        <a data-title="{{ __('Blog') }}" data-dropdown="yes" data-href=""  data-target="self" class="btn btn-primary btn-sm btn-rounded addToMenu" href="javascript:;">{{ __('Add To Menu') }}</a>
+                     </li>
+
+                     <li class="list-group-item d-flex justify-content-between">
+                        <span class="menu-items">{{ __('Pages') }}</span>
+                        <a data-title="{{ __('Pages') }}" data-dropdown="yes" data-href=""  data-target="self" class="btn btn-primary btn-sm btn-rounded addToMenu" href="javascript:;">{{ __('Add To Menu') }}</a>
+                     </li>
+
+                     <li class="list-group-item d-flex justify-content-between">
+                        <span class="menu-items">{{ __('FAQ') }}</span>
+                        <a data-title="{{ __('FAQ') }}" data-dropdown="yes" data-href=""  data-target="self" class="btn btn-primary btn-sm btn-rounded addToMenu" href="javascript:;">{{ __('Add To Menu') }}</a>
+                     </li>
+
+                     <li class="list-group-item d-flex justify-content-between">
+                        <span class="menu-items">{{ __('Contact') }}</span>
+                        <a data-title="{{ __('Contact') }}" data-dropdown="yes" data-href=""  data-target="self" class="btn btn-primary btn-sm btn-rounded addToMenu" href="javascript:;">{{ __('Add To Menu') }}</a>
+                     </li>
+
                      @foreach(DB::table('pages')->get() as $pg)
                      <li class="list-group-item d-flex justify-content-between">
                         <span class="menu-items">{{ $pg->title }}</span>
-                        <a data-title="{{ $pg->title }}" data-dropdown="no" data-href="Route Here"  data-target="self" class="btn btn-primary btn-sm btn-rounded addToMenu" href="javascript:;">{{ __('Add To Menu') }}</a>
+                        <a data-title="{{ $pg->title }}" data-dropdown="yes" data-href="Route Here"  data-target="self" class="btn btn-primary btn-sm btn-rounded addToMenu" href="javascript:;">{{ __('Add To Under Pages') }}</a>
                      </li>
                      @endforeach
                   </ul>

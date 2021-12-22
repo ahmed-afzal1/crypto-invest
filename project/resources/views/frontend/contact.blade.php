@@ -13,7 +13,7 @@
                                 <div class="col-xs-12">
                                     <h2 class="title-head">{{__('Get in')}} <span>{{__('touch')}}</span></h2>
                                     <hr>
-                                    <ul class="breadcrumb">
+                                    <ul class="breadcrumbb">
                                         <li><a href="{{route('front.index')}}"> {{__('home')}}</a></li>
                                         <li>{{__('contact')}}</li>
                                     </ul>
@@ -35,11 +35,11 @@
                             <form class="form-contact" method="post" action="{{route('front.contact.submit')}}" id="contactform">
                                 @csrf 
                                 @include('includes.admin.form-both')
-                                <div class="form-group col-md-6">
+                                <div class="form-group col-lg-6">
                                     <input class="form-control" name="firstname" id="firstname" placeholder="{{__('FIRST NAME')}}" type="text" required>
                                 </div>
 
-                                <div class="form-group col-md-6">
+                                <div class="form-group col-lg-6">
                                     <input class="form-control" name="lastname" id="lastname" placeholder="{{__('LAST NAME')}}" type="text" required>
                                 </div>
 

@@ -77,8 +77,12 @@
                     </div>
                     <div class="col-md-3 col-lg-3">
                         <ul class="unstyled user">
-                            <li class="sign-in"><a href="{{route('user.login')}}" class="btn btn-primary"><i class="fa fa-user"></i> sign in</a></li>
-                            <li class="sign-up"><a href="#" class="btn btn-primary"><i class="fa fa-user-plus"></i> register</a></li>
+                            @if (!auth()->user())
+                                <li class="sign-in"><a href="{{route('user.login')}}" class="btn btn-primary"><i class="fa fa-user"></i> {{__('sign in')}}</a></li>
+                                <li class="sign-up"><a href="{{route('user.register')}}" class="btn btn-primary"><i class="fa fa-user-plus"></i> {{__('register')}}</a></li>
+                            @else 
+                                <li class="sign-in"><a href="{{route('user.dashboard')}}" class="btn btn-primary"><i class="fa fa-user"></i> {{__('Dashboard')}}</a></li>
+                            @endif
                         </ul>
                     </div>
 
@@ -183,7 +187,7 @@
                             <div class="main-menu">
                             <ul class="nav">
                                 <li class="nav-item user-item">
-                                    <a href="{{ route('user-dashboard') }}" class="nav-link"><i class="material-icons">home</i>{{ __('Dashboard') }}</a>
+                                    <a href="{{ route('user.dashboard') }}" class="nav-link"><i class="material-icons">home</i>{{ __('Dashboard') }}</a>
                                 </li>
 
                                 <li class="nav-item user-item">

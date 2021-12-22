@@ -421,7 +421,7 @@ Route::prefix('user')->group(function() {
 
   Route::middleware([Otp::class])->group(function () {
 
-    Route::get('/dashboard', 'User\UserController@index')->name('user-dashboard');
+    Route::get('/dashboard', 'User\UserController@index')->name('user.dashboard');
     Route::get('/transactions', 'User\UserController@trans')->name('user-trans'); 
 
     Route::get('/two-factor', 'User\UserController@showTwoFactorForm')->name('user-show2faForm');
@@ -506,7 +506,6 @@ Route::prefix('user')->group(function() {
     Route::post('the/genius/ocean/2441139', 'Frontend\FrontendController@subscription');
     Route::get('finalize', 'Frontend\FrontendController@finalize');
 
-
     Route::get('/', 'Frontend\FrontendController@index')->name('front.index');
    
     Route::get('blogs', 'Frontend\FrontendController@blog')->name('front.blog');
@@ -516,18 +515,75 @@ Route::prefix('user')->group(function() {
     Route::get('/blog/tag/{slug}','Frontend\FrontendController@blogtags')->name('front.blogtags');
     Route::get('/blog/archive/{slug}','Frontend\FrontendController@blogarchive')->name('front.blogarchive');
 
-
     Route::get('/pricing-plan','Frontend\FrontendController@plan')->name('front.pricing');
     Route::get('/services','Frontend\FrontendController@services')->name('front.services');
 
-
-    Route::get('/user/portfolio/{slug}','Frontend\FrontendController@portfolio')->name('user.portfolio');
     Route::get('/contact', 'Frontend\FrontendController@contact')->name('front.contact');
     Route::post('/contact','Frontend\FrontendController@contactemail')->name('front.contact.submit');
     Route::get('/faq', 'Frontend\FrontendController@faq')->name('front.faq');
     Route::get('/{slug}','Frontend\FrontendController@page')->name('front.page');
+
+    Route::get('/invest/{id}','Frontend\CheckoutController@checkout')->name('front.checkout');
+
+    Route::post('/paypal-submit', 'Frontend\PaymentController@store')->name('paypal.submit');
+    Route::post('/stripe-submit', 'Frontend\StripeController@store')->name('stripe.submit');
+
+    Route::post('/blockchain-submit', 'Frontend\BlockChainController@deposit')->name('blockchain.submit');
+    Route::post('/blockchain/notify', 'Frontend\BlockChainController@chaincallback')->name('blockchain.notify');
+    Route::get('/invest/bitcoin', 'Frontend\BlockChainController@blockInvest')->name('blockchain.invest');
+
+    Route::post('/coinpay-submit', 'Frontend\CoinPaymentController@deposit')->name('coinpay.submit');
+    Route::post('/coinpay/notify', 'Frontend\CoinPaymentController@coincallback')->name('coinpay.notify');
+    Route::get('/invest/coinpay', 'Frontend\CoinPaymentController@blockInvest')->name('coinpay.invest');
+
+    Route::post('/blockio-submit', 'Frontend\BlockIOController@deposit')->name('blockio.submit');
+    Route::post('/blockio/notify', 'Frontend\BlockIOController@blockiocallback')->name('blockio.notify');
+    Route::get('/invest/blockio', 'Frontend\BlockIOController@blockioInvest')->name('blockio.invest');
+
+    Route::post('/coingate-submit', 'Frontend\CoinGateController@deposit')->name('coingate.submit');
+    Route::post('/coingate/notify', 'Frontend\CoinGateController@coingetCallback')->name('coingate.notify');
+
+    Route::post('/coincommerce-submit', 'Frontend\CoinbaseCommerce@deposit')->name('coincommerce.submit');
+
+    Route::post('/instamojo-submit', 'Frontend\InstamojoController@store')->name('instamojo.submit');
+    Route::get('/instamojo-notify', 'Frontend\InstamojoController@notify')->name('instamojo.notify');
+
+    Route::post('/razorpay-submit', 'Frontend\RazorpayController@store')->name('user.razorpay.submit');
+    Route::post('/razorpay-notify', 'Frontend\RazorpayController@notify')->name('user.razorpay.notify');
+
+    Route::post('/molly-submit', 'Frontend\MollieController@store')->name('molly.submit');
+    Route::get('/molly-notify', 'Frontend\MollieController@notify')->name('molly.notify');
+
+    Route::post('/authorize-submit', 'Frontend\AuthorizeController@store')->name('authorize.submit');
+
+    Route::post('/perfect-money-return', 'Frontend\CoinbaseCommerce@deposit')->name('perfect.money.return');
+
+    Route::get('/coinbase/commerce/submit', 'Frontend\CoinbaseCommerce@store');
+    Route::get('/coinbase/commerce/notify', 'Frontend\CoinbaseCommerce@notify');
+    Route::post('/perfect/notify', 'PaymentController@perfect_notify')->name('payment.perfect');
+
+    Route::post('/stripe/commerce/submit', 'Frontend\StripeHostedController@store')->name('stripe.v3.submit');
+    Route::get('/skrill/commerce/submit', 'Frontend\SkrillController@store');
+
+    Route::post('/paystack/submit', 'Frontend\PaystackController@store')->name('paystack.submit');
+
+    Route::post('/flutter/submit', 'Frontend\FlutterwaveController@store')->name('flutter.submit');
+    Route::post('/flutter/notify', 'Frontend\FlutterwaveController@notify')->name('flutter.notify');
+
+    Route::post('/paytm-submit', 'Frontend\PaytmController@store')->name('paytm.submit');
+    Route::post('/paytm-callback', 'Frontend\PaytmController@paytmCallback')->name('paytm.notify');
+
+    Route::post('/manual-submit', 'Frontend\ManualController@store')->name('manual.submit');
+    Route::post('/wallet-submit', 'Frontend\WalletController@store')->name('wallet.submit');
+
+
+
+
+
+
  
 
     Route::get('/currency/{id}', 'Frontend\FrontendController@currency')->name('front.currency');
     Route::get('/language/{id}', 'Frontend\FrontendController@language')->name('front.language');
+    Route::get('/crypto/setdata', 'Frontend\FrontendController@setdata')->name('front.setdata');
 

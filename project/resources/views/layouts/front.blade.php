@@ -7,13 +7,13 @@
     <title>{{$gs->title}}</title>
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 
-    <!-- Favicon -->
     <link rel="shortcut icon" href="{{asset('assets/images/'.$gs->favicon)}}">
     <link rel="stylesheet" href="{{asset('assets/front/css/font-awesome.min.css')}}">
     <link rel="stylesheet" href="{{asset('assets/front/css/bootstrap/bootstrap.min.css')}}">
     <link rel="stylesheet" href="{{asset('assets/front/css/magnific-popup.css')}}">
     <link rel="stylesheet" href="{{asset('assets/front/css/select2.min.css')}}">
     <link rel="stylesheet" href="{{asset('assets/front/css/style.css')}}">
+    <link rel="stylesheet" href="{{asset('assets/front/css/custom.css')}}">
 	<link rel="stylesheet" href="{{asset('assets/front/css/skins/orange.css')}}">
     <script src="{{asset('assets/front/js/modernizr.js')}}"></script>
 	@stack('css')
@@ -78,8 +78,12 @@
 
                     <div class="col-lg-3 col-xl-3 mx-auto">
                         <ul class="unstyled user">
-                            <li class="sign-in"><a href="{{route('user.login')}}" class="btn btn-primary"><i class="fa fa-user"></i> {{__('sign in')}}</a></li>
-                            <li class="sign-up"><a href="{{route('user.register')}}" class="btn btn-primary"><i class="fa fa-user-plus"></i> {{__('register')}}</a></li>
+                            @if (!auth()->user())
+                                <li class="sign-in"><a href="{{route('user.login')}}" class="btn btn-primary"><i class="fa fa-user"></i> {{__('sign in')}}</a></li>
+                                <li class="sign-up"><a href="{{route('user.register')}}" class="btn btn-primary"><i class="fa fa-user-plus"></i> {{__('register')}}</a></li>
+                            @else 
+                                <li class="sign-in"><a href="{{route('user.dashboard')}}" class="btn btn-primary"><i class="fa fa-user"></i> {{__('Dashboard')}}</a></li>
+                            @endif
                         </ul>
                     </div>
                 </div>

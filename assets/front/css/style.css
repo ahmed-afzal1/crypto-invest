@@ -1372,41 +1372,41 @@ ul.nav.nav-tabs li a:hover, ul.nav.nav-tabs li.active a:hover {
   color: #ffae11;
 }
 
-/*** Breadcrumb ***/
+/** Breadcrumb **/
 
-.banner-area .breadcrumb {
+.banner-area .breadcrumbb {
   font-size: 14px;
   text-transform: uppercase;
   margin: 15px 0 0;
   background: transparent;
 }
 
-.banner-area .breadcrumb>li {
+.banner-area .breadcrumbb>li {
   font-weight: 400;
 }
 
-.banner-area .breadcrumb>li a {
+.banner-area .breadcrumbb>li a {
   font-weight: 600;
 }
 
-.banner-area .breadcrumb>li a:hover {
+.banner-area .breadcrumbb>li a:hover {
   opacity: .9;
 }
 
-.banner-area .breadcrumb>li+li:before {
+.banner-area .breadcrumbb>li+li:before {
   color: #fff;
 }
-.breadcrumb {
+.breadcrumbb {
   padding: 8px 15px;
   margin-bottom: 20px;
   list-style: none;
   background-color: #f5f5f5;
   border-radius: 4px;
 }
-.breadcrumb>li {
+.breadcrumbb>li {
   display: inline-block;
 }
-.breadcrumb>li+li:before {
+.breadcrumbb>li+li:before {
   padding: 0 5px;
   color: #ccc;
   content: "/\00a0";

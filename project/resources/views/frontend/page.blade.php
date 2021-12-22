@@ -9,11 +9,11 @@
 			<div class="banner-overlay">
 				<div class="banner-text text-center">
 					<div class="container">
-						<div class="row text-center">
+						<div class="text-center">
 							<div class="col-xs-12">
-								<h2 class="title-head">terms of <span>services</span></h2>
+								<h2 class="title-head"><span>{{$page->title}}</span></h2>
 								<hr>
-								<ul class="breadcrumb">
+								<ul class="breadcrumbb">
 									<li><a href="{{route('front.index')}}"> {{__('home')}}</a></li>
 									<li>{{$page->title}}</li>
 								</ul>

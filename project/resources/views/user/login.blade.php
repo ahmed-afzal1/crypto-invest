@@ -18,6 +18,7 @@
                 </div>
                 <form id="loginform" action="{{ route('user.login.submit') }}" method="POST">
                     @csrf
+                    @include('includes.admin.form-login')
                     <div class="form-group">
                         <input class="form-control" name="email" id="email" placeholder="{{__('EMAIL')}}" type="email" required>
                     </div>
@@ -26,7 +27,7 @@
                     </div>
                     <div class="form-group">
                         <button class="btn btn-primary" type="submit">{{__('login')}}</button>
-                        <p class="text-center">{{__("don't have an account ?")}} <a href="register.html">{{__('register now')}}</a>
+                        <p class="text-center">{{__("don't have an account ?")}} <a href="{{route('user.register')}}">{{__('register now')}}</a>
                     </div>
                 </form>
             </div>

@@ -413,3 +413,204 @@
     margin-left: 100px;
     margin-bottom: 20px;
 }
+
+/*-------------------------------
+Order Details Start
+--------------------------------*/
+	.order-details {
+		padding: 100px 0px 100px; 
+	}
+
+	.order-details .order-details-box {
+	  box-shadow: 3px 3px 5px 0px rgba(0, 0, 0, 0.05);
+	  border: 1px solid rgba(0, 0, 0, 0.1);
+	  background: rgba(0, 0, 0, 0.1);
+	}
+
+	.order-details .pricing{
+	  padding: 0px
+	}
+
+	.order-details input{
+	  height: 60px;
+	}
+	
+	.order-details .order-details-box .content{
+	  padding: 15px 20px 30px 20px;
+	}
+	
+	.order-details .order-details-box .header {
+		text-align: center;
+		padding: 16px 0px;
+	}
+
+	.order-details .order-details-box .header .title {
+		color: #FD961A;
+		font-size: 24px;
+		font-weight: 600;
+		margin-bottom: 0px;
+	}
+	  .order-details .order-details-box .content .patment-method {
+		width: 100%;
+		height: 50px;
+		border: 0px;
+		border-radius: 50px;
+		padding: 0px 30px;
+		margin-top: 20px;
+		}
+	  .order-details .order-details-box .content .btn-checkout {
+		display: inline-block;
+		padding: 10px 40px;
+		margin-top: 30px;
+		-webkit-transition: all 0.3s ease-in;
+		-o-transition: all 0.3s ease-in;
+		transition: all 0.3s ease-in; 
+	}
+
+	.order-details .pricing-plan {
+	  box-shadow: 3px 3px 5px 0px rgba(0, 0, 0, 0.05);
+	  border: 1px solid rgba(0, 0, 0, 0.1);
+	  border-radius: 0px;
+	 }
+	  .order-details .pricing-plan .header-area {
+		padding: 21px 20px 26px;
+		border-bottom: 1px solid rgba(0, 0, 0, 0.1);
+		text-align: center; }
+		.order-details .pricing-plan .header-area .title {
+		  font-size: 24px;
+		  line-height: normal;
+		  margin-bottom: 0px; }
+		.order-details .pricing-plan .header-area .sub-title {
+		  margin-bottom: 0px; }
+	  .order-details .pricing-plan .pricing-area {
+		text-align: center;
+		padding: 12px 30px 5px; }
+		.order-details .pricing-plan .pricing-area p {
+		  margin-bottom: 10px;
+		  font-size: 25px;
+		  }
+		  .order-details .pricing-plan .pricing-area p sup {
+			font-size: 24px;
+			position: relative;
+			top: -25px; }
+		  .order-details .pricing-plan .pricing-area p sub {
+			font-size: 16px;
+			position: relative;
+			bottom: 0px;
+			left: -6px; }
+	  .order-details .pricing-plan .content {
+		padding: 0px 30px 30px;
+		text-align: center; }
+		.order-details .pricing-plan .content p {
+		  color: #fff;
+		  font-size: 16px;
+		  line-height: 26px;
+		  margin-bottom: 0px; }
+	.profile-area-img{
+	width: 40px;
+	height: 40px;
+	}
+	.profile-area{
+	position: relative;
+	margin-left: 10px;
+	}
+	.profile-area a{
+	transition: all linear .3s;
+	}
+	.profile-area a:hover{
+	color: #fd961a;
+	}
+	.profile-area-content{
+	position: absolute;
+	top: 100%;
+	width:  180px;
+	right: 0px;
+	background: #fff;
+	box-shadow: 0px 5px 10px rgba(0, 0, 0, 0.1);
+	padding: 10px 10px;
+	display: none;
+	}
+	.profile-area-content li a{
+	line-height: 35px;
+	font-weight: 600;
+	font-size: 15px;
+	transition: all linear .3s;
+	}
+	.profile-area-content li a:hover{
+	 color: #fd961a;
+	}
+	.profile-area-content li a i{
+	font-size: 12px;
+	margin-right: 4px;
+	}
+	
+	
+	
+		.pricing .single-pricebox .price-range-area-checkout {
+		  margin: 33px 0px 9px; }
+		  .pricing .single-pricebox .price-range-area-checkout .invest-count {
+			display: -webkit-box;
+			display: -ms-flexbox;
+			display: flex;
+			-webkit-box-pack: justify;
+			-ms-flex-pack: justify;
+			justify-content: space-between; }
+			.pricing .single-pricebox .price-range-area-checkout .invest-count .left {
+			  font-weight: 600;
+			  margin-bottom: 0px; }
+			.pricing .single-pricebox .price-range-area-checkout .invest-count .right {
+			  font-weight: 600;
+			  margin-bottom: 0px; }
+			  .pricing .single-pricebox .price-range-area-checkout .invest-count .right i {
+				color: #fd961a;
+				margin-left: 4px; }
+		  .pricing .single-pricebox .price-range-area-checkout .invest-range-slider {
+			margin: 2px 0px 7px; }
+		  .pricing .single-pricebox .price-range-area-checkout .invest-get {
+			display: -webkit-box;
+			display: -ms-flexbox;
+			display: flex;
+			-webkit-box-pack: justify;
+			-ms-flex-pack: justify;
+			justify-content: space-between; }
+			.pricing .single-pricebox .price-range-area-checkout .invest-get .left {
+			  text-align: left; }
+	
+	 .pricing .single-pricebox .price-range-area-checkout .invest-get .left .payprice{
+		font-weight: 600;
+		display: block;
+		font-size: 30px;
+		line-height: 30px;
+		border: 1px solid #fd961a;
+		border-radius: 0px;
+		height: 35px;
+		padding: 0px 0px 0px 20px;
+		display: inline-block;
+	
+	 }
+	
+	
+	
+	
+	
+			  .pricing .single-pricebox .price-range-area-checkout .invest-get .left span {
+				font-weight: 600;
+				display: block;
+				font-size: 30px;
+				line-height: 30px;
+				 }
+			.pricing .single-pricebox .price-range-area-checkout .invest-get .right {
+			  text-align: right; }
+			  .pricing .single-pricebox .price-range-area-checkout .invest-get .right span {
+				font-weight: 600;
+				display: block;
+				font-size: 30px;
+				line-height: 30px; }
+	
+	#errCard , #errCVC {
+	  color: red;
+	}
+	
+	/*-------------------------------
+	Order Details End
+	--------------------------------*/

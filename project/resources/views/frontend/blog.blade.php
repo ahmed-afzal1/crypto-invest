@@ -14,7 +14,7 @@
 								<h2 class="title-head">{{__('Blog')}} <span>{{__('Posts')}}</span></h2>
 								<hr>
 								<ul class="breadcrumb">
-									<li><a href="index.html"> {{__('home')}}</a></li>
+									<li><a href="{{route('front.index')}}"> {{__('home')}}</a></li>
 									<li>{{__('Blog')}}</li>
 								</ul>
 							</div>

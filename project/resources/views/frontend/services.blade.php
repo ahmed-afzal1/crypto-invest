@@ -9,11 +9,11 @@
 			<div class="banner-overlay">
 				<div class="banner-text text-center">
 					<div class="container">
-						<div class=" text-center">
+						<div class="text-center">
 							<div class="col-xs-12">
 								<h2 class="title-head">{{__('our')}} <span>{{__('services')}}</span></h2>
 								<hr>
-								<ul class="breadcrumb">
+								<ul class="breadcrumbb">
 									<li><a href="{{route('front.index')}}"> {{__('home')}}</a></li>
 									<li>{{__('services')}}</li>
 								</ul>
@@ -40,7 +40,11 @@
                                     <img src="{{asset('assets/images/'.$data->photo)}}" alt="download bitcoin">
                                     <div class="service-box-content">
                                         <h3>{{$data->title}}</h3>
-                                        <p>{{$data->details}}</p>
+                                        <p>
+											@php
+												echo $data->details;
+											@endphp
+										</p>
                                     </div>
                                 </div>
                             </div>
