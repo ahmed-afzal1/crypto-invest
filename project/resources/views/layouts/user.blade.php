@@ -34,7 +34,7 @@
                 <feMergeNode/>
                 <feMergeNode in="SourceGraphic"/>
                 </feMerge>
-                </filter>          
+                </filter>
                 <path class="path" fill="#000000" d="M446.089,261.45c6.135-41.001-25.084-63.033-67.769-77.735l13.844-55.532l-33.801-8.424l-13.48,54.068
                     c-8.896-2.217-18.015-4.304-27.091-6.371l13.568-54.429l-33.776-8.424l-13.861,55.521c-7.354-1.676-14.575-3.328-21.587-5.073
                     l0.034-0.171l-46.617-11.64l-8.993,36.102c0,0,25.08,5.746,24.549,6.105c13.689,3.42,16.159,12.478,15.75,19.658L208.93,357.23
@@ -43,13 +43,13 @@
                     l-13.802,55.309l33.801,8.424l13.994-56.061c57.648,10.902,100.998,6.502,119.237-45.627c14.705-41.979-0.731-66.193-31.06-81.984
                     C425.008,305.984,441.655,291.455,446.089,261.45z M368.859,369.754c-10.455,41.983-81.128,19.285-104.052,13.589l18.562-74.404
                     C306.28,314.65,379.774,325.975,368.859,369.754z M379.302,260.846c-9.527,38.187-68.358,18.781-87.442,14.023l16.828-67.489
-                    C327.767,212.14,389.234,221.02,379.302,260.846z"/>       
+                    C327.767,212.14,389.234,221.02,379.302,260.846z"/>
             </svg>
         </div>
     </div>
 
     <div class="wrapper">
-    
+
         <header class="header">
             <div class="container">
                 <div class="row">
@@ -77,63 +77,15 @@
                     </div>
                     <div class="col-md-3 col-lg-3">
                         <ul class="unstyled user">
-                            @if (!auth()->user())
-                                <li class="sign-in"><a href="{{route('user.login')}}" class="btn btn-primary"><i class="fa fa-user"></i> {{__('sign in')}}</a></li>
-                                <li class="sign-up"><a href="{{route('user.register')}}" class="btn btn-primary"><i class="fa fa-user-plus"></i> {{__('register')}}</a></li>
-                            @else 
-                                <li class="sign-in"><a href="{{route('user.dashboard')}}" class="btn btn-primary"><i class="fa fa-user"></i> {{__('Dashboard')}}</a></li>
-                            @endif
+                            <li class="sign-in"><a href="{{route('user.login')}}" class="btn btn-primary"><i class="fa fa-user"></i> sign in</a></li>
+                            <li class="sign-up"><a href="#" class="btn btn-primary"><i class="fa fa-user-plus"></i> register</a></li>
                         </ul>
                     </div>
 
                 </div>
             </div>
 
-            <nav class="site-navigation navigation" id="site-navigation">
-                <div class="container">
-                    <div class="site-nav-inner">
-                        <a class="logo-mobile" href="{{route('front.index')}}">
-							<img class="img-responsive" src="{{asset('assets/images/'.$gs->logo)}}" alt="">
-						</a>
-                        <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
-							<span class="sr-only">Toggle navigation</span>
-							<span class="icon-bar"></span>
-							<span class="icon-bar"></span>
-							<span class="icon-bar"></span>
-						</button>
-
-                        <div class="collapse navbar-collapse navbar-responsive-collapse">
-                            <ul class="nav navbar-nav">
-                                <li class="active"><a href="{{route('front.index')}}">{{__('Home')}}</a></li>
-                                <li><a href="{{route('front.services')}}">{{__('Services')}}</a></li>
-                                <li><a href="{{route('front.pricing')}}">{{__('Invest plan')}}</a></li>
-                                <li><a href="{{route('front.blog')}}">{{__('Blog')}}</a></li>
-
-                                @if (count($pages) > 0)
-                                    <li class="dropdown">
-                                        <a href="#" class="dropdown-toggle" data-toggle="dropdown">{{__('pages')}} <i class="fa fa-angle-down"></i></a>
-                                        <ul class="dropdown-menu" role="menu">
-                                            @foreach ($pages as $key=>$data)
-                                                <li><a href="{{route('front.page',$data->slug)}}">{{$data->title}}</a></li>
-                                            @endforeach
-                                        </ul>
-                                    </li>
-                                @endif
-                                <li><a href="{{route('front.contact')}}">{{(__('Contact'))}}</a></li>
-								<li class="cart"><a href="shopping-cart.html"><i class="fa fa-shopping-cart"></i></a></li>
-                                <li class="search"><button class="fa fa-search"></button></li>
-                            </ul>
-                        </div>
-                    </div>
-                </div>
-
-                <div class="site-search">
-                    <div class="container">
-                        <input type="text" placeholder="type your keyword and hit enter ...">
-                        <span class="close">×</span>
-                    </div>
-                </div>
-            </nav>
+            @includeIf('partials.front.navbar')
         </header>
 
         <div class="hero-area" style="background: url({{ $gs->breadcumb_banner ? asset('assets/images/'.$gs->breadcumb_banner):asset('assets/images/noimage.png') }});""></div>
@@ -146,8 +98,8 @@
                             <div class="img">
                                 @if(Auth::user()->is_provider == 1)
                                     <img src="{{ Auth::user()->photo ? asset(Auth::user()->photo):asset('assets/images/noimage.png') }}">
-                                @else 
-                                    <img src="{{ Auth::user()->photo ? asset('assets/images/users/'.Auth::user()->photo):asset('assets/images/noimage.png') }}">
+                                @else
+                                    <img src="https://royalscripts.com/product/crypto/assets/images/users/1634703855mysterious-mafia-man-smoking-cigarette_52683-34828.jpg">
                                 @endif
 
                             </div>
@@ -167,7 +119,7 @@
                         <div class="open-tikit-area">
                             <div class="open-tikit">
                                 <a href="{{ route('user-profile') }}">
-                                    <img src="{{ asset('assets/user/img/ticket-icon.png') }}" alt="">
+                                    <img src="https://royalscripts.com/product/crypto/assets/user/img/ticket-icon.png" alt="">
                                 </a>
                                 <i class="material-icons">
                                         add
@@ -206,13 +158,13 @@
                                 <li class="nav-item user-item">
                                 <a href="{{ route('user-payouts') }}" class="nav-link"><i class="material-icons">collections_bookmark</i>{{ __('Payouts') }}</a>
                                 </li>
-                            
+
                                 <li class="nav-item user-item">
                                 <a href="{{ route('user-wwt-index') }}" class="nav-link"><i class="material-icons">monetization_on</i>{{ __('Withdraw') }}</a>
                                 </li>
                                 <li class="nav-item user-item">
                                 <a href="{{ route('user-trans') }}" class="nav-link"><i class="material-icons">card_travel</i>{{ __('Transactions') }}</a>
-                                </li> 
+                                </li>
                                 <li class="nav-item user-item">
                                 <a href="{{route('user.plan')}}" class="nav-link"><i class="material-icons">payment</i>{{ __('Invest Now') }}</a>
                                 </li>
@@ -248,10 +200,10 @@
                                 <li class="nav-item">
                                 <a href="{{ route('user-logout') }}" class="nav-link"><i class="material-icons">logout</i>{{ __('Logout') }}</a>
                                 </li>
-                            </ul>            
-                            
+                            </ul>
+
                             </div>
-                            
+
 
                         </div>
                     </div>
@@ -350,9 +302,9 @@
 								<img src="images/icons/payment/paypal.png" alt="paypal">
 								<img class="last" src="images/icons/payment/maestro.png" alt="maestro">
 							</div>
-		
+
                         </div>
-          
+
                     </div>
                 </div>
             </div>

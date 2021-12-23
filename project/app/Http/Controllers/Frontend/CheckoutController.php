@@ -34,4 +34,8 @@ class CheckoutController extends Controller
         
         return view('frontend.checkout',$data);
     }
+
+    public function payreturn(){
+        return view('frontend.success');
+    }
 }

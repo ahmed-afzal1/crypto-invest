@@ -28,10 +28,10 @@ class InstamojoController extends Controller
         $total =  $request->invest;
         $paydata = $data->convertAutoData();
 
-        if($request->currency_code != "INR")
-        {
-            return redirect()->back()->with('unsuccess',__('Please Select INR Currency For This Payment.'));
-        }
+        // if($request->currency_code != "INR")
+        // {
+        //     return redirect()->back()->with('unsuccess',__('Please Select INR Currency For This Payment.'));
+        // }
 
 
         $order['item_name'] = $gs->title." Order";
@@ -56,7 +56,7 @@ class InstamojoController extends Controller
                 "redirect_url" => $notify_url
             ));
             $redirect_url = $response['longurl'];
-        /** add payment ID to session **/
+
         Session::put('input_data',$input);
         Session::put('order_data',$order);
         Session::put('order_payment_id', $response['id']);
@@ -74,10 +74,11 @@ class InstamojoController extends Controller
     {
         $input = Session::get('input_data');
         $order_data = Session::get('order_data');
-        $success_url = route('payment.return');
+        $success_url = route('front.payreturn');
         $cancel_url = route('payment.cancle');
         $input_data = $request->all();
         $order = new Order();
+        dd($request->all());
  
         /** Get the payment ID before session clear **/
         $payment_id = Session::get('order_payment_id');

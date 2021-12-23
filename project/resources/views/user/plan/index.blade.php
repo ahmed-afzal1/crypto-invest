@@ -32,17 +32,17 @@
                                     <div class="price-range-area">
                                         <div class="invest-count">
                                             <div class="left">
-                                                {{ __('Minimum Invest') }} 
+                                                {{ __('Minimum Invest') }}
                                             </div>
                                             <div class="right">
                                                 {{ $gs->currency_format == 0 ? $gs->currency_sign.$prod->min_price : $prod->min_price .$gs->currency_sign }}
-                                                <i class="fab fa-bitcoin"></i>
+                                                <i class="fa fa-bitcoin"></i>
                                             </div>
                                         </div>
                                         <div class="invest-range-slider">
                                             <div class="range-slider">
-                                            <input class="range-slider__range" type="range" value="{{ $prod->min_price }}" min="{{ $prod->min_price }}" max="{{ $prod->max_price }}" style="background: linear-gradient(90deg, rgb(31, 113, 212) 26.4%, rgba(31, 113, 212, 0.125) 26.5%);">
-                                            </div> 
+                                            <input class="range-slider__range" type="range" value="{{ $prod->min_price }}" min="{{ $prod->min_price }}" max="{{ $prod->max_price }}" style="background: linear-gradient(90deg, rgb(239, 150, 26) 26.4%, rgba(31, 113, 212, 0.125) 26.5%);">
+                                            </div>
                                         </div>
                                         <div class="invest-get">
                                             <div class="left">

@@ -1,5 +1,5 @@
 @extends('layouts.user')
-@section('content')      
+@section('content')
 
         <div class="col-lg-9">
             <div class="account-box">
@@ -14,7 +14,7 @@
               <div class="content">
 
 
-                <div class="table-responsive">
+                <div class="table-responsive referral">
                 <table>
                   <tr>
                     <td>
@@ -53,7 +53,7 @@
                         City<span>:</span>
                     </td>
                     <td>
-                        {{ $user->city }}      
+                        {{ $user->city }}
                     </td>
                   </tr>
                   <tr>
@@ -89,7 +89,7 @@
                       <button type="button" class="close" data-dismiss="modal" aria-hidden="true">
                           <span aria-hidden="true">&times;</span>
                       </button>
-  
+
                       <h4 class="card-title">Edit Profile</h4>
                     </div>
                   </div>
@@ -105,7 +105,7 @@
                         <div class="img">
                           @if($user->is_provider == 1)
                             <img src="{{ $user->photo ? asset($user->photo):asset('assets/images/noimage.png') }}">
-                          @else 
+                          @else
                             <img src="{{ $user->photo ? asset('assets/images/users/'.$user->photo):asset('assets/images/noimage.png') }}">
                           @endif
                         </div>
@@ -172,7 +172,7 @@
 @section('scripts')
 
 <script type="text/javascript">
-  
+
   $('.edit-profile').on('click',function(){
     $('.upload').click();
 

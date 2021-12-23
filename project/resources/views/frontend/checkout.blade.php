@@ -1,7 +1,7 @@
 @extends('layouts.front')
 
 @push('css')
-    
+    <link rel="stylesheet" href="{{asset('assets/front/css/checkout.css')}}">
 @endpush
 
 @section('contents')
@@ -45,22 +45,22 @@
 
                                     {{ csrf_field() }}
                                     <div class="row">
-                                        <div class="col-md-12 mb-3">
+                                        <div class="col-md-12">
                                             <input type="text" name="customer_name" class="form-control" placeholder="{{ __('Enter your full Name') }}" required="" value="{{auth()->user()->name }}">
                                         </div>
-                                        <div class="col-md-12 mb-3">
+                                        <div class="col-md-12">
                                             <input type="email" name="customer_email" class="form-control" placeholder="{{ __('Enter your email address') }}" required="" value="{{ auth()->user()->email }}">
                                         </div>
-                                        <div class="col-md-12 mb-3">
+                                        <div class="col-md-12">
                                             <input type="text" name="customer_phone" class="form-control" placeholder="{{ __('Enter your Phone Number') }}" required="" value="{{ auth()->user()->phone }}">
                                         </div>
-                                        <div class="col-md-12 mb-3">
+                                        <div class="col-md-12">
                                             <input type="text" name="customer_address" class="form-control" placeholder="{{ __('Enter your Address') }}" required="" value="{{ auth()->user()->address }}">
                                         </div>
-                                        <div class="col-md-12 mb-3">
+                                        <div class="col-md-12">
                                             <input type="text" name="customer_city" class="form-control" placeholder="{{ __('Enter your City') }}" required="" value="{{ auth()->user()->city }}">
                                         </div>
-                                        <div class="col-md-12 mb-3">
+                                        <div class="col-md-12">
                                             <input type="text" name="customer_zip" class="form-control" placeholder="{{ __('Enter your Postal Code') }}" required="" value="{{ auth()->user()->zip }}">
                                         </div>
                                         <div class="col-lg-12">
@@ -81,15 +81,15 @@
                                         </div>
 
                                         <div class="col-lg-12 mt-4 manual-payment d-none">
-                                            <div class="card">
+                                            <div class="card manual_card">
                                                 <div class="card-body">
                                                     <div class="row">
                                                         <div class="col-lg-12 pb-2 manual-payment-details">
                                                         </div>
                                                         
-                                                        <div class="col-lg-6">
+                                                        <div class="col-lg-12">
                                                             <label>{{__('Transaction ID')}}# *</label>
-                                                            <input class="form-control" name="txn_id4" type="text" placeholder="Transaction ID#" id="manual_transaction_id">
+                                                            <input class="form-control manual_input" name="txn_id4" type="text" placeholder="Transaction ID#" id="manual_transaction_id">
                                                         </div>
                                                     </div>
                                                 </div>
@@ -166,7 +166,7 @@
                                     <input type="hidden" name="paystackInfo" id="paystackInfo" value="{{$gs->paystack_key}}">
 
                                     <div class="col-lg-12">
-                                        <button type="submit" class="btn-checkout btn btn-primary" id="final-btn">{{ ('Checkout') }}</button>
+                                        <button type="submit" class="btn-checkout btn btn-primary mt-3" id="final-btn">{{ ('Checkout') }}</button>
                                     </div>
                                 </div>
                             </form>
@@ -226,219 +226,221 @@
 @endsection
 
 @push('js')
+    <script type="text/javascript">
+    'use strict';
 
-<script type="text/javascript">
-'use strict';
-$(document).on('change','#method',function(){
-	var val = $(this).val();
+    $(document).on('change','#method',function(){
+        var val = $(this).val();
 
-	if(val == 'stripe')
-	{
-		$('#payment-form').prop('action','{{ route('stripe.submit') }}');
-		$('#card-view').removeClass('d-none');
-		$('.card-elements').prop('required',true);
-    $('#manual_transaction_id').prop('required',false);
-    $('.manual-payment').addClass('d-none');
-
-	}
-  if(val == 'authorize.net')
-	{
-		$('#payment-form').prop('action','{{ route('authorize.submit') }}');
-		$('#card-view').removeClass('d-none');
-		$('.card-elements').prop('required',true);
-    $('#manual_transaction_id').prop('required',false);
-    $('.manual-payment').addClass('d-none');
-
-	}
-
-  if(val == 'paypal') {
-      $('#payment-form').prop('action','{{ route('paypal.submit') }}');
-      $('#card-view').addClass('d-none');
-      $('.card-elements').prop('required',false);
-      $('#manual_transaction_id').prop('required',false);
-      $('.manual-payment').addClass('d-none');
-  }
-  if(val == 'mollie') {
-      $('#payment-form').prop('action','{{ route('molly.submit') }}');
-      $('#card-view').addClass('d-none');
-      $('.card-elements').prop('required',false);
-      $('#manual_transaction_id').prop('required',false);
-      $('.manual-payment').addClass('d-none');
-  }
-	if(val == 'paystack') {
-        $('#payment-form').prop('action','{{ route('paystack.submit') }}');
-		    $('#payment-form').prop('class','step1-form');
-        $('#card-view').addClass('d-none');
-        $('.card-elements').prop('required',false);
-        $('#manual_transaction_id').prop('required',false);
-        $('.manual-payment').addClass('d-none');
-    }
-	if(val == 'flutterwave') {
-        $('#payment-form').prop('action','{{ route('flutter.submit') }}');
-        $('#card-view').addClass('d-none');
-        $('.card-elements').prop('required',false);
-        $('#manual_transaction_id').prop('required',false);
-
-        $('.manual-payment').addClass('d-none');
-    }
-	if(val == 'coingate') {
-        $('#payment-form').prop('action','{{ route('coingate.submit') }}');
-        $('#card-view').addClass('d-none');
-        $('.card-elements').prop('required',false);
-        $('#manual_transaction_id').prop('required',false);
-
-        $('.manual-payment').addClass('d-none');
-    }
-	if(val == 'paytm') {
-        $('#payment-form').prop('action','{{ route('paytm.submit') }}');
-        $('#card-view').addClass('d-none');
-        $('.card-elements').prop('required',false);
-        $('#manual_transaction_id').prop('required',false);
-
-        $('.manual-payment').addClass('d-none');
-    }
-	if(val == 'coinbase') {
-        $('#payment-form').prop('action','{{ route('coincommerce.submit') }}');
-        $('#card-view').addClass('d-none');
-        $('.card-elements').prop('required',false);
-        $('#manual_transaction_id').prop('required',false);
-
-        $('.manual-payment').addClass('d-none');
-    }
-    if(val == 'blockChain') {
-        $('#payment-form').prop('action','{{ route('blockchain.submit') }}');
-        $('#card-view').addClass('d-none');
-        $('.card-elements').prop('required',false);
-        $('#manual_transaction_id').prop('required',false);
-        $('.manual-payment').addClass('d-none');
-    }
-    if(val == 'PerfectMoney') {
-      
-        $('#amount').attr('name', 'PAYMENT_AMOUNT');
-        $('#payment-form').prop('action','https://perfectmoney.is/api/step1.asp');
-        $('#card-view').addClass('d-none');
-        $('.card-elements').prop('required',false);
-        $('#manual_transaction_id').prop('required',false);
-        $('.manual-payment').addClass('d-none');
-    }
-    if(val == 'coinPayment') {
-        $('#payment-form').prop('action','{{ route('coinpay.submit') }}');
-        $('#card-view').addClass('d-none');
-        $('.card-elements').prop('required',false);
-        $('#manual_transaction_id').prop('required',false);
-        $('.manual-payment').addClass('d-none');
-    }
-    if(val == 'BlockIO(BTC)' || val == 'BlockIO(LTC)' || val == 'BlockIO(DGC)') {
-        $('#payment-form').prop('action','{{ route('blockio.submit') }}');
-        $('#card-view').addClass('d-none');
-        $('.card-elements').prop('required',false);
-        $('#manual_transaction_id').prop('required',false);
-
-        $('.manual-payment').addClass('d-none');
-    }
-    if(val == 'VougePay') {
-        $('#payment-form').prop('action','https://voguepay.com/pay/');
-        $('#card-view').addClass('d-none');
-        $('.card-elements').prop('required',false);
-        $('#manual_transaction_id').prop('required',false);
-        $('.manual-payment').addClass('d-none');
-    }
-    if(val == 'Coingate') {
-        $('#payment-form').prop('action','{{route('coingate.submit')}}');
-        $('#card-view').addClass('d-none');
-        $('.card-elements').prop('required',false);
-        $('#manual_transaction_id').prop('required',false);
-        $('.manual-payment').addClass('d-none');
-    }
-
-    if(val == 'block.io.btc' || val == 'block.io.ltc' || val == 'block.io.dgc') {
-        $('#payment-form').prop('action','{{route('blockio.submit')}}');
-        $('#card-view').addClass('d-none');
-        $('.card-elements').prop('required',false);
-        $('#manual_transaction_id').prop('required',false);
-        $('.manual-payment').addClass('d-none');
-    }
-    if(val == 'instamojo') {
-        $('#payment-form').prop('action','{{ route('instamojo.submit') }}');
-        $('#card-view').addClass('d-none');
-        $('.card-elements').prop('required',false);
-        $('#manual_transaction_id').prop('required',false);
-        $('.manual-payment').addClass('d-none');
-    }
-
-    if(val == 'flutterwave') {
-        $('#payment-form').prop('action','{{ route('flutter.submit') }}');
-        $('#card-view').addClass('d-none');
-        $('.card-elements').prop('required',false);
-        $('#manual_transaction_id').prop('required',false);
-        $('.manual-payment').addClass('d-none');
-    }
-
-    if(val == 'razorpay') {
-        $('#payment-form').prop('action','{{ route('user.razorpay.submit') }}');
-        $('#card-view').addClass('d-none');
-        $('.card-elements').prop('required',false);
-        $('#manual_transaction_id').prop('required',false);
-        $('.manual-payment').addClass('d-none');
-    }
-
-    if(val == 'Manual'){
-      $('#payment-form').prop('action','{{route('manual.submit')}}');
-      $('.manual-payment').removeClass('d-none');
-      $('#card-view').addClass('d-none');
-      $('.card-elements').prop('required',false);
-      $('#manual_transaction_id').prop('required',true);
-      const details = $(this).find(':selected').data('details');
-      $('.manual-payment-details').empty();
-      $('.manual-payment-details').append(`<font size="3">${details}</font>`)
-    }
-
-    if(val == 'Wallet'){
-        $('#payment-form').prop('action','{{route('wallet.submit')}}');
-        $('#card-view').addClass('d-none');
-        $('.card-elements').prop('required',false);
-        $('#manual_transaction_id').prop('required',false);
-        $('.manual-payment').addClass('d-none');
-    }
-});
-
-$(document).on('submit','.step1-form',function(){
-    var val = $('#sub').val();
-    var total = $('#amount').val();
-    var paystackInfo = $('#paystackInfo').val();
-    var curr = $('#currencyCode').val();
-    total = Math.round(total);
-        if(val == 0)
+        if(val == 'stripe')
         {
-        var handler = PaystackPop.setup({
-          key: paystackInfo,
-          email: $('input[name=email]').val(),
-          amount: total * 100,
-          currency: curr,
-          ref: ''+Math.floor((Math.random() * 1000000000) + 1),
-          callback: function(response){
-            $('#ref_id').val(response.reference);
-            $('#sub').val('1');
-            $('#final-btn').click();
-          },
-          onClose: function(){
-            window.location.reload();
-          }
-        });
-        handler.openIframe();
-            return false;                    
+            $('#payment-form').prop('action','{{ route('stripe.submit') }}');
+            $('#card-view').removeClass('d-none');
+            $('.card-elements').prop('required',true);
+            $('#manual_transaction_id').prop('required',false);
+            $('.manual-payment').addClass('d-none');
+
         }
-        else {
-          $('#preloader').show();
-            return true;   
+
+        if(val == 'authorize.net')
+        {
+            $('#payment-form').prop('action','{{ route('authorize.submit') }}');
+            $('#card-view').removeClass('d-none');
+            $('.card-elements').prop('required',true);
+            $('#manual_transaction_id').prop('required',false);
+            $('.manual-payment').addClass('d-none');
         }
-});
 
+        if(val == 'paypal') {
+            $('#payment-form').prop('action','{{ route('paypal.submit') }}');
+            $('#card-view').addClass('d-none');
+            $('.card-elements').prop('required',false);
+            $('#manual_transaction_id').prop('required',false);
+            $('.manual-payment').addClass('d-none');
+        }
 
+        if(val == 'mollie') {
+            $('#payment-form').prop('action','{{ route('molly.submit') }}');
+            $('#card-view').addClass('d-none');
+            $('.card-elements').prop('required',false);
+            $('#manual_transaction_id').prop('required',false);
+            $('.manual-payment').addClass('d-none');
+        }
 
+        if(val == 'paystack') {
+            $('#payment-form').prop('action','{{ route('paystack.submit') }}');
+            $('#payment-form').prop('class','step1-form');
+            $('#card-view').addClass('d-none');
+            $('.card-elements').prop('required',false);
+            $('#manual_transaction_id').prop('required',false);
+            $('.manual-payment').addClass('d-none');
+        }
 
+        if(val == 'flutterwave') {
+            $('#payment-form').prop('action','{{ route('flutter.submit') }}');
+            $('#card-view').addClass('d-none');
+            $('.card-elements').prop('required',false);
+            $('#manual_transaction_id').prop('required',false);
+            $('.manual-payment').addClass('d-none');
+        }
 
-</script>
+        if(val == 'coingate') {
+            $('#payment-form').prop('action','{{ route('coingate.submit') }}');
+            $('#card-view').addClass('d-none');
+            $('.card-elements').prop('required',false);
+            $('#manual_transaction_id').prop('required',false);
+            $('.manual-payment').addClass('d-none');
+        }
+
+        if(val == 'paytm') {
+            $('#payment-form').prop('action','{{ route('paytm.submit') }}');
+            $('#card-view').addClass('d-none');
+            $('.card-elements').prop('required',false);
+            $('#manual_transaction_id').prop('required',false);
+            $('.manual-payment').addClass('d-none');
+        }
+
+        if(val == 'coinbase') {
+            $('#payment-form').prop('action','{{ route('coincommerce.submit') }}');
+            $('#card-view').addClass('d-none');
+            $('.card-elements').prop('required',false);
+            $('#manual_transaction_id').prop('required',false);
+            $('.manual-payment').addClass('d-none');
+        }
+
+        if(val == 'blockChain') {
+            $('#payment-form').prop('action','{{ route('blockchain.submit') }}');
+            $('#card-view').addClass('d-none');
+            $('.card-elements').prop('required',false);
+            $('#manual_transaction_id').prop('required',false);
+            $('.manual-payment').addClass('d-none');
+        }
+
+        if(val == 'PerfectMoney') {
+            $('#amount').attr('name', 'PAYMENT_AMOUNT');
+            $('#payment-form').prop('action','https://perfectmoney.is/api/step1.asp');
+            $('#card-view').addClass('d-none');
+            $('.card-elements').prop('required',false);
+            $('#manual_transaction_id').prop('required',false);
+            $('.manual-payment').addClass('d-none');
+        }
+
+        if(val == 'coinPayment') {
+            $('#payment-form').prop('action','{{ route('coinpay.submit') }}');
+            $('#card-view').addClass('d-none');
+            $('.card-elements').prop('required',false);
+            $('#manual_transaction_id').prop('required',false);
+            $('.manual-payment').addClass('d-none');
+        }
+
+        if(val == 'BlockIO(BTC)' || val == 'BlockIO(LTC)' || val == 'BlockIO(DGC)') {
+            $('#payment-form').prop('action','{{ route('blockio.submit') }}');
+            $('#card-view').addClass('d-none');
+            $('.card-elements').prop('required',false);
+            $('#manual_transaction_id').prop('required',false);
+            $('.manual-payment').addClass('d-none');
+        }
+
+        if(val == 'VougePay') {
+            $('#payment-form').prop('action','https://voguepay.com/pay/');
+            $('#card-view').addClass('d-none');
+            $('.card-elements').prop('required',false);
+            $('#manual_transaction_id').prop('required',false);
+            $('.manual-payment').addClass('d-none');
+        }
+
+        if(val == 'Coingate') {
+            $('#payment-form').prop('action','{{route('coingate.submit')}}');
+            $('#card-view').addClass('d-none');
+            $('.card-elements').prop('required',false);
+            $('#manual_transaction_id').prop('required',false);
+            $('.manual-payment').addClass('d-none');
+        }
+
+        if(val == 'block.io.btc' || val == 'block.io.ltc' || val == 'block.io.dgc') {
+            $('#payment-form').prop('action','{{route('blockio.submit')}}');
+            $('#card-view').addClass('d-none');
+            $('.card-elements').prop('required',false);
+            $('#manual_transaction_id').prop('required',false);
+            $('.manual-payment').addClass('d-none');
+        }
+
+        if(val == 'instamojo') {
+            $('#payment-form').prop('action','{{ route('instamojo.submit') }}');
+            $('#card-view').addClass('d-none');
+            $('.card-elements').prop('required',false);
+            $('#manual_transaction_id').prop('required',false);
+            $('.manual-payment').addClass('d-none');
+        }
+
+        if(val == 'flutterwave') {
+            $('#payment-form').prop('action','{{ route('flutter.submit') }}');
+            $('#card-view').addClass('d-none');
+            $('.card-elements').prop('required',false);
+            $('#manual_transaction_id').prop('required',false);
+            $('.manual-payment').addClass('d-none');
+        }
+
+        if(val == 'razorpay') {
+            $('#payment-form').prop('action','{{ route('user.razorpay.submit') }}');
+            $('#card-view').addClass('d-none');
+            $('.card-elements').prop('required',false);
+            $('#manual_transaction_id').prop('required',false);
+            $('.manual-payment').addClass('d-none');
+        }
+
+        if(val == 'Manual'){
+        $('#payment-form').prop('action','{{route('manual.submit')}}');
+        $('.manual-payment').removeClass('d-none');
+        $('#card-view').addClass('d-none');
+        $('.card-elements').prop('required',false);
+        $('#manual_transaction_id').prop('required',true);
+        const details = $(this).find(':selected').data('details');
+        $('.manual-payment-details').empty();
+        $('.manual-payment-details').append(`<font size="3">${details}</font>`)
+        }
+
+        if(val == 'Wallet'){
+            $('#payment-form').prop('action','{{route('wallet.submit')}}');
+            $('#card-view').addClass('d-none');
+            $('.card-elements').prop('required',false);
+            $('#manual_transaction_id').prop('required',false);
+            $('.manual-payment').addClass('d-none');
+        }
+    });
+
+    $(document).on('submit','.step1-form',function(){
+        var val = $('#sub').val();
+        var total = $('#amount').val();
+        var paystackInfo = $('#paystackInfo').val();
+        var curr = $('#currencyCode').val();
+        total = Math.round(total);
+            if(val == 0)
+            {
+            var handler = PaystackPop.setup({
+            key: paystackInfo,
+            email: $('input[name=email]').val(),
+            amount: total * 100,
+            currency: curr,
+            ref: ''+Math.floor((Math.random() * 1000000000) + 1),
+            callback: function(response){
+                $('#ref_id').val(response.reference);
+                $('#sub').val('1');
+                $('#final-btn').click();
+            },
+            onClose: function(){
+                window.location.reload();
+            }
+            });
+            handler.openIframe();
+                return false;                    
+            }
+            else {
+                $('#preloader').show();
+                return true;   
+            }
+    });
+    </script>
 
     <script>
         'use strict';

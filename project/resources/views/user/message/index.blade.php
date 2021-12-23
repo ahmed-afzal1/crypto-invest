@@ -12,10 +12,14 @@
               </h3>
             </div>
             <div class="content">
-
+              @if (count($convs) == 0)
+                <div class="row justify-content-md-center">
+                  <p>{{__('NO MESSAGE FOUND')}}</p>
+                </div>
+              @else 
               <div class="mr-table allproduct mt-4">
                   <div class="table-responsiv">
-                      <table id="example" class="table table-hover dt-responsive" cellspacing="0" width="100%">
+                      <table id="example" class="table tabl-text table-hover dt-responsive" cellspacing="0" width="100%">
                         <thead>
                           <tr>
                             <th>{{ __('Subject') }}</th>
@@ -43,7 +47,7 @@
                       </table>
                   </div>
                 </div>
-
+                @endif
             </div>
           </div>
         </div>
@@ -59,28 +63,28 @@
               <span aria-hidden="true">&times;</span>
             </button>
         </div>
-      <div class="modal-body">
-        <div class="container-fluid p-0">
-          <div class="row">
-            <div class="col-md-12">
-              <div class="contact-form">
-                <form id="emailreply1">
-                  {{csrf_field()}}
-                  <ul>
-                    <li>
-                      <input type="text" class="input-field" id="subj1" name="subject" placeholder="{{ __('Subject') }}" required="">
-                    </li>
-                    <li>
-                      <textarea class="input-field textarea" name="message" id="msg1" placeholder="{{ __('Your Message') }}" required=""></textarea>
-                    </li>
-                  </ul>
-                  <button class="submit-btn" id="emlsub1" type="submit">{{ __('Send') }}</button>
-                </form>
+        <div class="modal-body">
+          <div class="container-fluid p-0">
+            <div class="row">
+              <div class="col-md-12">
+                <div class="contact-form">
+                  <form id="emailreply1">
+                    {{csrf_field()}}
+                    <ul>
+                      <li>
+                        <input type="text" class="input-field" id="subj1" name="subject" placeholder="{{ __('Subject') }}" required="">
+                      </li>
+                      <li>
+                        <textarea class="input-field textarea" name="message" id="msg1" placeholder="{{ __('Your Message') }}" required=""></textarea>
+                      </li>
+                    </ul>
+                    <button class="submit-btn" id="emlsub1" type="submit">{{ __('Send') }}</button>
+                  </form>
+                </div>
               </div>
             </div>
           </div>
         </div>
-      </div>
       </div>
     </div>
   </div>
@@ -121,7 +125,7 @@
 @section('scripts')
 
 <script type="text/javascript">
-    
+
           $(document).on("submit", "#emailreply1" , function(){
           var token = $(this).find('input[name=_token]').val();
           var subject = $(this).find('input[name=subject]').val();
@@ -151,7 +155,7 @@
                       location.reload();
             }
 
-        });          
+        });
           return false;
         });
 

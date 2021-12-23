@@ -1,7 +1,7 @@
 @extends('layouts.user')
 
 
-@section('content')      
+@section('content')
 
         <div class="col-lg-9">
             <div class="account-box">

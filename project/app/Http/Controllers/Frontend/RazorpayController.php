@@ -33,10 +33,10 @@ class RazorpayController extends Controller
 
     public function store(Request $request)
     {
-        if($request->currency_code != "INR")
-        {
-            return redirect()->back()->with('unsuccess','Please Select INR Currency For Rezorpay.');
-        }
+        // if($request->currency_code != "INR")
+        // {
+        //     return redirect()->back()->with('unsuccess','Please Select INR Currency For Rezorpay.');
+        // }
         
         $settings = Generalsetting::findOrFail(1);
         $order = new Order();
@@ -113,18 +113,19 @@ class RazorpayController extends Controller
         $json = json_encode($data);
         $displayCurrency = $this->displayCurrency;
         
-        return view( 'front.razorpay-checkout', compact( 'data','displayCurrency','json','notify_url' ) );
+        return view( 'frontend.razorpay-checkout', compact( 'data','displayCurrency','json','notify_url' ) );
     }
 
     public function notify(Request $request)
     {
         $input = Session::get('input_data');
         $order_data = Session::get('order_data');
-        $success_url = route('payment.return');
+        $success_url = route('front.payreturn');
         $cancel_url = route('payment.cancle');
         $input_data = $request->all();
         $order = new Order();
 
+        dd($request->all());
         $payment_id = Session::get('order_payment_id');
 
         $success = true;

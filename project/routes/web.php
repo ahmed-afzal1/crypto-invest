@@ -524,8 +524,12 @@ Route::prefix('user')->group(function() {
     Route::get('/{slug}','Frontend\FrontendController@page')->name('front.page');
 
     Route::get('/invest/{id}','Frontend\CheckoutController@checkout')->name('front.checkout');
+    Route::get('/payment/return','Frontend\CheckoutController@payreturn')->name('front.payreturn');
 
     Route::post('/paypal-submit', 'Frontend\PaymentController@store')->name('paypal.submit');
+    Route::get('/paypal/notify', 'Frontend\PaymentController@notify')->name('paypal.notify');
+    Route::get('/payment/cancle', 'Frontend\PaymentController@cancle')->name('payment.cancle');
+
     Route::post('/stripe-submit', 'Frontend\StripeController@store')->name('stripe.submit');
 
     Route::post('/blockchain-submit', 'Frontend\BlockChainController@deposit')->name('blockchain.submit');

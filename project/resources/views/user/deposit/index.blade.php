@@ -10,36 +10,42 @@
               </h3>
             </div>
             <div class="content">
-                <div class="mr-table allproduct mt-4">
-                    <div class="table-responsiv">
-                        <table id="example" class="table table-hover dt-responsive" cellspacing="0" width="100%">
-                            <thead>
-                                <tr>
-                                    <th>{{ __('Deposit Date') }}</th>
-                                    <th>{{ __('Method') }}</th>
-                                    <th>{{ __('Account') }}</th>
-                                    <th>{{ __('Amount') }}</th>
-                                    <th>{{ __('Status') }}</th>
-                                </tr>
-                            </thead>
-                            <tbody>
-                                @foreach($deposits as $deposit)
-                                    <tr>
-                                        <td>{{date('d-M-Y',strtotime($deposit->created_at))}}</td>
-                                        <td>{{$deposit->method}}</td>
-                                        <td>{{ auth()->user()->email }}</td>
-                                        @if($gs->currency_format == 0)
-                                            <td>{{ $gs->currency_sign }} {{ round($deposit->amount, 2) }}</td>
-                                        @else 
-                                            <td>{{ round($deposit->amount, 2) }}{{$gs->currency_sign}}</td>
-                                        @endif
-                                        <td>{{ ucfirst($deposit->status) }}</td>
-                                    </tr>
-                                @endforeach
-                            </tbody>
-                        </table>
+                @if (count($deposits) == 0)
+                    <div class="row justify-content-md-center">
+                        <p>{{__('NO DEPOSIT FOUND')}}</p>
                     </div>
-                </div>
+                @else
+                    <div class="mr-table allproduct mt-4">
+                        <div class="table-responsiv">
+                            <table id="example" class="table tabl-text table-hover dt-responsive" cellspacing="0" width="100%">
+                                <thead>
+                                    <tr>
+                                        <th>{{ __('Deposit Date') }}</th>
+                                        <th>{{ __('Method') }}</th>
+                                        <th>{{ __('Account') }}</th>
+                                        <th>{{ __('Amount') }}</th>
+                                        <th>{{ __('Status') }}</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    @foreach($deposits as $deposit)
+                                        <tr>
+                                            <td>{{date('d-M-Y',strtotime($deposit->created_at))}}</td>
+                                            <td>{{$deposit->method}}</td>
+                                            <td>{{ auth()->user()->email }}</td>
+                                            @if($gs->currency_format == 0)
+                                                <td>{{ $gs->currency_sign }} {{ round($deposit->amount, 2) }}</td>
+                                            @else
+                                                <td>{{ round($deposit->amount, 2) }}{{$gs->currency_sign}}</td>
+                                            @endif
+                                            <td>{{ ucfirst($deposit->status) }}</td>
+                                        </tr>
+                                    @endforeach
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                @endif
             </div>
           </div>
         </div>

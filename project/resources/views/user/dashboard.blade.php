@@ -24,13 +24,13 @@
 						<div class="content ">
 							@if($gs->currency_format == 0)
 								<p class="amount">{{ $gs->currency_sign }}{{ round(Auth::user()->income,2) }}</p>
-							@else 
+							@else
 								<p class="amount">{{ round(Auth::user()->income,2) }}{{ $gs->currency_sign }}</p>
 							@endif
 								<span class="label">{{__('Current Balance')}}</span>
 						</div>
 					</div>
-					
+
 					<div class="col-lg-5  left-amount">
 						<div class="icon-area">
 							<div class="icon">
@@ -41,7 +41,7 @@
 						<div class="content ">
 							@if($gs->currency_format == 0)
 								<p class="amount">{{ $gs->currency_sign }}{{ round($investAmount,2) }}</p>
-							@else 
+							@else
 								<p class="amount">{{ round($investAmount,2) }}{{ $gs->currency_sign }}</p>
 							@endif
 								<span class="label">{{__('Invest Amount')}}</span>
@@ -51,9 +51,9 @@
 			</div>
 
             <div class="content">
-				<div class="mr-table allproduct mt-4">
+				<div class="mr-table allproduct mt-5">
 					<div class="table-responsiv">
-							<table id="example" class="table table-hover dt-responsive" cellspacing="0" width="100%">
+							<table id="example" class="table  table-hover dt-responsive tabl-text" cellspacing="0" width="100%">
 								<thead>
 									<tr>
 										<th>{{ __('Type') }}</th>
@@ -63,7 +63,7 @@
 									</tr>
 								</thead>
 
-								<tbody>	
+								<tbody>
 									@foreach($user->transactions()->orderBy('id','desc')->take(5)->get() as $data)
 									<tr>
 										<td>
@@ -77,7 +77,7 @@
 										<td>
 											@if($gs->currency_format == 0)
 												{{$gs->currency_sign}}{{ round($data->amount , 2) }}
-											@else 
+											@else
 												{{ round($data->amount , 2) }}{{$gs->currency_sign}}
 											@endif
 										</td>
