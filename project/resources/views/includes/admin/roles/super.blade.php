@@ -23,17 +23,10 @@
 
 
   <li class="nav-item">
-    <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#order" aria-expanded="true"
-    aria-controls="collapseTable">
-    <i class="fas fa-fw fa-sitemap"></i>
-    <span>{{ __('Manage Orders') }}</span>
-  </a>
-    <div id="order" class="collapse" aria-labelledby="headingTable" data-parent="#accordionSidebar">
-      <div class="bg-white py-2 collapse-inner rounded">
-        <a class="collapse-item" href="{{ route('admin.order.index') }}">{{ __('Order List') }}</a>
-        <a class="collapse-item" href="{{ route('admin.refund.index') }}">{{ __('Refund Order') }}</a>
-      </div>
-    </div>
+    <a class="nav-link" href="{{ route('admin.transactions.index') }}">
+      <i class="fas fa-chart-line"></i>
+      <span>{{ __('Transactions') }}</span>
+    </a>
   </li>
 
   <li class="nav-item">

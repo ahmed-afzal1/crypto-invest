@@ -147,10 +147,8 @@ class CoinGateController extends Controller
 
         $item_amount = $request->invest;
         $currency_code = $request->currency_code;
-        //$amount = file_get_contents('https://blockchain.info/tobtc?currency='.$currency_code.'&value='.$request->invest);
-        //return $amount;
         
-           $blockchain    = PaymentGateway::whereKeyword('blockChain')->first();
+        $blockchain    = PaymentGateway::whereKeyword('blockChain')->first();
         $blockchain= $blockchain->convertAutoData();
    
         $secret = $blockchain['secret_string'];
@@ -158,8 +156,7 @@ class CoinGateController extends Controller
 
         $item_name = $generalsettings->title." Invest";
 
-        //return $my_xpub.'-'.$secret.'-'.$my_api_key;
-        //$my_callback_url = url('/').'/coingate/notify?transx_id='.$item_number.'&secret='.$secret;
+
         $my_callback_url = route('coingate.notify');
 
         $return_url = action('Front\PaymentController@payreturn');

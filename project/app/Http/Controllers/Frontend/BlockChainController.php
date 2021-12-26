@@ -239,8 +239,7 @@ class BlockChainController extends Controller
 
 
         session(['address' => $address,'amount' => $amount,'currency_value' => $item_amount,'currency_sign' => $request->currency_sign,'accountnumber' => $acc]);
-
-        return redirect()->route('blockchain.invest');
+        return view('frontend.blockchain');
 
 
         }

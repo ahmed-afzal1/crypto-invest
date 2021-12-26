@@ -18,7 +18,7 @@ class OrderController extends Controller
 
     public function orders()
     {
-     
+        
         $user = Auth::guard('web')->user();
         $orders = Order::where('user_id','=',$user->id)->where('payment_status','=','completed')->where('status','=','pending')->orderBy('id','desc')->get();
         return view('user.order.invests',compact('user','orders'));

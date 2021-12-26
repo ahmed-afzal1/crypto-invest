@@ -46,6 +46,7 @@ use App\Http\Controllers\Admin\SitemapController;
 use App\Http\Controllers\Admin\SliderController;
 use App\Http\Controllers\Admin\SubCategoryController;
 use App\Http\Controllers\Admin\SubscriberController;
+use App\Http\Controllers\Admin\TransactionController;
 use App\Http\Controllers\User\DashboardController as AppDashboardController;
 use App\Http\Controllers\User\KYCController;
 use App\Http\Controllers\User\LoginController as UserLoginController;
@@ -96,6 +97,9 @@ Route::get('/cache/clear', function() {
   Route::get('/invests/{id1}/status/{status}', 'Admin\OrderController@status')->name('admin.invests.status');
   Route::get('/pending/invests/{id1}/status/{status}', 'Admin\OrderController@pendingstatus')->name('admin.pendinginvest.status');
   Route::post('/order/email/', 'Admin\OrderController@emailsub')->name('admin-order-emailsub');
+
+  Route::get('/transactions/datatables', [TransactionController::class,'datatables'])->name('admin.transactions.datatables');
+  Route::get('/transactions', [TransactionController::class,'index'])->name('admin.transactions.index');
 
   //------------Order Area Start----------------------
   Route::get('/orders/datatables', [OrderController::class,'datatables'])->name('admin.order.datatables');

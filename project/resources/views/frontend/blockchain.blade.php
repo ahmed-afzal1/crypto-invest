@@ -8,7 +8,7 @@
 <section class="order-details">
     <div class="container">
         <div class="row">
-            <div class="col-lg-8">
+            <div class="col-lg-12">
                 <div class="order-details-box">
                     <div class="header">
                         <h4 class="title">
