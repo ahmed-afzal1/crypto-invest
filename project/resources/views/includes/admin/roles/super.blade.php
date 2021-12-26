@@ -5,6 +5,23 @@
 </li>
 
 
+<li class="nav-item">
+  <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#invest" aria-expanded="true" aria-controls="collapseTable">
+  <i class="fas fa-piggy-bank"></i>
+  <span>{{ __('Invests') }}</span>
+</a>
+  <div id="invest" class="collapse" aria-labelledby="headingTable" data-parent="#accordionSidebar">
+    <div class="bg-white py-2 collapse-inner rounded">
+      <a class="collapse-item" href="{{ route('admin.invests.index') }}">{{ __('All Invests') }}</a>
+      <a class="collapse-item" href="{{ route('admin.invests.pending') }}">{{ __('Pending Invests') }}</a>
+      <a class="collapse-item" href="{{ route('admin.invests.running') }}">{{ __('Running Invests') }}</a>
+      <a class="collapse-item" href="{{ route('admin.invests.completed') }}">{{ __('Completed Invests') }}</a>
+      <a class="collapse-item" href="{{ route('admin.invests.declined') }}">{{ __('Declined Invests') }}</a>
+    </div>
+  </div>
+</li>
+
+
   <li class="nav-item">
     <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#order" aria-expanded="true"
     aria-controls="collapseTable">

@@ -24,34 +24,30 @@ use App\Models\UserNotification;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Input;
 use App\Models\PaymentGateway;
+use App\Repositories\OrderRepository;
 use Illuminate\Support\Str;
 
 class BlockIOController extends Controller
 {
+    public $orderRepositorty;
 
-    public function __construct() {
-       // $this->middleware('auth')->except(['coingetCallback']);
+    public function __construct(OrderRepository $orderRepositorty)
+    {
+        $this->orderRepositorty = $orderRepositorty;
     }
 
     public function blockioInvest()
     {
-        return view('front.blockio');
+        return view('frontend.blockio');
     }
 
-    /**
-     * Store a newly created resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
-     */
     public function blockiocallback(Request $request)
     {
 
 
-    $fpbt = fopen('blockIO-Response'.time().'.txt', 'w');
-    fwrite($fpbt, json_encode($request->all(),true));
-    fclose($fpbt);
-    // return true;
+        $fpbt = fopen('blockIO-Response'.time().'.txt', 'w');
+        fwrite($fpbt, json_encode($request->all(),true));
+        fclose($fpbt);
 
         $notifyID = $request['notification_id'];
         $amountRec = $request['data']['amount_received'];
@@ -59,89 +55,15 @@ class BlockIOController extends Controller
 
 
             if (Order::where('notify_id',$notifyID)->exists()){
-               
-                
-
                 $order = Order::where('notify_id',$notifyID)->where('payment_status','pending')->first();
 
                 if ($order->coin_amount <= $amountRec) {
-                    
                     $data['txnid'] = $bitTran;
                     $data['payment_status'] = "Completed";
                     $order->update($data);
 
-                    $notification = new Notification;
-                    $notification->order_id = $order->id;
-                    $notification->save();
-
-                    $trans = new Transaction;
-                    $trans->email = $order->customer_email;
-                    $trans->amount = $order->invest;
-                    $trans->type = "Invest";
-                    $trans->txnid = $order->order_number;
-                    $trans->user_id = $order->user_id;
-                    $trans->save();
-
-                    $notf = new UserNotification;
-                    $notf->user_id = $order->user_id;
-                    $notf->order_id = $order->id;
-                    $notf->type = "Invest";
-                    $notf->save();
-
-                    $gs =  Generalsetting::findOrFail(1);
-
-                    if($gs->is_affilate == 1)
-                    {
-                        $user = User::find($order->user_id);
-                        if ($user->referral_id != 0)
-                        {
-                            $val = $order->invest / 100;
-                            $sub = $val * $gs->affilate_charge;
-                            $sub = round($sub,2);
-                            $ref = User::find($user->referral_id);
-                            if(isset($ref))
-                            {
-                                $ref->income += $sub;
-                                $ref->update();
-
-                                $trans = new Transaction;
-                                $trans->email = $ref->email;
-                                $trans->amount = $sub;
-                                $trans->type = "Referral Bonus";
-                                $trans->txnid = $order->order_number;
-                                $trans->user_id = $ref->id;
-                                $trans->save();
-                            }
-                        }
-                    }
-
-                    if($gs->is_smtp == 1)
-                    {
-                        $data = [
-                            'to' => $order->customer_email,
-                            'type' => "Invest",
-                            'cname' => $order->customer_name,
-                            'oamount' => $order->order_number,
-                            'aname' => "",
-                            'aemail' => "",
-                            'wtitle' => "",
-                        ];
-
-                        $mailer = new GeniusMailer();
-                        $mailer->sendAutoMail($data);
-                    }
-                    else
-                    {
-                        $to = $order->customer_email;
-                        $subject = " You have invested successfully.";
-                        $msg = "Hello ".$order->customer_name."!\nYou have invested successfully.\nThank you.";
-                        $headers = "From: ".$gs->from_name."<".$gs->from_email.">";
-                        mail($to,$subject,$msg,$headers);
-                    }
-
+                    $this->orderRepositorty->callAfterOrder($request,$order);
                 }
-
-
             }
 
         
@@ -192,15 +114,10 @@ class BlockIOController extends Controller
 
             
             $block_io = new BlockIO($my_api_key, $secret, $version);
-            // $biodata = $block_io->get_current_price(array('price_base' => 'USD'));
-            // if ($biodata->status != 'success') {
-            //     return back()->with('danger', 'Failed to Process');
-            // }
-            // $biorate = $biodata->data->prices[0]->price;
             $biorate = 1;
 
             $acc = Auth::user()->id;
-            $item_number = Str::random(4).time();;
+            $item_number = Str::random(4).time();
 
             $item_amount = $request->invest;
             $currency_code = $request->currency_code;
@@ -230,32 +147,8 @@ class BlockIOController extends Controller
 
             $address = $addObject->data->address;
 
-            $notifyID ="fdgdf";
-            $order = new Order;
-
-            $order['pay_amount'] = $request->total;
-            $order['user_id'] = $request->user_id;
-            $order['invest'] = $request->invest;
-            $order['method'] = $methods;
-            $order['customer_email'] = $request->customer_email;
-            $order['customer_name'] = $request->customer_name;
-            $order['customer_phone'] = $request->customer_phone;
-            $order['order_number'] = $item_number;
-            $order['customer_address'] = $request->customer_address;
-            $order['customer_city'] = $request->customer_city;
-            $order['customer_zip'] = $request->customer_zip;
-            $order['payment_status'] = "Pending";
-            $order['currency_sign'] = $request->currency_sign;
-            $order['notify_id'] = $notifyID;
-            $order['subtitle'] = $request->subtitle;
-            $order['title'] = $request->title;
-            $order['details'] = $request->details;
-
-            $date = Carbon::now();
-            $date = $date->addDays($request->days);
-            $date = Carbon::parse($date)->format('Y-m-d h:i:s');
-            $order['end_date'] = $date;
-            $order->save();
+            $addionalData = ['item_number'=>$item_number];
+            $this->orderRepositorty->order($request,'pending',$addionalData);
 
 
             session(['address' => $address,'coin' => $coin,'amount' => $bcoin,'currency_value' => $item_amount,'currency_sign' => $request->currency_sign,'accountnumber' => $acc]);
@@ -278,8 +171,7 @@ class BlockIOController extends Controller
             $version = 2;
             $coin = "BTC";
             $my_api_key = $blocksettings['blockio_api_btc'];
-           
-            //$my_api_key_live = '6ed5-46d5-80e7-7990';
+        
 
              if($methods == "BlockIO(LTC)"){
                 $blockinfo    = PaymentGateway::whereKeyword('block.io.ltc')->first();
@@ -311,19 +203,7 @@ class BlockIOController extends Controller
 
 
             $block_io = new BlockIO($my_api_key, $secret, $version);
-            // $block_io_live = new BlockIO($my_api_key_live, $secret, $version);
-            // if ($methods != "BlockIO(DGC)") {
-            //     $biodata = $block_io->get_current_price(array('price_base' => 'USD'));
-            //     if ($biodata->status != 'success') {
-            //         return back()->with('danger', 'Failed to Process');
-            //     }
-            //     $biorate = $biodata->data->prices[0]->price;
-    
-            // }else{
-            //     $dogeprice = file_get_contents("https://api.coinmarketcap.com/v1/ticker/dogecoin");
-            //     $dresult = json_decode($dogeprice);
-            //     $biorate = $dresult[0]->price_usd;
-            // }
+
             $biorate = 1;
         
             $coin_amount = round($item_amount / $biorate, 8);
@@ -337,33 +217,8 @@ class BlockIOController extends Controller
 
             $notifyID = $notifyObject->data->notification_id;
 
-            $order = new Order;
-
-            $order['pay_amount'] = $request->total;
-            $order['user_id'] = $request->user_id;
-            $order['invest'] = $request->invest;
-            $order['method'] = $methods;
-            $order['customer_email'] = $request->customer_email;
-            $order['customer_name'] = $request->customer_name;
-            $order['customer_phone'] = $request->customer_phone;
-            $order['order_number'] = $item_number;
-            $order['customer_address'] = $request->customer_address;
-            $order['customer_city'] = $request->customer_city;
-            $order['customer_zip'] = $request->customer_zip;
-            $order['payment_status'] = "Pending";
-            $order['currency_sign'] = $request->currency_sign;
-            $order['notify_id'] = $notifyID;
-            $order['coin_address'] = $address;
-            $order['coin_amount'] = $coin_amount;
-            $order['subtitle'] = $request->subtitle;
-            $order['title'] = $request->title;
-            $order['details'] = $request->details;
-
-            $date = Carbon::now();
-            $date = $date->addDays($request->days);
-            $date = Carbon::parse($date)->format('Y-m-d h:i:s');
-            $order['end_date'] = $date;
-            $order->save();
+            $addionalData = ['item_number'=>$item_number];
+            $this->orderRepositorty->order($request,'pending',$addionalData);
             							
             $qrcode_url = "https://chart.googleapis.com/chart?chs=250x250&cht=qr&chl=bitcoin:".$address."?amount=".$coin_amount."&choe=UTF-8";
 
@@ -372,7 +227,6 @@ class BlockIOController extends Controller
 
             return redirect('invest/blockio');
 
-            //return redirect()->back()->with('message','Deposit Request Sent Successfully.');
 
         }
         return redirect()->back()->with('error','Please enter a valid amount.')->withInput();

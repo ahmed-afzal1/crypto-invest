@@ -14,5 +14,7 @@ class VerifyCsrfToken extends Middleware
     protected $except = [
         '/paytm-callback',
         '/razorpay-notify',
+        '/flutter/notify',
+        '/user/deposit/paytm-callback'
     ];
 }

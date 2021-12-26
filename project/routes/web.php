@@ -84,6 +84,19 @@ Route::get('/cache/clear', function() {
   Route::get('/password', [DashboardController::class,'passwordreset'])->name('admin.password');
   Route::post('/password/update', [DashboardController::class,'changepass'])->name('admin.password.update');
 
+
+  Route::get('/pendingorders/datatables/{slug}', 'Admin\OrderController@pendingdatatables')->name('admin-pendingorder-datatables');
+  Route::get('/invests/datatables/{slug}', 'Admin\InvestController@datatables')->name('admin.invests.datatables');
+  Route::get('/invests', 'Admin\InvestController@index')->name('admin.invests.index');
+  Route::get('/invests/pending', 'Admin\InvestController@pending')->name('admin.invests.pending');
+  Route::get('/invests/running', 'Admin\InvestController@running')->name('admin.invests.running');
+  Route::get('/invests/completed', 'Admin\InvestController@completed')->name('admin.invests.completed');
+  Route::get('/invests/declined', 'Admin\InvestController@declined')->name('admin.invests.declined');
+  Route::get('/invest/{id}/show', 'Admin\InvestController@show')->name('admin.invests.show');
+  Route::get('/invests/{id1}/status/{status}', 'Admin\OrderController@status')->name('admin.invests.status');
+  Route::get('/pending/invests/{id1}/status/{status}', 'Admin\OrderController@pendingstatus')->name('admin.pendinginvest.status');
+  Route::post('/order/email/', 'Admin\OrderController@emailsub')->name('admin-order-emailsub');
+
   //------------Order Area Start----------------------
   Route::get('/orders/datatables', [OrderController::class,'datatables'])->name('admin.order.datatables');
   Route::get('/orders', [OrderController::class,'index'])->name('admin.order.index');
@@ -534,7 +547,7 @@ Route::prefix('user')->group(function() {
 
     Route::post('/blockchain-submit', 'Frontend\BlockChainController@deposit')->name('blockchain.submit');
     Route::post('/blockchain/notify', 'Frontend\BlockChainController@chaincallback')->name('blockchain.notify');
-    Route::get('/invest/bitcoin', 'Frontend\BlockChainController@blockInvest')->name('blockchain.invest');
+    Route::get('/invest/blockchain', 'Frontend\BlockChainController@blockInvest')->name('blockchain.invest');
 
     Route::post('/coinpay-submit', 'Frontend\CoinPaymentController@deposit')->name('coinpay.submit');
     Route::post('/coinpay/notify', 'Frontend\CoinPaymentController@coincallback')->name('coinpay.notify');
@@ -549,8 +562,8 @@ Route::prefix('user')->group(function() {
 
     Route::post('/coincommerce-submit', 'Frontend\CoinbaseCommerce@deposit')->name('coincommerce.submit');
 
-    Route::post('/instamojo-submit', 'Frontend\InstamojoController@store')->name('instamojo.submit');
-    Route::get('/instamojo-notify', 'Frontend\InstamojoController@notify')->name('instamojo.notify');
+    Route::post('/invest/instamojo-submit', 'Frontend\InstamojoController@store')->name('instamojo.submit');
+    Route::get('/invest/instamojo-notify', 'Frontend\InstamojoController@notify')->name('instamojo.notify');
 
     Route::post('/razorpay-submit', 'Frontend\RazorpayController@store')->name('user.razorpay.submit');
     Route::post('/razorpay-notify', 'Frontend\RazorpayController@notify')->name('user.razorpay.notify');

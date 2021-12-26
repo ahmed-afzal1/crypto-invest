@@ -10,6 +10,7 @@ use App\Models\Order;
 use App\Models\Transaction;
 use App\Models\User;
 use App\Models\UserNotification;
+use App\Repositories\OrderRepository;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Mollie\Laravel\Facades\Mollie;
@@ -19,6 +20,13 @@ use Str;
 
 class MollieController extends Controller
 {
+    public $orderRepositorty;
+
+    public function __construct(OrderRepository $orderRepositorty)
+    {
+        $this->orderRepositorty = $orderRepositorty;
+    }
+
     public function store(Request $request){
 
    
@@ -27,8 +35,6 @@ class MollieController extends Controller
 
         $item_name = "Deposit via Molly Payment";
 
-        // dd(sprintf('%0.2f', $item_amount));
-      
         $payment = Mollie::api()->payments()->create([
             'amount' => [
                 'currency' => $request->currency_code,
@@ -53,6 +59,7 @@ class MollieController extends Controller
         $success_url = route('payment.return');
         $cancel_url = route('payment.cancle');
         $payment = Mollie::api()->payments()->get(Session::get('payment_id'));
+        dd($payment);
       
         if($payment->status == 'paid'){
             $order = new Order();

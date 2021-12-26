@@ -150,12 +150,13 @@ a:focus {
   border: 1px solid #333;
   padding: 0px 0px 4px 20px;
   height: 46px;
-  color: #fff;
+  color: #ffae11;
   background: #222;
   font-size: 14px;
   border-radius: 0;
   outline: 0;
   transition: .1s;
+  margin-top: 25px;
 }
 
 .form-control:focus {
@@ -1491,6 +1492,45 @@ ul.nav.nav-tabs li a:hover, ul.nav.nav-tabs li.active a:hover {
   position: absolute;
   top: 0;
   left: 0;
+}
+.account-box .header-area {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-pack: justify;
+  -ms-flex-pack: justify;
+  justify-content: space-between;
+  border-bottom: 1px solid rgba(239, 150, 26, 0.2);
+  padding-bottom: 20px;
+  margin-bottom: 30px;
+}
+.account-box .header-area h4{
+  color: #ffae11;
+}
+.account-box {
+  padding: 25px 30px 21px;
+  border-radius: 3px;
+  -webkit-box-shadow: 6px 6px 8px 0px rgb(239 150 26 / 2%);
+  box-shadow: 6px 6px 8px 0px rgb(239 150 26 / 2%);
+  background: #201e1e;
+}
+.account-box .content table tr td:first-child {
+  text-align: right;
+  width: 150px;
+  font-weight: 400;
+  padding: 20px 0px;
+}
+.account-box .content table tr td:last-child {
+  padding-left: 30px;
+}
+.table-responsive.referral table td {
+  padding: 10px 0 10px 0;
+  color: #ffae11;
+}
+.form-control:disabled, .form-control[readonly] {
+  background-color: rgba(203, 148, 71, 0.6);
+  opacity: 1;
+  color: rgb(255, 255, 255);
 }
 
 .img-block-left {
@@ -5136,7 +5176,7 @@ Pricing Area Start
   .pricing .single-pricebox {
     border: 1px solid rgba(0, 0, 0, 0.1);
     padding: 28px 30px 40px;
-    border: 1px solid #e5edf8;
+    border: 1px solid #ffae11;
     -webkit-box-shadow: 0px 0px 10px 0px rgba(214, 214, 214, 0.3);
     box-shadow: 0px 0px 10px 0px rgba(214, 214, 214, 0.3);
     -webkit-transition: all 0.3s ease-in;
@@ -5147,7 +5187,7 @@ Pricing Area Start
     .pricing .single-pricebox .plan-title {
       font-size: 24px;
       font-weight: 600;
-      color: #677d8d;
+      color: #ffae11;
       text-align: center; }
     .pricing .single-pricebox .bonus {
       text-align: center;
@@ -5163,7 +5203,7 @@ Pricing Area Start
         font-size: 36px;
         line-height: 36px;
         font-weight: 700;
-        color: #1f71d4;
+        color: #ffae11;
         margin-bottom: 5px; }
       .pricing .single-pricebox .bonus .time {
         font-size: 16px; }
@@ -5183,7 +5223,7 @@ Pricing Area Start
           font-weight: 600;
           margin-bottom: 0px; }
           .pricing .single-pricebox .price-range-area .invest-count .right i {
-            color: #1f71d4;
+            color: #ffae11;
             margin-left: 4px; }
       .pricing .single-pricebox .price-range-area .invest-range-slider {
         margin: 2px 0px 7px; }
@@ -5205,7 +5245,7 @@ Pricing Area Start
     display: block;
     font-size: 30px;
     line-height: 30px;
-    border: 1px solid rgba(31, 113, 212, 0.05);
+    border: 1px solid rgba(23, 130, 238, 0.05);
     border-radius: 0px;
     height: 35px;
     padding: 0px 0px 0px 20px;
@@ -5237,7 +5277,7 @@ Pricing Area Start
         margin-top: 25px;
         padding: 7px 25px; }
     .pricing .single-pricebox:hover {
-      border: 1px solid #1f71d4;
+      border: 1px solid #444a52;
       -webkit-box-shadow: 0px 3px 10px 0px rgba(137, 133, 133, 0.5);
       box-shadow: 0px 3px 10px 0px rgba(137, 133, 133, 0.5); }
 
@@ -5249,7 +5289,7 @@ Pricing Area Start
   width: 100%;
   height: 6px;
   border-radius: 5px;
-  background: rgba(31, 113, 212, 0.3);
+  background: rgba(rgb(239, 150, 26, 0.3);
   outline: none;
   padding: 0;
   margin: 0; }
@@ -5261,7 +5301,7 @@ Pricing Area Start
   height: 15px;
   border-radius: 50%;
   background: #ffffff;
-  border: 2px solid #1f71d4;
+  border: 2px solid #ffae11;
   cursor: pointer;
   -webkit-box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.5);
   box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.5);
@@ -5277,7 +5317,7 @@ Pricing Area Start
   height: 15px;
   border-radius: 50%;
   background: #ffffff;
-  border: 2px solid #1f71d4;
+  border: 2px solid #ffae11;
   cursor: pointer;
   box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.5);
   -webkit-transition: background .15s ease-in-out;
@@ -5291,7 +5331,7 @@ Pricing Area Start
   height: 15px;
   border-radius: 50%;
   background: #ffffff;
-  border: 2px solid #1f71d4;
+  border: 2px solid #ffae11;
   cursor: pointer;
   box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.5);
   -webkit-transition: background .15s ease-in-out;
@@ -5305,4 +5345,8 @@ Pricing Area End
 
 p {
   margin: 0 0 10px;
+}
+.col-lg-5.left-amount {
+  margin-left: 45px;
+  padding: 20px;
 }

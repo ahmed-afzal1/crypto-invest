@@ -9,6 +9,7 @@ use App\Models\Transaction;
 use App\Models\User;
 use App\Models\UserNotification;
 use Carbon\Carbon;
+use Illuminate\Support\Facades\Session;
 use Illuminate\Support\Str;
 
 class OrderRepository
@@ -58,6 +59,41 @@ class OrderRepository
 
         $date = Carbon::now();
         $date = $date->addDays($request->days);
+        $date = Carbon::parse($date)->format('Y-m-d h:i:s');
+        $order['end_date'] = $date;
+        $order->save();
+
+        if($status == 'complete'){
+            $this->callAfterOrder($request,$order);
+        }
+    }
+
+    public function OrderFromSession($request,$status,$addionalData){
+        $input = Session::get('input_data');
+
+        $order = new Order();
+
+        $order['pay_amount'] = $input['total'];
+        $order['user_id'] = auth()->user()->id;
+        $order['invest'] = $input['invest'];
+        $order['method'] = $input['method'];
+        $order['customer_email'] = $input['customer_email'];
+        $order['customer_name'] = $input['customer_name'];
+        $order['customer_phone'] = $input['customer_phone'];
+        $order['order_number'] = Str::random(4).time();
+        $order['customer_address'] = $input['customer_address'];
+        $order['customer_city'] = $input['customer_city'];
+        $order['customer_zip'] = $input['customer_zip'];
+        $order['payment_status'] = "completed";
+        $order['currency_sign'] = $input['currency_sign'];
+        $order['subtitle'] = $input['subtitle'];
+        $order['title'] = $input['title'];
+        $order['details'] = $input['details'];
+        $order['status'] = "pending";
+        $order['txnid'] = $addionalData['txnid'];
+
+        $date = Carbon::now();
+        $date = $date->addDays($input['days']);
         $date = Carbon::parse($date)->format('Y-m-d h:i:s');
         $order['end_date'] = $date;
         $order->save();
@@ -152,4 +188,5 @@ class OrderRepository
             }
         }
     }
+
 }

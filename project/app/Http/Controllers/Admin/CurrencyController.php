@@ -20,7 +20,6 @@ class CurrencyController extends Controller
     public function datatables()
     {
         $datas = Currency::orderBy('id','desc');
-         //--- Integrating This Collection Into Datatables
          return Datatables::of($datas)
                             ->addColumn('action', function(Currency $data) {
 
@@ -38,7 +37,7 @@ class CurrencyController extends Controller
                             </div>';
                             })
                             ->rawColumns(['action'])
-                            ->toJson(); //--- Returning Json Data To Client Side
+                            ->toJson();
     }
 
     //*** GET Request

@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Http\Controllers\Front;
+namespace App\Http\Controllers\Frontend;
 
 use App\{
     Models\Deposit,
@@ -14,6 +14,7 @@ use App\Models\Notification;
 use App\Models\Order;
 use App\Models\User;
 use App\Models\UserNotification;
+use App\Repositories\OrderRepository;
 use Carbon\Carbon;
 use Session;
 use Illuminate\Http\Request;
@@ -24,55 +25,33 @@ class FlutterwaveController extends Controller
 
     public $public_key;
     private $secret_key;
+    public $orderRepositorty;
 
-    public function __construct()
+    public function __construct(OrderRepository $orderRepositorty)
     {
         $data = PaymentGateway::whereKeyword('flutterwave')->first();
         $paydata = $data->convertAutoData();
         $this->public_key = $paydata['public_key'];
         $this->secret_key = $paydata['secret_key'];
+        $this->orderRepositorty = $orderRepositorty;
     }
 
     public function store(Request $request) {
         $item_number = Str::random(4).time();
-         $item_amount = $request->invest;
-         
-
-        // SET CURL
+        $item_amount = $request->invest;
 
         $curl = curl_init();
 
         $customer_email =  $request->customer_email;
         $amount = $item_amount;  
         $currency = $request->currency_code;
-        $txref = $item_number; // ensure you generate unique references per transaction.
-        $PBFPubKey = $this->public_key; // get your public key from the dashboard.
+        $txref = $item_number;
+        $PBFPubKey = $this->public_key;
         $redirect_url = route('flutter.notify');
-        $payment_plan = ""; // this is only required for recurring payments.
+        $payment_plan = "";
 
-        $order = new Order();
-        $order['pay_amount'] = $request->total;
-        $order['user_id'] = $request->user_id;
-        $order['invest'] = $request->invest;
-        $order['method'] = $request->method;
-        $order['customer_email'] = $request->customer_email;
-        $order['customer_name'] = $request->customer_name;
-        $order['customer_phone'] = $request->customer_phone;
-        $order['order_number'] = $item_number;
-        $order['customer_address'] = $request->customer_address;
-        $order['customer_city'] = $request->customer_city;
-        $order['customer_zip'] = $request->customer_zip;
-        $order['payment_status'] = "completed";
-        $order['currency_sign'] = $request->currency_sign;
-        $order['subtitle'] = $request->subtitle;
-        $order['title'] = $request->title;
-        $order['details'] = $request->details;
-        $date = Carbon::now();
-        $date = $date->addDays($request->days);
-        $date = Carbon::parse($date)->format('Y-m-d h:i:s');
-        $order['end_date'] = $date;
-        
-        $order->save();
+        $addionalData = ['item_number'=>$item_number];
+        $this->orderRepositorty->order($request,'pending',$addionalData);
 
         Session::put('item_number',$item_number);
 
@@ -99,14 +78,12 @@ class FlutterwaveController extends Controller
           $err = curl_error($curl);
           
           if($err){
-            // there was an error contacting the rave API
             die('Curl returned error: ' . $err);
           }
           
           $transaction = json_decode($response);
           
           if(!$transaction->data && !$transaction->data->link){
-            // there was an error from the API
             print_r('API returned error: ' . $transaction->message);
           }
           
@@ -126,16 +103,14 @@ class FlutterwaveController extends Controller
 
 
         if (isset($input['txref'])) {
-
             $ref = $input['txref'];
-
             $query = array(
                 "SECKEY" => $this->secret_key,
                 "txref" => $ref
             );
 
             $data_string = json_encode($query);
-                
+              
             $ch = curl_init('https://api.ravepay.co/flwv3-pug/getpaidx/api/v2/verify');                                                                      
             curl_setopt($ch, CURLOPT_CUSTOMREQUEST, "POST");
             curl_setopt($ch, CURLOPT_POSTFIELDS, $data_string);                                              
@@ -144,9 +119,7 @@ class FlutterwaveController extends Controller
             curl_setopt($ch, CURLOPT_HTTPHEADER, array('Content-Type: application/json'));
     
             $response = curl_exec($ch);
-    
             curl_close($ch);
-    
             $resp = json_decode($response, true);
 
             if ($resp['status'] == "success") {
@@ -155,99 +128,25 @@ class FlutterwaveController extends Controller
               $chargeResponsecode = $resp['data']['chargecode'];
 
               if (($chargeResponsecode == "00" || $chargeResponsecode == "0") && ($paymentStatus == "successful")) {
+      
+                  $order['payment_status'] = "completed";
+                  $order['txnid'] = $resp['data']['txid'];
+                  $order->save();
 
-           
-                $order['status'] = "completed";
-                $order['txnid'] = $resp['data']['txid'];;
-       
+                  $this->orderRepositorty->callAfterOrder($request,$order);
 
-               
-                $order->save();
-
-                $notification = new Notification();
-                $notification->order_id = $order->id;
-                $notification->save();
-
-                $trans = new Transaction;
-                $trans->email = $order->customer_email;
-                $trans->amount = $order->invest;
-                $trans->type = "Invest";
-                $trans->txnid = $order->order_number;
-                $trans->user_id = $order->user_id;
-                $trans->save();
-
-                $notf = new UserNotification();
-                $notf->user_id = $request->user_id;
-                $notf->order_id = $order->id;
-                $notf->type = "Invest";
-                $notf->save();
-
-                $gs =  Generalsetting::findOrFail(1);
-
-                if($gs->is_smtp == 1)
-                {
-                $data = [
-                    'to' => $order->customer_email,
-                    'type' => "Invest",
-                    'cname' => $order->customer_name,
-                    'oamount' => $order->order_number,
-                    'aname' => "",
-                    'aemail' => "",
-                    'wtitle' => "",
-                ];
-
-                $mailer = new GeniusMailer();
-                $mailer->sendAutoMail($data);            
-                }
-                else
-                {
-                   $to = $order->customer_email;
-                   $subject = " You have invested successfully.";
-                   $msg = "Hello ".$order->customer_name."!\nYou have invested successfully.\nThank you.";
-                   $headers = "From: ".$gs->from_name."<".$gs->from_email.">";
-                   mail($to,$subject,$msg,$headers);            
-                }
-
-                if($gs->is_affilate == 1)
-                {
-                    $user = User::find($order->user_id);
-                    if ($user->referral_id != 0) 
-                    {
-                        $val = $order->invest / 100;
-                        $sub = $val * $gs->affilate_charge;
-                        $sub = round($sub,2);
-                        $ref = User::find($user->referral_id);
-                        if(isset($ref))
-                        {
-                            $ref->income += $sub;
-                            $ref->update();
-
-                            $trans = new Transaction;
-                            $trans->email = $ref->email;
-                            $trans->amount = $sub;
-                            $trans->type = "Referral Bonus";
-                            $trans->txnid = $order->order_number;
-                            $trans->user_id = $ref->id;
-                            $trans->save();
-                        }
-                    }
-                }
-              
-
-                  return view('front.success');;
+                  return redirect()->route('front.payreturn');
               
               }
-
               else {
-               
+                return redirect()->route('front.checkout')->with('error','Something went wrong!');
               }
-
 
             }
         }
-            else {
-              
-            }
+        else {
+            return redirect()->route('front.checkout')->with('error','Something went wrong!');
+          }
 
      }
 }

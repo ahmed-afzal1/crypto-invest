@@ -16,7 +16,7 @@
   Profile Area CSS Start
 --------------------------------*/
 .profile {
-	margin-top: -120px; }
+	margin-top: -175px; }
 	.profile .profile-image-area {
 	  display: -webkit-box;
 	  display: -ms-flexbox;
@@ -44,7 +44,7 @@
 		  margin-bottom: 4px; }
 		.profile .profile-image-area .content .location {
 		  font-size: 18px;
-		  color: #616060; }
+		  color: #0a0a0a; }
 		  .profile .profile-image-area .content .location i {
 			font-size: 18px; }
 	.profile .open-tikit-area {
@@ -53,8 +53,8 @@
 	  .profile .open-tikit-area .open-tikit {
 		position: absolute;
 		right: 0px;
-		bottom: 50px;
-		border: 1px solid rgba(0, 0, 0, 0.5);
+		bottom: 25px;
+		border: 1px solid #fff;
 		width: 60px;
 		height: 60px;
 		text-align: center;
@@ -65,7 +65,7 @@
 		color: #fff;
 		top: -10px;
 		right: -10px;
-		background: #2f5ff6;
+		background: #111111;
 		border-radius: 50%;
 		width: 20px;
 		height: 20px;
@@ -172,7 +172,7 @@
 	   .current-balance .content .amount {
 		  font-size: 32px;
 		  font-weight: 500;
-		  color: #2f5ff6;
+		  color: #ffae11;
 		  margin-bottom: 0px; }
 		.current-balance .content .label {
 		  font-size: 14px;
@@ -206,14 +206,15 @@
 	  box-shadow: 6px 6px 8px 0px rgba(0, 0, 0, 0.02);
 	  background: #fff; }
    .icon-area .icon {
-		background-color: #2f5ff6;
+	background-color: #ffae11;
 		display: inline-block;
 		width: 60px;
 		height: 60px;
 		border-radius: 50%;
 		text-align: center;
 		padding: 10px;
-		position: relative; }
+		position: relative; 
+	}
 	  .icon-area .icon img {
 		  width: auto;
 		  position: inherit;
@@ -226,7 +227,7 @@
 		  width: 114%;
 		  height: 114%;
 		  border-radius: 50%;
-		  background: rgba(47, 95, 246, 0.2);
+		  background: rgba(210, 192, 72, 0.528);
 		  z-index: 3; }
 	   .icon-area .icon::before {
 		  position: absolute;
@@ -236,12 +237,11 @@
 		  width: 130%;
 		  height: 130%;
 		  border-radius: 50%;
-		  background: rgba(47, 95, 246, 0.15);
+		  background: rgba(240, 208, 93, 0.15);
 		  z-index: 2; }
-		  .left-amount{
-		  
-			box-shadow: 10px 10px 12px 10px rgba(0.03, 0, 0, 0.04);
-		  }
+		  .left-amount {
+			box-shadow: 6px 10px 11px #ef961a;
+	  }
 		  .col-lg-5.left-amount {
 			margin-left: 45px;
 			padding: 20px;
@@ -318,125 +318,179 @@
 		  line-height: normal;
 		  font-weight: 700;
 		  display: inline-block; 
-		  color: #fff;
+		  color: #ffae11;
 		}
 	  .dashbord-content .transaction-area .content .heading-menu {
 		background: #f2f8fd;
 		padding: 6px 20px; }
-		.dashbord-content .transaction-area .content .heading-menu h6 {
-		  font-size: 15px;
-		  text-transform: unset; }
-	  .dashbord-content .transaction-area .content #accordionTransactions .single-accordion .accordion-header {
+
+	.dashbord-content .transaction-area .content .heading-menu h6 {
+		font-size: 15px;
+		text-transform: unset; 
+	}
+
+	.dashbord-content .transaction-area .content #accordionTransactions .single-accordion .accordion-header {
 		border-bottom: 1px solid rgba(0, 0, 0, 0.1);
-		padding: 6px 20px 15px; }
-		.dashbord-content .transaction-area .content #accordionTransactions .single-accordion .accordion-header[aria-expanded="true"] .box i.plus {
-		  display: none; }
-		.dashbord-content .transaction-area .content #accordionTransactions .single-accordion .accordion-header[aria-expanded="true"] .box i.minus {
-		  display: block; }
-		.dashbord-content .transaction-area .content #accordionTransactions .single-accordion .accordion-header[aria-expanded="false"] .box i.plus {
-		  display: block; }
-		.dashbord-content .transaction-area .content #accordionTransactions .single-accordion .accordion-header[aria-expanded="false"] .box i.minus {
-		  display: none; }
-		.dashbord-content .transaction-area .content #accordionTransactions .single-accordion .accordion-header .box {
-		  -ms-flex-item-align: center;
-		  -ms-grid-row-align: center;
-		  align-self: center;
-		  text-align: left; }
-		  .dashbord-content .transaction-area .content #accordionTransactions .single-accordion .accordion-header .box h6 {
-			margin-bottom: 0px;
-			font-weight: 500;
-			font-size: 16px; }
-		  .dashbord-content .transaction-area .content #accordionTransactions .single-accordion .accordion-header .box h5 {
-			margin-bottom: 0px;
-			font-weight: 500;
-			font-size: 16px; }
-		  .dashbord-content .transaction-area .content #accordionTransactions .single-accordion .accordion-header .box p {
-			font-size: 14px;
-			margin-bottom: 0px;
-			font-weight: 400; }
-		  .dashbord-content .transaction-area .content #accordionTransactions .single-accordion .accordion-header .box .amount {
-			margin-bottom: 0px;
-			font-weight: 500;
-			font-size: 16px;
-			color: #ff0000; }
-		  .dashbord-content .transaction-area .content #accordionTransactions .single-accordion .accordion-header .box i {
-			font-size: 20px;
-			width: 20px;
-			height: 20px;
-			line-height: 20px;
-			text-align: center;
-			background: #2f5ff6;
-			color: #fff;
-			font-size: 16px;
-			border-radius: 50px;
-			font-weight: 700;
-			cursor: pointer;
-			}
-	  .dashbord-content .transaction-area .content #accordionTransactions .single-accordion .accordion-body {
+		padding: 6px 20px 15px;
+	}
+
+	.dashbord-content .transaction-area .content #accordionTransactions .single-accordion .accordion-header[aria-expanded="true"] .box i.plus {
+		display: none; 
+	}
+
+	.dashbord-content .transaction-area .content #accordionTransactions .single-accordion .accordion-header[aria-expanded="true"] .box i.minus {
+		display: block; 
+	}
+
+	.dashbord-content .transaction-area .content #accordionTransactions .single-accordion .accordion-header[aria-expanded="false"] .box i.plus {
+		display: block; 
+	}
+
+	.dashbord-content .transaction-area .content #accordionTransactions .single-accordion .accordion-header[aria-expanded="false"] .box i.minus {
+		display: none;
+	}
+
+	.dashbord-content .transaction-area .content #accordionTransactions .single-accordion .accordion-header .box {
+		-ms-flex-item-align: center;
+		-ms-grid-row-align: center;
+		align-self: center;
+		text-align: left;
+	}
+
+	.dashbord-content .transaction-area .content #accordionTransactions .single-accordion .accordion-header .box h6 {
+		margin-bottom: 0px;
+		font-weight: 500;
+		font-size: 16px; 
+	}
+
+	.dashbord-content .transaction-area .content #accordionTransactions .single-accordion .accordion-header .box h5 {
+		margin-bottom: 0px;
+		font-weight: 500;
+		font-size: 16px; 
+	}
+
+	.dashbord-content .transaction-area .content #accordionTransactions .single-accordion .accordion-header .box p {
+		font-size: 14px;
+		margin-bottom: 0px;
+		font-weight: 400; 
+	}
+
+	.dashbord-content .transaction-area .content #accordionTransactions .single-accordion .accordion-header .box .amount {
+		margin-bottom: 0px;
+		font-weight: 500;
+		font-size: 16px;
+		color: #ffae11; 
+	}
+
+	.dashbord-content .transaction-area .content #accordionTransactions .single-accordion .accordion-header .box i {
+		font-size: 20px;
+		width: 20px;
+		height: 20px;
+		line-height: 20px;
+		text-align: center;
+		background: #2f5ff6;
+		color: #fff;
+		font-size: 16px;
+		border-radius: 50px;
+		font-weight: 700;
+		cursor: pointer;
+	}
+
+	.dashbord-content .transaction-area .content #accordionTransactions .single-accordion .accordion-body {
 		padding: 17px 20px;
-		border-bottom: 1px solid rgba(0, 0, 0, 0.1); }
-		.dashbord-content .transaction-area .content #accordionTransactions .single-accordion .accordion-body .transaction-info {
-		  padding: 0px; }
-		  .dashbord-content .transaction-area .content #accordionTransactions .single-accordion .accordion-body .transaction-info p {
-			font-size: 14px; }
-			.dashbord-content .transaction-area .content #accordionTransactions .single-accordion .accordion-body .transaction-info p strong {
-			  color: #333333; }
-		.dashbord-content .transaction-area .content #accordionTransactions .single-accordion .accordion-body .transaction-info2 p {
-		  display: -webkit-box;
-		  display: -ms-flexbox;
-		  display: flex;
-		  -webkit-box-pack: justify;
-		  -ms-flex-pack: justify;
-		  justify-content: space-between;
-		  font-size: 14px; }
-		  .dashbord-content .transaction-area .content #accordionTransactions .single-accordion .accordion-body .transaction-info2 p strong {
-			color: #333333; }
-	  .dashbord-content .transaction-area .content .view-more {
+		border-bottom: 1px solid rgba(0, 0, 0, 0.1); 
+	}
+
+	.dashbord-content .transaction-area .content #accordionTransactions .single-accordion .accordion-body .transaction-info {
+		padding: 0px; 
+	}
+
+	.dashbord-content .transaction-area .content #accordionTransactions .single-accordion .accordion-body .transaction-info p {
+		font-size: 14px; 
+	}
+
+	.dashbord-content .transaction-area .content #accordionTransactions .single-accordion .accordion-body .transaction-info p strong {
+		color: #333333; 
+	}
+
+	.dashbord-content .transaction-area .content #accordionTransactions .single-accordion .accordion-body .transaction-info2 p {
+		display: -webkit-box;
+		display: -ms-flexbox;
+		display: flex;
+		-webkit-box-pack: justify;
+		-ms-flex-pack: justify;
+		justify-content: space-between;
+		font-size: 14px; 
+	}
+
+	.dashbord-content .transaction-area .content #accordionTransactions .single-accordion .accordion-body .transaction-info2 p strong {
+		color: #333333;
+	}
+
+	.dashbord-content .transaction-area .content .view-more {
 		margin-top: 30px;
 		width: 100%;
 		text-align: center;
-		display: block; }
-		.dashbord-content .transaction-area .content .view-more .mybtn1 {
-		  display: inline-block;
-		  border: 1px solid transparent;
-		  color: #fff; }
-		  .dashbord-content .transaction-area .content .view-more .mybtn1:hover {
-			border: 1px solid #2f5ff6;
-			background: none;
-			color: #2f5ff6; }
+		display: block; 
+	}
+
+	.dashbord-content .transaction-area .content .view-more .mybtn1 {
+		display: inline-block;
+		border: 1px solid transparent;
+		color: #fff; 
+	}
+
+	.dashbord-content .transaction-area .content .view-more .mybtn1:hover {
+		border: 1px solid #2f5ff6;
+		background: none;
+		color: #2f5ff6; 
+	}
   
-  /*-------------------------------
-	dashbord-conten Area CSS End
-  --------------------------------*/
+	/*-------------------------------
+		dashbord-conten Area CSS End
+	--------------------------------*/
 
   .bmd-form-group {
-    margin-left: 100px;
-    margin-bottom: 20px;
-}
+		margin-bottom: 20px;
+	}
 
-/*-------------------------------
-Order Details Start
---------------------------------*/
+	.tabl-text{
+		color: #ef961a;
+	}
+
+	.tabl-text tbody tr:hover{
+		color: #ef961a !important;
+	}
+
+	.tabl-text tbody tr td,.tabl-text thead tr th{
+		border-bottom: 1px solid #ef961a !important;
+		border-top: 1px solid #ef961a !important;
+	}
+
+	/*-------------------------------
+	Order Details Start
+	--------------------------------*/
+
 	.order-details {
 		padding: 100px 0px 100px; 
 	}
 
 	.order-details .order-details-box {
-	  box-shadow: 3px 3px 5px 0px rgba(0, 0, 0, 0.05);
-	  border: 1px solid rgba(0, 0, 0, 0.1);
-	  background: rgba(0, 0, 0, 0.1);
+		box-shadow: 3px 3px 5px 0px rgba(0, 0, 0, 0.05);
+		border: 1px solid rgba(0, 0, 0, 0.1);
+		background: rgba(0, 0, 0, 0.1);
 	}
 
 	.order-details .pricing{
-	  padding: 0px
+	  	padding: 0px
 	}
 
 	.order-details input{
-	  height: 60px;
+	  	height: 60px;
 	}
 	
 	.order-details .order-details-box .content{
-	  padding: 15px 20px 30px 20px;
+		padding: 15px 20px 30px 20px;
 	}
 	
 	.order-details .order-details-box .header {
@@ -450,15 +504,16 @@ Order Details Start
 		font-weight: 600;
 		margin-bottom: 0px;
 	}
-	  .order-details .order-details-box .content .patment-method {
+
+	.order-details .order-details-box .content .patment-method {
 		width: 100%;
 		height: 50px;
 		border: 0px;
 		border-radius: 50px;
 		padding: 0px 30px;
 		margin-top: 20px;
-		}
-	  .order-details .order-details-box .content .btn-checkout {
+	}
+	.order-details .order-details-box .content .btn-checkout {
 		display: inline-block;
 		padding: 10px 40px;
 		margin-top: 30px;
@@ -468,115 +523,153 @@ Order Details Start
 	}
 
 	.order-details .pricing-plan {
-	  box-shadow: 3px 3px 5px 0px rgba(0, 0, 0, 0.05);
-	  border: 1px solid rgba(0, 0, 0, 0.1);
-	  border-radius: 0px;
-	 }
-	  .order-details .pricing-plan .header-area {
+		box-shadow: 3px 3px 5px 0px rgba(0, 0, 0, 0.05);
+		border: 1px solid rgba(0, 0, 0, 0.1);
+		border-radius: 0px;
+	}
+
+	.order-details .pricing-plan .header-area {
 		padding: 21px 20px 26px;
 		border-bottom: 1px solid rgba(0, 0, 0, 0.1);
-		text-align: center; }
-		.order-details .pricing-plan .header-area .title {
-		  font-size: 24px;
-		  line-height: normal;
-		  margin-bottom: 0px; }
-		.order-details .pricing-plan .header-area .sub-title {
-		  margin-bottom: 0px; }
-	  .order-details .pricing-plan .pricing-area {
+		text-align: center; 
+	}
+
+	.order-details .pricing-plan .header-area .title {
+		font-size: 24px;
+		line-height: normal;
+		margin-bottom: 0px; 
+	}
+
+	.order-details .pricing-plan .header-area .sub-title {
+		margin-bottom: 0px; 
+	}
+
+	.order-details .pricing-plan .pricing-area {
 		text-align: center;
-		padding: 12px 30px 5px; }
-		.order-details .pricing-plan .pricing-area p {
-		  margin-bottom: 10px;
-		  font-size: 25px;
-		  }
-		  .order-details .pricing-plan .pricing-area p sup {
-			font-size: 24px;
-			position: relative;
-			top: -25px; }
-		  .order-details .pricing-plan .pricing-area p sub {
-			font-size: 16px;
-			position: relative;
-			bottom: 0px;
-			left: -6px; }
-	  .order-details .pricing-plan .content {
+		padding: 12px 30px 5px; 
+	}
+
+	.order-details .pricing-plan .pricing-area p {
+		margin-bottom: 10px;
+		font-size: 25px;
+	}
+
+	.order-details .pricing-plan .pricing-area p sup {
+		font-size: 24px;
+		position: relative;
+		top: -25px; 
+	}
+
+	.order-details .pricing-plan .pricing-area p sub {
+		font-size: 16px;
+		position: relative;
+		bottom: 0px;
+		left: -6px; 
+	}
+
+	.order-details .pricing-plan .content {
 		padding: 0px 30px 30px;
-		text-align: center; }
-		.order-details .pricing-plan .content p {
-		  color: #fff;
-		  font-size: 16px;
-		  line-height: 26px;
-		  margin-bottom: 0px; }
+		text-align: center; 
+	}
+
+	.order-details .pricing-plan .content p {
+		color: #fff;
+		font-size: 16px;
+		line-height: 26px;
+		margin-bottom: 0px; 
+	}
+
 	.profile-area-img{
-	width: 40px;
-	height: 40px;
+		width: 40px;
+		height: 40px;
 	}
+
 	.profile-area{
-	position: relative;
-	margin-left: 10px;
+		position: relative;
+		margin-left: 10px;
 	}
+
 	.profile-area a{
-	transition: all linear .3s;
+		transition: all linear .3s;
 	}
 	.profile-area a:hover{
-	color: #fd961a;
+		color: #fd961a;
 	}
+
 	.profile-area-content{
-	position: absolute;
-	top: 100%;
-	width:  180px;
-	right: 0px;
-	background: #fff;
-	box-shadow: 0px 5px 10px rgba(0, 0, 0, 0.1);
-	padding: 10px 10px;
-	display: none;
+		position: absolute;
+		top: 100%;
+		width:  180px;
+		right: 0px;
+		background: #fff;
+		box-shadow: 0px 5px 10px rgba(0, 0, 0, 0.1);
+		padding: 10px 10px;
+		display: none;
 	}
+
 	.profile-area-content li a{
-	line-height: 35px;
-	font-weight: 600;
-	font-size: 15px;
-	transition: all linear .3s;
+		line-height: 35px;
+		font-weight: 600;
+		font-size: 15px;
+		transition: all linear .3s;
 	}
+
 	.profile-area-content li a:hover{
-	 color: #fd961a;
+	 	color: #fd961a;
 	}
+
 	.profile-area-content li a i{
-	font-size: 12px;
-	margin-right: 4px;
+		font-size: 12px;
+		margin-right: 4px;
 	}
 	
 	
+	.pricing .single-pricebox .price-range-area-checkout {
+		margin: 33px 0px 9px; 
+	}
+
+	.pricing .single-pricebox .price-range-area-checkout .invest-count {
+		display: -webkit-box;
+		display: -ms-flexbox;
+		display: flex;
+		-webkit-box-pack: justify;
+		-ms-flex-pack: justify;
+		justify-content: space-between; 
+	}
+
+	.pricing .single-pricebox .price-range-area-checkout .invest-count .left {
+		font-weight: 600;
+		margin-bottom: 0px; 
+	}
+
+	.pricing .single-pricebox .price-range-area-checkout .invest-count .right {
+		font-weight: 600;
+		margin-bottom: 0px; 
+	}
+
+	.pricing .single-pricebox .price-range-area-checkout .invest-count .right i {
+		color: #fd961a;
+		margin-left: 4px; 
+	}
+		  
+	.pricing .single-pricebox .price-range-area-checkout .invest-range-slider {
+		margin: 2px 0px 7px; 
+	}
+
+	.pricing .single-pricebox .price-range-area-checkout .invest-get {
+		display: -webkit-box;
+		display: -ms-flexbox;
+		display: flex;
+		-webkit-box-pack: justify;
+		-ms-flex-pack: justify;
+		justify-content: space-between; 
+	}
+
+	.pricing .single-pricebox .price-range-area-checkout .invest-get .left {
+		text-align: left; 
+	}
 	
-		.pricing .single-pricebox .price-range-area-checkout {
-		  margin: 33px 0px 9px; }
-		  .pricing .single-pricebox .price-range-area-checkout .invest-count {
-			display: -webkit-box;
-			display: -ms-flexbox;
-			display: flex;
-			-webkit-box-pack: justify;
-			-ms-flex-pack: justify;
-			justify-content: space-between; }
-			.pricing .single-pricebox .price-range-area-checkout .invest-count .left {
-			  font-weight: 600;
-			  margin-bottom: 0px; }
-			.pricing .single-pricebox .price-range-area-checkout .invest-count .right {
-			  font-weight: 600;
-			  margin-bottom: 0px; }
-			  .pricing .single-pricebox .price-range-area-checkout .invest-count .right i {
-				color: #fd961a;
-				margin-left: 4px; }
-		  .pricing .single-pricebox .price-range-area-checkout .invest-range-slider {
-			margin: 2px 0px 7px; }
-		  .pricing .single-pricebox .price-range-area-checkout .invest-get {
-			display: -webkit-box;
-			display: -ms-flexbox;
-			display: flex;
-			-webkit-box-pack: justify;
-			-ms-flex-pack: justify;
-			justify-content: space-between; }
-			.pricing .single-pricebox .price-range-area-checkout .invest-get .left {
-			  text-align: left; }
-	
-	 .pricing .single-pricebox .price-range-area-checkout .invest-get .left .payprice{
+	.pricing .single-pricebox .price-range-area-checkout .invest-get .left .payprice{
 		font-weight: 600;
 		display: block;
 		font-size: 30px;
@@ -587,25 +680,25 @@ Order Details Start
 		padding: 0px 0px 0px 20px;
 		display: inline-block;
 	
-	 }
+	}
 	
-	
-	
-	
-	
-			  .pricing .single-pricebox .price-range-area-checkout .invest-get .left span {
-				font-weight: 600;
-				display: block;
-				font-size: 30px;
-				line-height: 30px;
-				 }
-			.pricing .single-pricebox .price-range-area-checkout .invest-get .right {
-			  text-align: right; }
-			  .pricing .single-pricebox .price-range-area-checkout .invest-get .right span {
-				font-weight: 600;
-				display: block;
-				font-size: 30px;
-				line-height: 30px; }
+	.pricing .single-pricebox .price-range-area-checkout .invest-get .left span {
+		font-weight: 600;
+		display: block;
+		font-size: 30px;
+		line-height: 30px;
+	}
+
+	.pricing .single-pricebox .price-range-area-checkout .invest-get .right {
+		text-align: right; 
+	}
+
+	.pricing .single-pricebox .price-range-area-checkout .invest-get .right span {
+		font-weight: 600;
+		display: block;
+		font-size: 30px;
+		line-height: 30px; 
+	}
 	
 	#errCard , #errCVC {
 	  color: red;
@@ -614,3 +707,20 @@ Order Details Start
 	/*-------------------------------
 	Order Details End
 	--------------------------------*/
+
+	p {
+		margin: 0 0 10px;
+	  }
+	  .col-lg-5.left-amount {
+		margin-left: 45px;
+		padding: 20px;
+	  }
+	  label.bmd-label-floating {
+		color: #ffae11;
+	}
+	input.payprice {
+		color: #999;
+		background: #0c0c0c;
+		border: 1px solid rgb(239, 150, 26, 0.4) !important;
+	}
+	

@@ -125,7 +125,7 @@
                                             <input type="hidden" name="cmd" value="_xclick">
                                             <input type="hidden" name="no_note" value="1">
                                             <input type="hidden" name="lc" value="UK">
-                                            <input type="hidden" id="currencyCode" name="currency_code" value="{{ $gs->currency_code }}">
+                                            <input type="hidden" id="currencyCode" name="currency_code" value="{{ $defaultCurrency->name }}">
                                             <input type="hidden" name="bn" value="PP-BuyNowBF:btn_buynow_LG.gif:NonHostedGuest">
 
                                             <div class="col-lg-6">
@@ -155,15 +155,15 @@
                                     <input type="hidden" name="details" value="{{ $product->details }}">
                                     <input type="hidden" name="days" value="{{ $product->days }}">
                                     <input type="hidden" name="total" value="{{ Session::get('getprice')}}">
-                                    <input type="hidden" name="currency_sign" value="{{ $gs->currency_sign }}">
-                                    <input type="hidden" name="currency_code" value="{{ $gs->currency_code }}">
+                                    <input type="hidden" name="currency_sign" value="{{ $defaultCurrency->sign }}">
+                                    <input type="hidden" name="currency_code" value="{{ $defaultCurrency->name }}">
 
 
                                     <input type="hidden" name="email" value="{{ auth()->user()->email }}">
                                     <input type="hidden" name="ref_id" id="ref_id" value="">
                                     <input type="hidden" name="sub" id="sub" value="0">
                                     
-                                    <input type="hidden" name="paystackInfo" id="paystackInfo" value="{{$gs->paystack_key}}">
+                                    <input type="hidden" name="paystackInfo" id="paystackInfo" value="{{$paystackdata['key']}}">
 
                                     <div class="col-lg-12">
                                         <button type="submit" class="btn-checkout btn btn-primary mt-3" id="final-btn">{{ ('Checkout') }}</button>
@@ -309,6 +309,7 @@
         }
 
         if(val == 'blockChain') {
+            alert('ok');
             $('#payment-form').prop('action','{{ route('blockchain.submit') }}');
             $('#card-view').addClass('d-none');
             $('.card-elements').prop('required',false);
@@ -373,13 +374,6 @@
             $('.manual-payment').addClass('d-none');
         }
 
-        if(val == 'flutterwave') {
-            $('#payment-form').prop('action','{{ route('flutter.submit') }}');
-            $('#card-view').addClass('d-none');
-            $('.card-elements').prop('required',false);
-            $('#manual_transaction_id').prop('required',false);
-            $('.manual-payment').addClass('d-none');
-        }
 
         if(val == 'razorpay') {
             $('#payment-form').prop('action','{{ route('user.razorpay.submit') }}');
@@ -390,14 +384,14 @@
         }
 
         if(val == 'Manual'){
-        $('#payment-form').prop('action','{{route('manual.submit')}}');
-        $('.manual-payment').removeClass('d-none');
-        $('#card-view').addClass('d-none');
-        $('.card-elements').prop('required',false);
-        $('#manual_transaction_id').prop('required',true);
-        const details = $(this).find(':selected').data('details');
-        $('.manual-payment-details').empty();
-        $('.manual-payment-details').append(`<font size="3">${details}</font>`)
+            $('#payment-form').prop('action','{{route('manual.submit')}}');
+            $('.manual-payment').removeClass('d-none');
+            $('#card-view').addClass('d-none');
+            $('.card-elements').prop('required',false);
+            $('#manual_transaction_id').prop('required',true);
+            const details = $(this).find(':selected').data('details');
+            $('.manual-payment-details').empty();
+            $('.manual-payment-details').append(`<font size="3">${details}</font>`)
         }
 
         if(val == 'Wallet'){

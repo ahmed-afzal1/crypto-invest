@@ -29,28 +29,19 @@ class BlockChainController extends Controller
 
     public function blockInvest()
     {
-        return view('front.blockchain');
+        return 'ok';
+        return view('frontend.blockchain');
     }
 
-    /**
-     * Store a newly created resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
-     */
+
     public function chaincallback()
     {
 
         $blockinfo    = PaymentGateway::whereKeyword('blockChain')->first();
         $blocksettings= $blockinfo->convertAutoData();
         $real_secret  = $blocksettings['secret_string'];
-        //$randString = new GetUserAgents();
 
         $des = $_SERVER['QUERY_STRING'];
-
-//        $fh = fopen('transDet.txt', 'w');
-//        fwrite($fh, $des);
-//        fclose($fh);
 
         $bitTran = $_GET['transaction_hash'];
         $bitAddr = $_GET['address'];
@@ -205,12 +196,10 @@ class BlockChainController extends Controller
         }
         
 
-        //return $amount;
         $secret = $blocksettings['secret_string'];
         $my_xpub = $blocksettings['blockchain_xpub'];
         $my_api_key = $blocksettings['blockchain_api'];
         $my_gap = $blocksettings['gap_limit'];
-        //return $my_xpub.'-'.$secret.'-'.$my_api_key;
         $my_callback_url = url('/').'/blockchain/notify?transx_id='.$item_number.'&secret='.$secret;
                 $ttt = 'https://www.google.com/';
         $root_url = 'https://api.blockchain.info/v2/receive';
@@ -251,13 +240,11 @@ class BlockChainController extends Controller
 
         session(['address' => $address,'amount' => $amount,'currency_value' => $item_amount,'currency_sign' => $request->currency_sign,'accountnumber' => $acc]);
 
-        return redirect('invest/bitcoin');
+        return redirect()->route('blockchain.invest');
 
-            //return redirect()->back()->with('message','Deposit Request Sent Successfully.');
 
         }
         return redirect()->back()->with('error','Please enter a valid amount.')->withInput();
-        //return view('user.depositmoney');
     }
 
     public function getDepositCount()
@@ -281,48 +268,4 @@ class BlockChainController extends Controller
     }
 
 
-    /**
-     * Display the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function show($id)
-    {
-        //
-    }
-
-    /**
-     * Show the form for editing the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function edit($id)
-    {
-        //
-    }
-
-    /**
-     * Update the specified resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function update(Request $request, $id)
-    {
-        //
-    }
-
-    /**
-     * Remove the specified resource from storage.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function destroy($id)
-    {
-        //
-    }
 }

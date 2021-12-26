@@ -31,6 +31,9 @@ class CheckoutController extends Controller
         }
     	$data['product'] = Product::findOrFail($id);
         $data['gateways'] = PaymentGateway::where('status',1)->get();
+        $data['defaultCurrency'] = Currency::where('is_default',1)->first();
+        $paystackGateway = PaymentGateway::where('keyword','paystack')->first();
+        $data['paystackdata'] = $paystackGateway->convertAutoData();
         
         return view('frontend.checkout',$data);
     }

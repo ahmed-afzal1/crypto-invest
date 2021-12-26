@@ -82,6 +82,17 @@
       0 => 'Laravel\\Tinker\\TinkerServiceProvider',
     ),
   ),
+  'mollie/laravel-mollie' => 
+  array (
+    'providers' => 
+    array (
+      0 => 'Mollie\\Laravel\\MollieServiceProvider',
+    ),
+    'aliases' => 
+    array (
+      'Mollie' => 'Mollie\\Laravel\\Facades\\Mollie',
+    ),
+  ),
   'nesbot/carbon' => 
   array (
     'providers' => 
