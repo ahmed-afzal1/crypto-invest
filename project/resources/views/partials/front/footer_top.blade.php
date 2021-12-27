@@ -2,7 +2,7 @@
     <div class="call-action-all-overlay">
         <div class="container">
             <div class="row">
-                <div class="col-xs-12">
+                <div class="col-xs-12 mx-auto">
                     <div class="action-text">
                         <h2>{{$ps->footer_top_title}}</h2>
                         <p class="lead">{{$ps->footer_top_text}}</p>

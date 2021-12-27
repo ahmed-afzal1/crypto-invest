@@ -686,6 +686,12 @@ select.currency.selectors.nice, select.language.selectors.nice {
   color: var(--theme-general-color);
   font-size: 14px !important;
 }
+ul.nav.nav-tabs {
+  display: block;
+}
+.success-heading {
+  color: #ffae11;
+}
 
 /*** Bitcoin Statistics ***/
 
