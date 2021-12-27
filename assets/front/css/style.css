@@ -642,6 +642,14 @@ body.light .shop-checkout .table tbody > tr {
   padding-top: 9px;
   padding-bottom: 14px;
 }
+.table td, .table th {
+  padding: 0.75rem;
+  vertical-align: top;
+  border-top: 1px solid #ffae11 !important;
+}
+.table th{
+  border-bottom: 1px solid #ffae11 !important;
+}
 
 .logo-mobile {
   display: none;

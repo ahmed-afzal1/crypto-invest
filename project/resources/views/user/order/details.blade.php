@@ -13,7 +13,7 @@
             <div class="content">
                 <div class="mr-table allproduct mt-4">
                     <div class="table-responsiv">
-                        <table class="table">
+                        <table class="table tabl-text">
                             <tr>
                                 <th width="50%">{{ __('Transaction ID') }}</th>
                                 <td>{{$order->order_number}}</td>
@@ -60,7 +60,7 @@
                             </tr>
 
 
-                            
+
                         </table>
                     </div>
                 </div>
