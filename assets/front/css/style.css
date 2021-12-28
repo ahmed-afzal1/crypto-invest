@@ -658,7 +658,7 @@ body.light .shop-checkout .table tbody > tr {
   
   font-size: 13px;
   padding: 7px 0;
-  background: #382c1b;
+  background: #2a2a29;
 }
 .top-links {
   flex-direction: row;
@@ -828,7 +828,7 @@ ul.user li.sign-in a {
   border-bottom: 1px solid #222;
 }
 .new-nav{
-  background: #050505;
+  background: #1d1d1d;
 }
 
 
