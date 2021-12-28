@@ -28,13 +28,14 @@ class UserController extends Controller
         $user = Auth::user();  
         $nowDate = Carbon::now();
         
-        $orders = Order::where('status','completed')->where('user_id',auth()->user()->id)->where('income_add_status',0)->orderBy('id','desc')->get();
+        $orders = Order::where('status','running')->where('user_id',auth()->user()->id)->where('income_add_status',0)->orderBy('id','desc')->get();
+
         foreach($orders as $key=>$val){
             $result = $nowDate->gt($val->end_date);
             if($result){
                 $user = User::findOrFail($val->user_id);
                 $user->increment('income',$val->pay_amount);
-                $val->update(['income_add_status'=>1]);
+                $val->update(['income_add_status'=>1,'status'=>'completed']);
             }
         }
         $investAmount = Order::where('user_id',auth()->user()->id)->where('payment_status','completed')->sum('invest');
@@ -55,13 +56,11 @@ class UserController extends Controller
 
     public function profileupdate(Request $request)
     {
-        //--- Validation Section
         $request->validate([
             'photo' => 'mimes:jpeg,jpg,png,svg',
             'email' => 'unique:users,email,'.Auth::user()->id
         ]);
 
-        //--- Validation Section Ends
         $input = $request->all();  
         $data = Auth::user();        
         if ($file = $request->file('photo')) 

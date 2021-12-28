@@ -309,7 +309,6 @@
         }
 
         if(val == 'blockChain') {
-            alert('ok');
             $('#payment-form').prop('action','{{ route('blockchain.submit') }}');
             $('#card-view').addClass('d-none');
             $('.card-elements').prop('required',false);
@@ -486,7 +485,6 @@
 <script type="text/javascript" src="{{ asset('assets/front/js/paymin.js') }}"></script>
 <script type="text/javascript" src="https://js.stripe.com/v3/"></script>
 <script type="text/javascript" src="{{ asset('assets/front/js/payform.js') }}"></script>
-<script src="//voguepay.com/js/voguepay.js"></script>
 <script src="https://js.paystack.co/v1/inline.js"></script>
 
 

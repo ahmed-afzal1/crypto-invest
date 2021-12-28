@@ -147,7 +147,7 @@ var table = $('#geniustable').DataTable({
                         {data:'amount',name:'amount'},
                         {data:'method',name:'method'},
                         {data: 'created_at',name:'created_at'},
-                        {data:'status',name:'name'},
+                        { data: 'status',searchable: false, orderable: false},
             			{ data: 'action', searchable: false, orderable: false }
                      ],
                 language : {

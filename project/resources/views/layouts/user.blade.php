@@ -189,7 +189,7 @@
 
                                 @if ($gs->kyc)
                                 <li class="nav-item user-item">
-                                    <a href="{{ route('kyc-form') }}" class="nav-link"><i class="material-icons">switch_access_shortcut</i>@lang('KYC')</a>
+                                    <a href="{{ route('user.kyc.form') }}" class="nav-link"><i class="material-icons">switch_access_shortcut</i>@lang('KYC')</a>
                                 </li>
                                 @endif
 

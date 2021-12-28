@@ -723,4 +723,8 @@
 		background: #0c0c0c;
 		border: 1px solid rgb(239, 150, 26, 0.4) !important;
 	}
+	.payinfo{
+		width: 18rem;
+		margin: 0 auto;
+	}
 	

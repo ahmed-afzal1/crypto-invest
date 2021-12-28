@@ -28,28 +28,18 @@ use Redirect;
 
 class CoinPaymentController extends Controller
 {
-
-    public function __construct() {
-       // $this->middleware('auth')->except(['coingetCallback']);
-    }
-
     public function blockInvest()
     {
         return view('front.coinpay');
     }
 
-    /**
-     * Store a newly created resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
-     */
+
     public function coinCallback(Request $request)
     {
         
         $fpbt = fopen('coin-payment'.time().'.txt', 'w');
-    fwrite($fpbt, json_encode($request->all(),true));
-    fclose($fpbt);
+        fwrite($fpbt, json_encode($request->all(),true));
+        fclose($fpbt);
     
     return true;
         Session::put('check_txn',$request->all());
@@ -187,7 +177,6 @@ class CoinPaymentController extends Controller
             );
 
             $result = $cps->CreateTransaction($req);
-             
             if ($result['error'] == 'ok') {
 
                 $qr_url = $result['result']['qrcode_url'];
@@ -235,21 +224,16 @@ class CoinPaymentController extends Controller
                     'checkout_url' => $checkout_url
                 ]);
 
-                return redirect('invest/coinpay');
+                return redirect()->route('coinpay.invest');
 
             } else {
 
                 return redirect()->back()->with('unsuccess', $result['error'])->withInput();
-                //print 'Error: '.$result['error']."\n";
 
             }
 
-
-            //return redirect()->back()->with('message','Deposit Request Sent Successfully.');
-
         }
         return redirect()->back()->with('unsuccess','Please enter a valid amount.')->withInput();
-        //return view('user.depositmoney');
     }
 
 }

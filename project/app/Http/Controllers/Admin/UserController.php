@@ -63,10 +63,6 @@ class UserController extends Controller
                                 ->toJson(); //--- Returning Json Data To Client Side
         }
 
-
-
-
-
         //*** GET Request
         public function index()
         {
@@ -140,12 +136,12 @@ class UserController extends Controller
 
         public function withdraws(){
             return view('admin.user.withdraws');
-          }
+        }
 
           public function withdrawdatatables()
           {
-               $datas = Withdraw::get();
-               //--- Integrating This Collection Into Datatables
+               $datas = Withdraw::orderBy('id','desc');
+
                return Datatables::of($datas)
                                   ->addColumn('email', function(Withdraw $data) {
                                       $email = $data->user->email;
@@ -176,6 +172,8 @@ class UserController extends Controller
                                     $action = '<a href="javascript:;" data-href="' . route('admin-withdraw-accept',$data->id) . '"  class="dropdown-item" data-toggle="modal"  data-target="#status-modal">'.__("Accept").'</a>
                                     <a href="javascript:;" data-href="' . route('admin-withdraw-reject',$data->id) . '"  class="dropdown-item" data-toggle="modal" data-target="#confirm-delete">'.__("Reject").'</a>
                                 ';
+                                }else{
+                                    $action = '';
                                 }
                                 return '<div class="btn-group mb-1">
                                 <button type="button" class="btn btn-primary btn-sm btn-rounded dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
@@ -187,11 +185,8 @@ class UserController extends Controller
                                 </div>
                               </div>';
                              })
-
-
-
-                                  ->rawColumns(['name','email','amount','action'])
-                                  ->toJson(); //--- Returning Json Data To Client Side
+                            ->rawColumns(['name','email','amount','action'])
+                            ->toJson(); //--- Returning Json Data To Client Side
           }
 
            //*** GET Request

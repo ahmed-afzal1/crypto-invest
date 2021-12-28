@@ -81,7 +81,7 @@
                                         @if (auth()->user())
                                             <a href="javascript:;" data-url="{{ route('front.setdata') }}" data-href="{{ route('front.checkout',$data->id) }}" class="mybtn1 checkout-btn btn btn-primary">{{ __('INVEST NOW') }} </a>
                                         @else 
-                                            <a href="javascript:;" data-checkoutRoute="{{ route('front.checkout', $data->id) }}" data-url="{{ route('front.setdata') }}" data-href="" class="mybtn1 checkout-btn btn btn-primary">{{ __('INVEST NOW') }} </a>
+                                            <a href="javascript:;" data-checkoutRoute="{{ route('front.checkout', $data->id) }}" data-url="{{ route('front.setdata') }}" data-href="{{ route('front.checkout',$data->id) }}" class="mybtn1 checkout-btn btn btn-primary">{{ __('INVEST NOW') }} </a>
                                         @endif
                                     </div>
                                 </div>

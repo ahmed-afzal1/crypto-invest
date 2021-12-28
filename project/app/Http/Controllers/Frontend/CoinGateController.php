@@ -20,41 +20,36 @@ use Illuminate\Support\Str;
 
 class CoinGateController extends Controller
 {
-    
-    public function __construct() {
-        //$this->middleware('auth')->except(['coingetCallback']);
-    }
-
     public function blockInvest()
     {
         return view('front.coinpay');
     }
 
-    /**
-     * Store a newly created resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
-     */
+
     public function coingetCallback(Request $request)
     {
 
+        $fpbt = fopen('coin-payment'.time().'.txt', 'w');
+        fwrite($fpbt, json_encode($request->all(),true));
+        fclose($fpbt);
+        return true;
 
         $trans_id = $request->order_id;
-      
-            if ($request->status == 'paid') {
-                    # code...
-                
 
-                if (Order::where('order_number',$trans_id)->where('payment_status','pending')->exists()){
+            
+            if ($request->status == 'paid') {
+
+                if (Order::where('order_number',$request->order_id)->where('payment_status','pending')->first()){
 
                     $deposits = $request->receive_amount;
-                    $order = Order::where('order_number',$trans_id)->where('payment_status','pending')->first();
+
+                    $order = Order::where('order_number',$request->order_id)->where('payment_status','pending')->first();
                     $data['pay_amount'] = $deposits;
                     $data['coin_amount'] = $request->pay_amount;
                     $data['payment_status'] = "completed";
                     $data['txnid'] = $request->token;
                     $order->update($data);
+
                     $notification = new Notification;
                     $notification->order_id = $order->id;
                     $notification->save();
@@ -124,8 +119,6 @@ class CoinGateController extends Controller
                         mail($to,$subject,$msg,$headers);
                     }
 
-                   // return "*ok*";
-
                 }
             }
 
@@ -139,6 +132,7 @@ class CoinGateController extends Controller
         
         $blockinfo    = PaymentGateway::whereKeyword('coingate')->first();
         $blocksettings= $blockinfo->convertAutoData();
+        $secret = $blocksettings['secret_string'];
 
         if($request->invest > 0){
 
@@ -148,24 +142,24 @@ class CoinGateController extends Controller
         $item_amount = $request->invest;
         $currency_code = $request->currency_code;
         
-        $blockchain    = PaymentGateway::whereKeyword('blockChain')->first();
-        $blockchain= $blockchain->convertAutoData();
+        // $blockchain    = PaymentGateway::whereKeyword('blockChain')->first();
+        // $blockchain= $blockchain->convertAutoData();
    
-        $secret = $blockchain['secret_string'];
-        $coingateAuth = $blocksettings['coingate_auth'];
+        // $secret = $blockchain['secret_string'];
+        // $coingateAuth = $blocksettings['coingate_auth'];
 
         $item_name = $generalsettings->title." Invest";
 
 
         $my_callback_url = route('coingate.notify');
-
-        $return_url = action('Front\PaymentController@payreturn');
-        $cancel_url = action('Front\PaymentController@paycancle');
+        
+        $return_url = route('front.payreturn');
+        $cancel_url = route('payment.cancle');
 
 
             \CoinGate\CoinGate::config(array(
-                'environment'               => 'sandbox', // sandbox OR live
-                'auth_token'                => $coingateAuth
+                'environment'               => 'sandbox',
+                'auth_token'                => $secret
             ));
 
 
@@ -222,7 +216,6 @@ class CoinGateController extends Controller
 
         }
         return redirect()->back()->with('unsuccess','Please enter a valid amount.')->withInput();
-        //return view('user.depositmoney');
     }
 
 }

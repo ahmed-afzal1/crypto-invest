@@ -26,6 +26,7 @@
 				<th>{{__('Invest')}}</th>
 				<th>{{__('Get')}}</th>
 				<th>{{__('Method')}}</th>
+				<th>{{__('Payment Status')}}</th>
 				<th>{{__('Status')}}</th>
 				<th>{{__('Actions')}}</th>
 			</tr>
@@ -104,6 +105,7 @@
 				{ data: 'invest', name: 'invest' },
 				{ data: 'pay_amount', name: 'pay_amount' },
 				{ data: 'method', name: 'method' },
+				{ data: 'payment_status', name: 'payment_status' },
 				{ data: 'status', name: 'status' },
 				{ data: 'action', searchable: false, orderable: false }
 

@@ -15,6 +15,7 @@ class VerifyCsrfToken extends Middleware
         '/paytm-callback',
         '/razorpay-notify',
         '/flutter/notify',
+        '/coingate/notify',
         '/user/deposit/paytm-callback'
     ];
 }

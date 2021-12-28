@@ -63,7 +63,7 @@ class PaymentController extends Controller
         $order = new Order;
         $paypal_email = $settings->paypal_business;
         $return_url = route('front.payreturn');
-        $cancel_url = route('paypal.cancle');
+        $cancel_url = route('payment.cancle');
         $notify_url = route('paypal.notify');
 
         $item_name = $settings->title." Order";

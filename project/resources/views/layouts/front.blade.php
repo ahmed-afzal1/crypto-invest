@@ -95,11 +95,9 @@
 		@yield('contents')
 
         <footer class="footer">
-            <!-- Footer Top Area Starts -->
             <div class="top-footer">
                 <div class="container">
                     <div class="row">
-                        <!-- Footer Widget Starts -->
                         <div class="col-md-4 col-lg-2">
                             <h4>Our Company</h4>
                             <div class="menu">
@@ -119,8 +117,7 @@
                                 </ul>
                             </div>
                         </div>
-                        <!-- Footer Widget Ends -->
-                        <!-- Footer Widget Starts -->
+
                         <div class="col-md-4 col-lg-2">
                             <h4>Help &amp; Support</h4>
                             <div class="menu">
@@ -140,8 +137,7 @@
                                 </ul>
                             </div>
                         </div>
-                        <!-- Footer Widget Ends -->
-                        <!-- Footer Widget Starts -->
+
                         <div class="col-md-4 col-lg-3">
                             <h4>Contact Us </h4>
                             <div class="contacts">
@@ -154,7 +150,7 @@
                                 <div> <span>mon-sat 08am &#x21FE; 05pm</span>
                                 </div>
                             </div>
-                            <!-- Social Media Profiles Starts -->
+
                             <div class="social-footer">
                                 <ul>
                                     <li><a href="#" target="_blank"><i class="fa fa-facebook"></i></a>
@@ -167,59 +163,41 @@
                                     </li>
                                 </ul>
                             </div>
-                            <!-- Social Media Profiles Ends -->
                         </div>
-                        <!-- Footer Widget Ends -->
-                        <!-- Footer Widget Starts -->
+
                         <div class="col-md-12 col-lg-5">
-                            <!-- Facts Starts -->
                             <div class="facts-footer">
                                 <div>
-                                        <h5>$198.76B</h5>
-            <span>Market cap</span>
+                                    <h5>$198.76B</h5>
+                                    <span>Market cap</span>
                                 </div>
                                 <div>
-                                        <h5>243K</h5>
-            <span>daily transactions</span>
+                                    <h5>243K</h5>
+                                    <span>daily transactions</span>
                                 </div>
                                 <div>
-                                        <h5>369K</h5>
-            <span>active accounts</span>
+                                    <h5>369K</h5>
+                                    <span>active accounts</span>
                                 </div>
                                 <div>
-                                        <h5>127</h5>
-            <span>supported countries</span>
+                                    <h5>127</h5>
+                                    <span>supported countries</span>
                                 </div>
                             </div>
-                            <!-- Facts Ends -->
                             <hr>
-                            <!-- Supported Payment Cards Logo Starts -->
-                            <div class="payment-logos">
-                                    <h4 class="payment-title">supported payment methods</h4>
-                                <img src="images/icons/payment/american-express.png" alt="american-express">
-                                <img src="images/icons/payment/mastercard.png" alt="mastercard">
-                                <img src="images/icons/payment/visa.png" alt="visa">
-                                <img src="images/icons/payment/paypal.png" alt="paypal">
-                                <img class="last" src="images/icons/payment/maestro.png" alt="maestro">
-                            </div>
-                            <!-- Supported Payment Cards Logo Ends -->
                         </div>
-                        <!-- Footer Widget Ends -->
                     </div>
                 </div>
             </div>
-            <!-- Footer Top Area Ends -->
-            <!-- Footer Bottom Area Starts -->
+
             <div class="bottom-footer">
                 <div class="container">
                     <div class="row">
                         <div class="col-12">
-                            <!-- Copyright Text Starts -->
                             <p class="text-center">Copyright &#xA9; 2018 Bayya All Rights Reserved | Created with Love by
                                 <a
                                 href="https://themeforest.net/user/celtano" target="_blank">celtano</a>
                             </p>
-                            <!-- Copyright Text Ends -->
                         </div>
                     </div>
                 </div>

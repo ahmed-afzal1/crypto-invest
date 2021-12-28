@@ -19,8 +19,8 @@
                         <div class="col-lg-12">
                             <div class="content">
                                 <div class="card">
-                                    <img src="https://chart.googleapis.com/chart?chs=250x250&cht=qr&chl=bitcoin:{{ Session::get('address') }}?amount={{ Session::get('amount') }}" class="card-img-top">
-                                    <div class="card-body">
+                                    <img src="https://chart.googleapis.com/chart?chs=250x250&cht=qr&chl=bitcoin:{{ Session::get('address') }}?amount={{ Session::get('amount') }}" class="img-fluid img-thumbnail payinfo" alt="Responsive image">
+                                    <div class="card-body text-center">
                                       <h5 class="card-title">{{__('Address')}}: {{ Session::get('address') }}</h5>
                                       <p>{{__('Please send approximately')}} <b>{{ Session::get('amount') }}</b> {{ Session::get('coin') }} {{__('to this address. After completing your payment')}}, <b>{{ Session::get('currency_sign') }}{{ Session::get('currency_value') }}</b> {{__('invest will be deposited')}}. <br>{{__('This Process may take some time for confirmations. Thank you.')}}</p>
                                       <h4><a href="javascript:history.back();">{{__('Go Back')}}</a></h4>

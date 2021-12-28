@@ -3,11 +3,7 @@
 namespace App\Classes;
 
 use Exception;
-/**
- *
- * OpenSSL functionality adapted from Jan Lindemann's BitcoinECDSA.php
- * @author Atif Nazir
- */
+
 if (!extension_loaded('gmp')) {
     throw new \Exception('GMP extension seems not to be installed');
 }
@@ -17,10 +13,7 @@ if (!extension_loaded('curl')) {
 class BlockIO
 {
     
-    /**
-     * Validate the given API key on instantiation
-     */
-     
+
     private $api_key;
     private $pin = "";
     private $encryption_key = "";
@@ -28,7 +21,7 @@ class BlockIO
     private $withdrawal_methods;
     private $sweep_methods;
     public function __construct($api_key, $pin, $api_version = 2)
-    { // the constructor
+    {
       $this->api_key = $api_key;
 
       $this->pin = $pin;
@@ -37,7 +30,7 @@ class BlockIO
       $this->sweep_methods = array("sweep_from_address");
     }
     public function __call($name, array $args)
-    { // method_missing for PHP
+    { 
         $response = "";
 	
 	if (empty($args)) { $args = array(); }

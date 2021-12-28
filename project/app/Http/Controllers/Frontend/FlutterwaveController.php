@@ -53,7 +53,7 @@ class FlutterwaveController extends Controller
         $addionalData = ['item_number'=>$item_number];
         $this->orderRepositorty->order($request,'pending',$addionalData);
 
-        Session::put('item_number',$item_number);
+        Session::put('order_number',$item_number);
 
         curl_setopt_array($curl, array(
             CURLOPT_URL => "https://api.ravepay.co/flwv3-pug/getpaidx/api/v2/hosted/pay",
@@ -95,10 +95,12 @@ class FlutterwaveController extends Controller
      public function notify(Request $request) {
 
         $input = $request->all();
+        $order_number = Session::get('order_number');
  
-        $order = Order::where('item_number',Session::get('item_number'))->first();
+        $order = Order::where('order_number',$order_number)->where('payment_status','pending')->first();
+
         if($request->cancelled == "true"){
-          return redirect()->route('user-dashboard')->with('success',__('Payment Cancelled!'));
+          return redirect()->route('user.dashboard')->with('success',__('Payment Cancelled!'));
         }
 
 

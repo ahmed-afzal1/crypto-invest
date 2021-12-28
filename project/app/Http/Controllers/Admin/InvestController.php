@@ -20,19 +20,19 @@ class InvestController extends Controller
     public function datatables($status)
     {
         if($status == 'pending'){
-            $datas = Order::where('status','=','pending')->where('payment_status','pending')->orderBy('id','desc');
+            $datas = Order::where('status','pending')->orderBy('id','desc');
         }
-        if($status == 'running'){
-            $datas = Order::where('status','=','pending')->where('payment_status','completed')->orderBy('id','desc');
+        elseif($status == 'running'){
+            $datas = Order::where('status','running')->orderBy('id','desc');
         }
         elseif($status == 'processing') {
-            $datas = Order::where('status','=','processing')->where('payment_status','completed')->orderBy('id','desc');
+            $datas = Order::where('status','processing')->orderBy('id','desc');
         }
         elseif($status == 'completed') {
-            $datas = Order::where('status','=','completed')->where('payment_status','completed')->orderBy('id','desc');
+            $datas = Order::where('status','completed')->orderBy('id','desc');
         }
         elseif($status == 'declined') {
-            $datas = Order::where('status','=','declined')->where('payment_status','completed')->orderBy('id','desc');
+            $datas = Order::where('status','declined')->orderBy('id','desc');
         }
         else{
           $datas = Order::orderBy('id','desc');  
@@ -51,20 +51,34 @@ class InvestController extends Controller
                                 $gs = Generalsetting::find(1);
                                 return $gs->currency_sign.$data->invest;
                             })
+                            ->editColumn('payment_status', function(Order $data) {
+                                $status      = $data->payment_status == 'completed' ? _('Completed') : _('Not completed');
+                                $status_sign = $data->payment_status == 'completed' ? 'success'   : 'danger';
+
+                                return '<div class="btn-group mb-1">
+                                <button type="button" class="btn btn-'.$status_sign.' btn-sm btn-rounded dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                  '.$status .'
+                                </button>
+                                <div class="dropdown-menu" x-placement="bottom-start">
+                                  <a href="javascript:;" data-toggle="modal" data-target="#statusModal" class="dropdown-item" data-href="'. route('admin.invest.paymentstatus',['id1' => $data->id, 'status' => 'pending']).'">'.__("Completed").'</a>
+                                  <a href="javascript:;" data-toggle="modal" data-target="#statusModal" class="dropdown-item" data-href="'. route('admin.invest.paymentstatus',['id1' => $data->id, 'status' => 'completed']).'">'.__("Not completed").'</a>
+                                </div>
+                              </div>';
+                            })
                             ->editColumn('status', function(Order $data) {
 
                                 if($data->status == 'pending'){
                                     $status = "Pending";
                                     $status_sign = $data->status == 'pending' ? 'warning' : '';
-                                }elseif($data->status == 'processing'){
-                                    $status = "Processing";
-                                    $status_sign = $data->status == 'processing' ? 'info' : '';
+                                }elseif($data->status == 'running'){
+                                    $status = "Running";
+                                    $status_sign = $data->status == 'running' ? 'info' : '';
                                 }elseif($data->status == 'declined'){
                                     $status = "Declined";
                                     $status_sign = $data->status == 'declined' ? 'danger' : '';
                                 }else{
                                     $status = "Completed";
-                                    $status_sign = $data->status == 'declined' ? 'success' : '';
+                                    $status_sign = $data->status == 'completed' ? 'success' : '';
                                 }
 
                                 return '<div class="btn-group mb-1">
@@ -72,9 +86,10 @@ class InvestController extends Controller
                                   '.$status .'
                                 </button>
                                 <div class="dropdown-menu" x-placement="bottom-start">
-                                  <a href="javascript:;" data-toggle="modal" data-target="#statusModal" class="dropdown-item" data-href="'. route('admin.pendinginvest.status',['id1' => $data->id, 'status' => 'pending']).'">'.__("Pending").'</a>
-                                  <a href="javascript:;" data-toggle="modal" data-target="#statusModal" class="dropdown-item" data-href="'. route('admin.pendinginvest.status',['id1' => $data->id, 'status' => 'completed']).'">'.__("Completed").'</a>
-                                  <a href="javascript:;" data-toggle="modal" data-target="#statusModal" class="dropdown-item" data-href="'. route('admin.pendinginvest.status',['id1' => $data->id, 'status' => 'declined']).'">'.__("Declined").'</a>
+                                  <a href="javascript:;" data-toggle="modal" data-target="#statusModal" class="dropdown-item" data-href="'. route('admin.invests.status',['id1' => $data->id, 'status' => 'pending']).'">'.__("Pending").'</a>
+                                  <a href="javascript:;" data-toggle="modal" data-target="#statusModal" class="dropdown-item" data-href="'. route('admin.invests.status',['id1' => $data->id, 'status' => 'running']).'">'.__("Running").'</a>
+                                  <a href="javascript:;" data-toggle="modal" data-target="#statusModal" class="dropdown-item" data-href="'. route('admin.invests.status',['id1' => $data->id, 'status' => 'completed']).'">'.__("Completed").'</a>
+                                  <a href="javascript:;" data-toggle="modal" data-target="#statusModal" class="dropdown-item" data-href="'. route('admin.invests.status',['id1' => $data->id, 'status' => 'declined']).'">'.__("Declined").'</a>
                                 </div>
                               </div>';
                             })
@@ -82,7 +97,7 @@ class InvestController extends Controller
                                 return '<div class="actions-btn"><a href="'.route('admin.invests.show',$data->id).'" class="btn btn-primary btn-sm btn-rounded"><i class="fas fa-eye"></i> '.__("View Details").'
                               </a></div>';
                             }) 
-                            ->rawColumns(['id','customer_email','status','action'])
+                            ->rawColumns(['id','customer_email','payment_status','status','action'])
                             ->toJson();
     }
 
@@ -109,5 +124,75 @@ class InvestController extends Controller
     public function show($id){
         $data['order'] = Order::findOrFail($id);
         return view('admin.invest.details',$data);
+    }
+
+    public function status($id,$status)
+    {
+        $mainorder = Order::findOrFail($id);
+        if ($mainorder->status == "completed"){
+            $msg = 'This Invest is Already Completed';
+            return response()->json($msg);       
+        }else{
+        if ($status == "completed"){
+
+            $user = User::findOrFail($mainorder->user_id);
+            
+            if($user){
+                $user->increment('income',$mainorder->pay_amount);
+            }
+            $stat['income_add_status'] = 1;
+
+            $gs = Generalsetting::findOrFail(1);
+            if($gs->is_smtp == 1)
+            {
+                $data = [
+                    'to' => $mainorder->customer_email,
+                    'subject' => 'Your invest '.$mainorder->order_number.' is Confirmed!',
+                    'body' => "Hello ".$mainorder->customer_name.","."\n Thank you for investing with us. We are looking forward to your next visit.",
+                ];
+
+                $mailer = new GeniusMailer();
+                $mailer->sendCustomMail($data);                
+            }
+            else
+            {
+               $to = $mainorder->customer_email;
+               $subject = 'Your invest '.$mainorder->order_number.' is Confirmed!';
+               $msg = "Hello ".$mainorder->customer_name.","."\n Thank you for investing with us. We are looking forward to your next visit.";
+               $headers = "From: ".$gs->from_name."<".$gs->from_email.">";
+               mail($to,$subject,$msg,$headers);                
+            }
+        }
+        elseif ($status == "declined"){
+            $gs = Generalsetting::findOrFail(1);
+            if($gs->is_smtp == 1)
+            {
+                $data = [
+                    'to' => $mainorder->customer_email,
+                    'subject' => 'Your invest '.$mainorder->order_number.' is Declined!',
+                    'body' => "Hello ".$mainorder->customer_name.","."\n We are sorry for the inconvenience caused. We are looking forward to your next visit.",
+                ];
+                $mailer = new GeniusMailer();
+                $mailer->sendCustomMail($data);
+            }
+            else
+            {
+               $to = $mainorder->customer_email;
+               $subject = 'Your invest '.$mainorder->order_number.' is Declined!';
+               $msg = "Hello ".$mainorder->customer_name.","."\n We are sorry for the inconvenience caused. We are looking forward to your next visit.";
+               $headers = "From: ".$gs->from_name."<".$gs->from_email.">";
+               mail($to,$subject,$msg,$headers);
+            }
+
+        }
+
+        $stat['status'] = $status;
+        $mainorder->update($stat);
+        
+        //--- Redirect Section        
+        $msg = 'Invest Status Updated Successfully';
+        return response()->json($msg);      
+        //--- Redirect Section Ends   
+        }
     }
 }

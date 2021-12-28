@@ -19,17 +19,14 @@ use Illuminate\Support\Str;
 
 class BlockChainController extends Controller
 {
-
-  
     public function index()
     {
         return view('payblocktrail');
     }
 
 
-    public function blockInvest()
+    public function blockchainInvest()
     {
-        return 'ok';
         return view('frontend.blockchain');
     }
 
@@ -59,6 +56,7 @@ class BlockChainController extends Controller
                 $data['pay_amount'] = $deposits;
                 $data['payment_status'] = "completed";
                 $order->update($data);
+
                 $notification = new Notification;
                 $notification->order_id = $order->id;
                 $notification->save();
@@ -239,7 +237,7 @@ class BlockChainController extends Controller
 
 
         session(['address' => $address,'amount' => $amount,'currency_value' => $item_amount,'currency_sign' => $request->currency_sign,'accountnumber' => $acc]);
-        return view('frontend.blockchain');
+        return redirect()->route('blockchain.invest');
 
 
         }

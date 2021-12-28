@@ -94,8 +94,8 @@ Route::get('/cache/clear', function() {
   Route::get('/invests/completed', 'Admin\InvestController@completed')->name('admin.invests.completed');
   Route::get('/invests/declined', 'Admin\InvestController@declined')->name('admin.invests.declined');
   Route::get('/invest/{id}/show', 'Admin\InvestController@show')->name('admin.invests.show');
-  Route::get('/invests/{id1}/status/{status}', 'Admin\OrderController@status')->name('admin.invests.status');
-  Route::get('/pending/invests/{id1}/status/{status}', 'Admin\OrderController@pendingstatus')->name('admin.pendinginvest.status');
+  Route::get('/invests/{id1}/status/{status}', 'Admin\InvestController@status')->name('admin.invests.status');
+  Route::get('/pending/invests/{id1}/status/{status}', 'Admin\InvestController@paymentstatus')->name('admin.invest.paymentstatus');
   Route::post('/order/email/', 'Admin\OrderController@emailsub')->name('admin-order-emailsub');
 
   Route::get('/transactions/datatables', [TransactionController::class,'datatables'])->name('admin.transactions.datatables');
@@ -131,174 +131,171 @@ Route::get('/cache/clear', function() {
   // ------------------------Refund Order End--------------------
 
 
-  //------------ ADMIN GENERAL SETTINGS SECTION ------------
-  Route::get('/general-settings/logo', [GeneralSettingController::class,'logo'])->name('admin.gs.logo');
-  Route::get('/general-settings/favicon', [GeneralSettingController::class,'fav'])->name('admin.gs.fav');
-  Route::get('/general-settings/loader', [GeneralSettingController::class,'load'])->name('admin.gs.load');
-  Route::post('/general-settings/update/all', [GeneralSettingController::class,'generalupdate'])->name('admin.gs.update');
-  Route::get('/general-settings/contents', [GeneralSettingController::class,'contents'])->name('admin.gs.contents');
-  Route::get('/general-settings/theme', [GeneralSettingController::class,'theme'])->name('admin.gs.theme');
+    //------------ ADMIN GENERAL SETTINGS SECTION ------------
+    Route::get('/general-settings/logo', [GeneralSettingController::class,'logo'])->name('admin.gs.logo');
+    Route::get('/general-settings/favicon', [GeneralSettingController::class,'fav'])->name('admin.gs.fav');
+    Route::get('/general-settings/loader', [GeneralSettingController::class,'load'])->name('admin.gs.load');
+    Route::post('/general-settings/update/all', [GeneralSettingController::class,'generalupdate'])->name('admin.gs.update');
+    Route::get('/general-settings/contents', [GeneralSettingController::class,'contents'])->name('admin.gs.contents');
+    Route::get('/general-settings/theme', [GeneralSettingController::class,'theme'])->name('admin.gs.theme');
 
-  Route::get('/general-settings/breadcumb', [GeneralSettingController::class,'breadcumb'])->name('admin.gs.breadcumb');
-  Route::get('/general-settings/menu-builder', [GeneralSettingController::class,'menubuilder'])->name('admin.gs.menubuilder');
-  Route::get('/general-settings/status/{field}/{status}', [GeneralSettingController::class,'status'])->name('admin.gs.status');
-  Route::get('/general-settings/footer', [GeneralSettingController::class,'footer'])->name('admin.gs.footer');
-  Route::get('/general-settings/affilate', [GeneralSettingController::class,'affilate'])->name('admin.gs.affilate');
-  Route::get('/general-settings/error-banner', [GeneralSettingController::class,'errorbanner'])->name('admin.gs.error.banner');
-  Route::get('/general-settings/popup', [GeneralSettingController::class,'popup'])->name('admin.gs.popup');
-  Route::get('/general-settings/maintenance', [GeneralSettingController::class,'maintain'])->name('admin.gs.maintenance');
-  //------------ ADMIN GENERAL SETTINGS JSON SECTION ENDS------------
-
-
-
-  //------------ ADMIN EMAIL SETTINGS SECTION ------------
-  Route::get('/email-templates/datatables', [EmailController::class,'datatables'])->name('admin.mail.datatables');
-  Route::get('/email-templates', [EmailController::class,'index'])->name('admin.mail.index');
-  Route::get('/email-templates/{id}', [EmailController::class,'edit'])->name('admin.mail.edit');
-  Route::post('/email-templates/{id}', [EmailController::class,'update'])->name('admin.mail.update');
-  Route::get('/email-config', [EmailController::class,'config'])->name('admin.mail.config');
-  Route::get('/groupemail', [EmailController::class,'groupemail'])->name('admin.group.show');
-  Route::post('/groupemailpost', [EmailController::class,'groupemailpost'])->name('admin.group.submit');
-  //------------ ADMIN EMAIL SETTINGS SECTION ENDS ------------
-
-  Route::get('/check/movescript', 'Admin\DashboardController@movescript')->name('admin-move-script');
-  Route::get('/generate/backup', 'Admin\DashboardController@generate_bkup')->name('admin-generate-backup');
-  Route::get('/activation', 'Admin\DashboardController@activation')->name('admin-activation-form');
-  Route::post('/activation', 'Admin\DashboardController@activation_submit')->name('admin-activate-purchase');
-  Route::get('/clear/backup', 'Admin\DashboardController@clear_bkup')->name('admin-clear-backup');
+    Route::get('/general-settings/breadcumb', [GeneralSettingController::class,'breadcumb'])->name('admin.gs.breadcumb');
+    Route::get('/general-settings/menu-builder', [GeneralSettingController::class,'menubuilder'])->name('admin.gs.menubuilder');
+    Route::get('/general-settings/status/{field}/{status}', [GeneralSettingController::class,'status'])->name('admin.gs.status');
+    Route::get('/general-settings/footer', [GeneralSettingController::class,'footer'])->name('admin.gs.footer');
+    Route::get('/general-settings/affilate', [GeneralSettingController::class,'affilate'])->name('admin.gs.affilate');
+    Route::get('/general-settings/error-banner', [GeneralSettingController::class,'errorbanner'])->name('admin.gs.error.banner');
+    Route::get('/general-settings/popup', [GeneralSettingController::class,'popup'])->name('admin.gs.popup');
+    Route::get('/general-settings/maintenance', [GeneralSettingController::class,'maintain'])->name('admin.gs.maintenance');
+    //------------ ADMIN GENERAL SETTINGS JSON SECTION ENDS------------
 
 
-  // ------------ ROLE SECTION ----------------------
-  Route::get('/role/datatables', [RoleController::class,'datatables'])->name('admin.role.datatables');
-  Route::get('/role', [RoleController::class,'index'])->name('admin.role.index');
-  Route::get('/role/create', [RoleController::class,'create'])->name('admin.role.create');
-  Route::post('/role/create', [RoleController::class,'store'])->name('admin.role.store');
-  Route::get('/role/edit/{id}', [RoleController::class,'edit'])->name('admin.role.edit');
-  Route::post('/role/edit/{id}', [RoleController::class,'update'])->name('admin.role.update');
-  Route::get('/role/delete/{id}', [RoleController::class,'destroy'])->name('admin.role.delete');
-  // ------------ ROLE SECTION ENDS ----------------------
+    //------------ ADMIN EMAIL SETTINGS SECTION ------------
+    Route::get('/email-templates/datatables', [EmailController::class,'datatables'])->name('admin.mail.datatables');
+    Route::get('/email-templates', [EmailController::class,'index'])->name('admin.mail.index');
+    Route::get('/email-templates/{id}', [EmailController::class,'edit'])->name('admin.mail.edit');
+    Route::post('/email-templates/{id}', [EmailController::class,'update'])->name('admin.mail.update');
+    Route::get('/email-config', [EmailController::class,'config'])->name('admin.mail.config');
+    Route::get('/groupemail', [EmailController::class,'groupemail'])->name('admin.group.show');
+    Route::post('/groupemailpost', [EmailController::class,'groupemailpost'])->name('admin.group.submit');
+    //------------ ADMIN EMAIL SETTINGS SECTION ENDS ------------
+
+    Route::get('/check/movescript', 'Admin\DashboardController@movescript')->name('admin-move-script');
+    Route::get('/generate/backup', 'Admin\DashboardController@generate_bkup')->name('admin-generate-backup');
+    Route::get('/activation', 'Admin\DashboardController@activation')->name('admin-activation-form');
+    Route::post('/activation', 'Admin\DashboardController@activation_submit')->name('admin-activate-purchase');
+    Route::get('/clear/backup', 'Admin\DashboardController@clear_bkup')->name('admin-clear-backup');
 
 
-  //------------ ADMIN BLOG SECTION ------------
-  Route::get('/blog/datatables', [BlogController::class,'datatables'])->name('admin.blog.datatables'); //JSON REQUEST
-  Route::get('/blog', [BlogController::class,'index'])->name('admin.blog.index');
-  Route::get('/blog/create', [BlogController::class,'create'])->name('admin.blog.create');
-  Route::post('/blog/create', [BlogController::class,'store'])->name('admin.blog.store');
-  Route::get('/blog/edit/{id}', [BlogController::class,'edit'])->name('admin.blog.edit');
-  Route::post('/blog/edit/{id}', [BlogController::class,'update'])->name('admin.blog.update');
-  Route::get('/blog/delete/{id}', [BlogController::class,'destroy'])->name('admin.blog.delete');
-
-  Route::get('/blog/category/datatables', [BlogCategoryController::class,'datatables'])->name('admin.cblog.datatables'); //JSON REQUEST
-  Route::get('/blog/category', [BlogCategoryController::class,'index'])->name('admin.cblog.index');
-  Route::get('/blog/category/create', [BlogCategoryController::class,'create'])->name('admin.cblog.create');
-  Route::post('/blog/category/create', [BlogCategoryController::class,'store'])->name('admin.cblog.store');
-  Route::get('/blog/category/edit/{id}', [BlogCategoryController::class,'edit'])->name('admin.cblog.edit');
-  Route::post('/blog/category/edit/{id}', [BlogCategoryController::class,'update'])->name('admin.cblog.update');
-  Route::get('/blog/category/delete/{id}', [BlogCategoryController::class,'destroy'])->name('admin.cblog.delete');
-  //------------ ADMIN BLOG SECTION ENDS ------------
-
-  //------------ ADMIN SLIDEER SECTION ------------
-  Route::get('/slider/datatables', [SliderController::class,'datatables'])->name('admin.slider.datatables'); //JSON REQUEST
-  Route::get('/slider', [SliderController::class,'index'])->name('admin.slider.index');
-  Route::get('/slider/create', [SliderController::class,'create'])->name('admin.slider.create');
-  Route::post('/slider/create', [SliderController::class,'store'])->name('admin.slider.store');
-  Route::get('/slider/edit/{id}', [SliderController::class,'edit'])->name('admin.slider.edit');
-  Route::post('/slider/update/{id}', [SliderController::class,'update'])->name('admin.slider.update');
-  Route::get('/slider/delete/{id}', [SliderController::class,'destroy'])->name('admin.slider.delete');
-  //------------ ADMIN SLIDEER SECTION ENDS ------------
-    
-  //------------ ADMIN FEATURE SECTION ------------
-  Route::get('/feature/datatables', [FeatureController::class,'datatables'])->name('admin.feature.datatables'); //JSON REQUEST
-  Route::get('/feature', [FeatureController::class,'index'])->name('admin.feature.index');
-  Route::get('/feature/create', [FeatureController::class,'create'])->name('admin.feature.create');
-  Route::post('/feature/create', [FeatureController::class,'store'])->name('admin.feature.store');
-  Route::get('/feature/edit/{id}', [FeatureController::class,'edit'])->name('admin.feature.edit');
-  Route::post('/feature/update/{id}', [FeatureController::class,'update'])->name('admin.feature.update');
-  Route::get('/feature/delete/{id}', [FeatureController::class,'destroy'])->name('admin.feature.delete');
-  //------------ ADMIN FEATURE SECTION ENDS ------------
+    // ------------ ROLE SECTION ----------------------
+    Route::get('/role/datatables', [RoleController::class,'datatables'])->name('admin.role.datatables');
+    Route::get('/role', [RoleController::class,'index'])->name('admin.role.index');
+    Route::get('/role/create', [RoleController::class,'create'])->name('admin.role.create');
+    Route::post('/role/create', [RoleController::class,'store'])->name('admin.role.store');
+    Route::get('/role/edit/{id}', [RoleController::class,'edit'])->name('admin.role.edit');
+    Route::post('/role/edit/{id}', [RoleController::class,'update'])->name('admin.role.update');
+    Route::get('/role/delete/{id}', [RoleController::class,'destroy'])->name('admin.role.delete');
+    // ------------ ROLE SECTION ENDS ----------------------
 
 
-  //------------ ADMIN SERVICE SECTION ------------
-  Route::get('/service/datatables', [ServiceController::class,'datatables'])->name('admin.service.datatables'); //JSON REQUEST
-  Route::get('/service', [ServiceController::class,'index'])->name('admin.service.index');
-  Route::get('/service/create', [ServiceController::class,'create'])->name('admin.service.create');
-  Route::post('/service/store', [ServiceController::class,'store'])->name('admin.service.store');
-  Route::get('/service/edit/{id}', [ServiceController::class,'edit'])->name('admin.service.edit');
-  Route::post('/service/edit/{id}', [ServiceController::class,'update'])->name('admin.service.update');  
-  Route::get('/service/delete/{id}', [ServiceController::class,'destroy'])->name('admin.service.delete'); 
-  //------------ ADMIN SERVICE SECTION ENDS ------------
+    //------------ ADMIN BLOG SECTION ------------
+    Route::get('/blog/datatables', [BlogController::class,'datatables'])->name('admin.blog.datatables'); //JSON REQUEST
+    Route::get('/blog', [BlogController::class,'index'])->name('admin.blog.index');
+    Route::get('/blog/create', [BlogController::class,'create'])->name('admin.blog.create');
+    Route::post('/blog/create', [BlogController::class,'store'])->name('admin.blog.store');
+    Route::get('/blog/edit/{id}', [BlogController::class,'edit'])->name('admin.blog.edit');
+    Route::post('/blog/edit/{id}', [BlogController::class,'update'])->name('admin.blog.update');
+    Route::get('/blog/delete/{id}', [BlogController::class,'destroy'])->name('admin.blog.delete');
+
+    Route::get('/blog/category/datatables', [BlogCategoryController::class,'datatables'])->name('admin.cblog.datatables'); //JSON REQUEST
+    Route::get('/blog/category', [BlogCategoryController::class,'index'])->name('admin.cblog.index');
+    Route::get('/blog/category/create', [BlogCategoryController::class,'create'])->name('admin.cblog.create');
+    Route::post('/blog/category/create', [BlogCategoryController::class,'store'])->name('admin.cblog.store');
+    Route::get('/blog/category/edit/{id}', [BlogCategoryController::class,'edit'])->name('admin.cblog.edit');
+    Route::post('/blog/category/edit/{id}', [BlogCategoryController::class,'update'])->name('admin.cblog.update');
+    Route::get('/blog/category/delete/{id}', [BlogCategoryController::class,'destroy'])->name('admin.cblog.delete');
+    //------------ ADMIN BLOG SECTION ENDS ------------
+
+    //------------ ADMIN SLIDEER SECTION ------------
+    Route::get('/slider/datatables', [SliderController::class,'datatables'])->name('admin.slider.datatables'); //JSON REQUEST
+    Route::get('/slider', [SliderController::class,'index'])->name('admin.slider.index');
+    Route::get('/slider/create', [SliderController::class,'create'])->name('admin.slider.create');
+    Route::post('/slider/create', [SliderController::class,'store'])->name('admin.slider.store');
+    Route::get('/slider/edit/{id}', [SliderController::class,'edit'])->name('admin.slider.edit');
+    Route::post('/slider/update/{id}', [SliderController::class,'update'])->name('admin.slider.update');
+    Route::get('/slider/delete/{id}', [SliderController::class,'destroy'])->name('admin.slider.delete');
+    //------------ ADMIN SLIDEER SECTION ENDS ------------
+      
+    //------------ ADMIN FEATURE SECTION ------------
+    Route::get('/feature/datatables', [FeatureController::class,'datatables'])->name('admin.feature.datatables'); //JSON REQUEST
+    Route::get('/feature', [FeatureController::class,'index'])->name('admin.feature.index');
+    Route::get('/feature/create', [FeatureController::class,'create'])->name('admin.feature.create');
+    Route::post('/feature/create', [FeatureController::class,'store'])->name('admin.feature.store');
+    Route::get('/feature/edit/{id}', [FeatureController::class,'edit'])->name('admin.feature.edit');
+    Route::post('/feature/update/{id}', [FeatureController::class,'update'])->name('admin.feature.update');
+    Route::get('/feature/delete/{id}', [FeatureController::class,'destroy'])->name('admin.feature.delete');
+    //------------ ADMIN FEATURE SECTION ENDS ------------
 
 
-  //------------ ADMIN MENU PAGE SETTINGS SECTION ------------
-  Route::get('/page-settings/contact', [PageSettingController::class,'contact'])->name('admin.ps.contact');
-  Route::get('/page-settings/about', [PageSettingController::class,'about'])->name('admin.ps.about');
-  Route::get('/page-settings/top/service', [PageSettingController::class,'topservice'])->name('admin.ps.topservice');
-  Route::get('/page-settings/top/footer', [PageSettingController::class,'footertop'])->name('admin.ps.footertop');
-  Route::post('/page-settings/contact/update', [PageSettingController::class,'contactupdate'])->name('admin.ps.contactupdate');
-  Route::post('/page-settings/update/all', [PageSettingController::class,'update'])->name('admin.ps.update');
-  Route::get('/homepage-settings/hero-section', [PageSettingController::class,'herosection'])->name('admin.ps.hero');
-  Route::get('/homepage-settings/recent-theme-section', [PageSettingController::class,'checkouttheme'])->name('admin.ps.recent');
-  Route::get('/homepage-settings/featured-theme-section', [PageSettingController::class,'featuredtheme'])->name('admin.ps.featured');
-  Route::get('/homepage-settings/blog-section', [PageSettingController::class,'blogsection'])->name('admin.ps.blog');
-  Route::get('/homepage-settings/newsletter-section', [PageSettingController::class,'newsletter'])->name('admin.ps.newsletter');
-  //------------ ADMIN PAGE SECTION ------------
+    //------------ ADMIN SERVICE SECTION ------------
+    Route::get('/service/datatables', [ServiceController::class,'datatables'])->name('admin.service.datatables'); //JSON REQUEST
+    Route::get('/service', [ServiceController::class,'index'])->name('admin.service.index');
+    Route::get('/service/create', [ServiceController::class,'create'])->name('admin.service.create');
+    Route::post('/service/store', [ServiceController::class,'store'])->name('admin.service.store');
+    Route::get('/service/edit/{id}', [ServiceController::class,'edit'])->name('admin.service.edit');
+    Route::post('/service/edit/{id}', [ServiceController::class,'update'])->name('admin.service.update');  
+    Route::get('/service/delete/{id}', [ServiceController::class,'destroy'])->name('admin.service.delete'); 
+    //------------ ADMIN SERVICE SECTION ENDS ------------
 
 
-  Route::get('/page/datatables', [PageController::class,'datatables'])->name('admin.page.datatables'); //JSON REQUEST
-  Route::get('/page', [PageController::class,'index'])->name('admin.page.index');
-  Route::get('/page/create', [PageController::class,'create'])->name('admin.page.create');
-  Route::post('/page/create', [PageController::class,'store'])->name('admin.page.store');
-  Route::get('/page/edit/{id}', [PageController::class,'edit'])->name('admin.page.edit');
-  Route::post('/page/update/{id}', [PageController::class,'update'])->name('admin.page.update');
-  Route::get('/page/delete/{id}', [PageController::class,'destroy'])->name('admin.page.delete');
-  Route::get('/page/status/{id1}/{id2}', [PageController::class,'status'])->name('admin.page.status');
+    //------------ ADMIN MENU PAGE SETTINGS SECTION ------------
+    Route::get('/page-settings/contact', [PageSettingController::class,'contact'])->name('admin.ps.contact');
+    Route::get('/page-settings/about', [PageSettingController::class,'about'])->name('admin.ps.about');
+    Route::get('/page-settings/top/service', [PageSettingController::class,'topservice'])->name('admin.ps.topservice');
+    Route::get('/page-settings/top/footer', [PageSettingController::class,'footertop'])->name('admin.ps.footertop');
+    Route::post('/page-settings/contact/update', [PageSettingController::class,'contactupdate'])->name('admin.ps.contactupdate');
+    Route::post('/page-settings/update/all', [PageSettingController::class,'update'])->name('admin.ps.update');
+    Route::get('/homepage-settings/hero-section', [PageSettingController::class,'herosection'])->name('admin.ps.hero');
+    Route::get('/homepage-settings/recent-theme-section', [PageSettingController::class,'checkouttheme'])->name('admin.ps.recent');
+    Route::get('/homepage-settings/featured-theme-section', [PageSettingController::class,'featuredtheme'])->name('admin.ps.featured');
+    Route::get('/homepage-settings/blog-section', [PageSettingController::class,'blogsection'])->name('admin.ps.blog');
+    Route::get('/homepage-settings/newsletter-section', [PageSettingController::class,'newsletter'])->name('admin.ps.newsletter');
+    //------------ ADMIN PAGE SECTION ------------
 
 
-  //------------------------------FAQ PAGE----------------------
-  Route::get('/faq/datatables', [FaqController::class,'datatables'])->name('admin.faq.datatables');
-  Route::get('/admin-faq', [FaqController::class,'index'])->name('admin.faq.index');
-  Route::get('/faq/create', [FaqController::class,'create'])->name('admin.faq.create');
-  Route::get('/faq/edit/{id}', [FaqController::class,'edit'])->name('admin.faq.edit');
-  Route::get('/faq/delete/{id}', [FaqController::class,'destroy'])->name('admin.faq.delete');
-  Route::post('/faq/update/{id}', [FaqController::class,'update'])->name('admin.faq.update');
-  Route::post('/faq/create', [FaqController::class,'store'])->name('admin.faq.store');
-  // ---------------------------Faq page end---------------------
+    Route::get('/page/datatables', [PageController::class,'datatables'])->name('admin.page.datatables'); //JSON REQUEST
+    Route::get('/page', [PageController::class,'index'])->name('admin.page.index');
+    Route::get('/page/create', [PageController::class,'create'])->name('admin.page.create');
+    Route::post('/page/create', [PageController::class,'store'])->name('admin.page.store');
+    Route::get('/page/edit/{id}', [PageController::class,'edit'])->name('admin.page.edit');
+    Route::post('/page/update/{id}', [PageController::class,'update'])->name('admin.page.update');
+    Route::get('/page/delete/{id}', [PageController::class,'destroy'])->name('admin.page.delete');
+    Route::get('/page/status/{id1}/{id2}', [PageController::class,'status'])->name('admin.page.status');
 
 
-  //------------ ADMIN SOCIAL SETTINGS SECTION ------------
-  Route::get('/social', [SocialSettingController::class,'index'])->name('admin.social.index');
-  Route::post('/social/update', [SocialSettingController::class,'socialupdate'])->name('admin.social.update');
-  Route::post('/social/update/all', [SocialSettingController::class,'socialupdateall'])->name('admin.social.update.all');
-  Route::get('/social/facebook', [SocialSettingController::class,'facebook'])->name('admin.social.facebook');
-  Route::get('/social/google', [SocialSettingController::class,'google'])->name('admin.social.google');
-  Route::get('/social/facebook/{status}', [SocialSettingController::class,'facebookup'])->name('admin.social.facebookup');
-  Route::get('/social/google/{status}', [SocialSettingController::class,'googleup'])->name('admin.social.googleup');
-  //------------ ADMIN SOCIAL SETTINGS SECTION ENDS------------
+    //------------------------------FAQ PAGE----------------------
+    Route::get('/faq/datatables', [FaqController::class,'datatables'])->name('admin.faq.datatables');
+    Route::get('/admin-faq', [FaqController::class,'index'])->name('admin.faq.index');
+    Route::get('/faq/create', [FaqController::class,'create'])->name('admin.faq.create');
+    Route::get('/faq/edit/{id}', [FaqController::class,'edit'])->name('admin.faq.edit');
+    Route::get('/faq/delete/{id}', [FaqController::class,'destroy'])->name('admin.faq.delete');
+    Route::post('/faq/update/{id}', [FaqController::class,'update'])->name('admin.faq.update');
+    Route::post('/faq/create', [FaqController::class,'store'])->name('admin.faq.store');
+    // ---------------------------Faq page end---------------------
 
 
-  //------------ ADMIN SEOTOOL SETTINGS SECTION ------------
-  Route::get('/seotools/analytics', [SeoToolController::class,'analytics'])->name('admin.seotool.analytics');
-  Route::post('/seotools/analytics/update', [SeoToolController::class,'analyticsupdate'])->name('admin.seotool.analytics.update');
-  Route::get('/seotools/keywords', [SeoToolController::class,'keywords'])->name('admin.seotool.keywords');
-  Route::post('/seotools/keywords/update', [SeoToolController::class,'keywordsupdate'])->name('admin.seotool.keywords.update');
-  Route::get('/products/popular/{id}',[SeoToolController::class,'popular'])->name('admin.prod.popular');
-  //------------ ADMIN SEOTOOL SETTINGS SECTION ------------
+    //------------ ADMIN SOCIAL SETTINGS SECTION ------------
+    Route::get('/social', [SocialSettingController::class,'index'])->name('admin.social.index');
+    Route::post('/social/update', [SocialSettingController::class,'socialupdate'])->name('admin.social.update');
+    Route::post('/social/update/all', [SocialSettingController::class,'socialupdateall'])->name('admin.social.update.all');
+    Route::get('/social/facebook', [SocialSettingController::class,'facebook'])->name('admin.social.facebook');
+    Route::get('/social/google', [SocialSettingController::class,'google'])->name('admin.social.google');
+    Route::get('/social/facebook/{status}', [SocialSettingController::class,'facebookup'])->name('admin.social.facebookup');
+    Route::get('/social/google/{status}', [SocialSettingController::class,'googleup'])->name('admin.social.googleup');
+    //------------ ADMIN SOCIAL SETTINGS SECTION ENDS------------
 
-  //---------------Category Section--------------
-  Route::get('/category/datatables',[CategoryController::class,'datatables'])->name('admin.cat.datatables');
-  Route::get('/category',[CategoryController::class,'index'])->name('admin.cat.index');
-  Route::get('/category/create', [CategoryController::class,'create'])->name('admin.cat.create');
-  Route::post('/category/store', [CategoryController::class,'store'])->name('admin.cat.store');
-  Route::get('/category/edit/{id}',[CategoryController::class,'edit'])->name('admin.cat.edit');
-  Route::post('/category/update/{id}',[CategoryController::class,'update'])->name('admin.cat.update');
-  Route::get('/category/delete/{id}',[CategoryController::class,'destroy'])->name('admin.cat.delete');
-  Route::get('/category/status/{id1}/{id2}',[CategoryController::class,'status'])->name('admin.cat.status');
-  //---------------Category Section End--------------
 
+    //------------ ADMIN SEOTOOL SETTINGS SECTION ------------
+    Route::get('/seotools/analytics', [SeoToolController::class,'analytics'])->name('admin.seotool.analytics');
+    Route::post('/seotools/analytics/update', [SeoToolController::class,'analyticsupdate'])->name('admin.seotool.analytics.update');
+    Route::get('/seotools/keywords', [SeoToolController::class,'keywords'])->name('admin.seotool.keywords');
+    Route::post('/seotools/keywords/update', [SeoToolController::class,'keywordsupdate'])->name('admin.seotool.keywords.update');
+    Route::get('/products/popular/{id}',[SeoToolController::class,'popular'])->name('admin.prod.popular');
+    //------------ ADMIN SEOTOOL SETTINGS SECTION ------------
+
+    //---------------Category Section--------------
+    Route::get('/category/datatables',[CategoryController::class,'datatables'])->name('admin.cat.datatables');
+    Route::get('/category',[CategoryController::class,'index'])->name('admin.cat.index');
+    Route::get('/category/create', [CategoryController::class,'create'])->name('admin.cat.create');
+    Route::post('/category/store', [CategoryController::class,'store'])->name('admin.cat.store');
+    Route::get('/category/edit/{id}',[CategoryController::class,'edit'])->name('admin.cat.edit');
+    Route::post('/category/update/{id}',[CategoryController::class,'update'])->name('admin.cat.update');
+    Route::get('/category/delete/{id}',[CategoryController::class,'destroy'])->name('admin.cat.delete');
+    Route::get('/category/status/{id1}/{id2}',[CategoryController::class,'status'])->name('admin.cat.status');
+    //---------------Category Section End--------------
 
 
    //-----------------------------Paymentys Information----------------------------
-
    Route::post('/general-settings/update/all',[ GeneralSettingController::class,'generalupdate'])->name('admin.gs.update');
    Route::get('/payment/information', [PaymentGatewayController::class,'paymentinfo'])->name('admin.payment.info');
    Route::get('/paymentgateway/datatables', [PaymentGatewayController::class,'datatables'])->name('admin.payment.datatables'); //JSON REQUEST
@@ -551,7 +548,7 @@ Route::prefix('user')->group(function() {
 
     Route::post('/blockchain-submit', 'Frontend\BlockChainController@deposit')->name('blockchain.submit');
     Route::post('/blockchain/notify', 'Frontend\BlockChainController@chaincallback')->name('blockchain.notify');
-    Route::get('/invest/blockchain', 'Frontend\BlockChainController@blockInvest')->name('blockchain.invest');
+    Route::get('/invest/blockchain/info', 'Frontend\BlockChainController@blockchainInvest')->name('blockchain.invest');
 
     Route::post('/coinpay-submit', 'Frontend\CoinPaymentController@deposit')->name('coinpay.submit');
     Route::post('/coinpay/notify', 'Frontend\CoinPaymentController@coincallback')->name('coinpay.notify');
