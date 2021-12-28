@@ -1,7 +1,7 @@
 @extends('layouts.front')
 
 @push('css')
-    
+
 @endpush
 
 @section('contents')
@@ -28,18 +28,20 @@
 <section class="thankyou">
     <div class="container">
       <div class="row justify-content-center">
-        <div class="col-lg-8 col-md-10 col-11">
-          <div class="content">
-            <div class="icon">
-                <i class="far fa-check-circle"></i>
-            </div>
-            <h4 class="heading">
-                  {{__('THANK YOU FOR YOUR INVEST.')}}
-            </h4>
-            <p class="text">
-                  {{__("We'll email you an order confirmation with details and tracking info.")}}
-            </p>
-            <a href="{{route('front.index')}}" class="link">{{__('Get Back To Our Homepage')}}</a>
+        <div class="col-lg-6 col-md-10 offset-lg-3  mx-auto">
+          <div class="card shadow-lg p-3 bg-dark ">
+
+              <div class="card-body text-center">
+
+                    <h4 class="heading success-heading">
+                        <i class="fa fa-check-circle"></i> {{__('THANK YOU FOR YOUR INVEST.')}}
+                    </h4>
+                    <p class="text success-heading">
+                         {{__("We'll email you an order confirmation with details and tracking info.")}}
+                    </p>
+                    <a href="{{route('front.index')}}" class="link">{{__('Get Back To Our Homepage')}}</a>
+
+              </div>
           </div>
         </div>
       </div>
@@ -48,5 +50,5 @@
 @endsection
 
 @push('js')
-    
+
 @endpush

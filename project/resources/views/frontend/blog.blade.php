@@ -1,7 +1,7 @@
 @extends('layouts.front')
 
 @push('css')
-    
+
 @endpush
 
 @section('contents')
@@ -27,12 +27,14 @@
         <section class="container blog-page">
 			<div class="row">
 				<div class="sidebar col-xs-12 col-md-4">
-					<div class="widget">
-						<h3 class="widget-title">{{__('Categories')}}</h3>
-						<ul class="arrow nav nav-tabs second-font uppercase">
+
+                    <div class="widget">
+						<h3 class="widget-title">{{ __('Categories') }}</h3>
+						<ul class="nav nav-tabs">
 							@foreach ($bcats as $key=>$data)
 								<li><a href="{{ route('front.blogcategory',$data->slug) }}">{{$data->name}}</a></li>
 							@endforeach
+
 						</ul>
 					</div>
 
@@ -68,7 +70,7 @@
 								<h3 class="text-center">{{__('No Blog Found')}}</h3>
 							</div>
 						</div>
-					@else 
+					@else
 						@foreach ($blogs as $key=>$data)
 							<article class="mb-3">
 								<a href="{{route('blog.details',$data->slug)}}"><h4>{{Str::limit($data->title,50)}}</h4></a>
@@ -99,5 +101,5 @@
 @endsection
 
 @push('js')
-    
+
 @endpush

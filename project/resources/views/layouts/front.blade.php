@@ -32,7 +32,7 @@
                 <feMergeNode/>
                 <feMergeNode in="SourceGraphic"/>
                 </feMerge>
-                </filter>          
+                </filter>
                 <path class="path" fill="#000000" d="M446.089,261.45c6.135-41.001-25.084-63.033-67.769-77.735l13.844-55.532l-33.801-8.424l-13.48,54.068
                     c-8.896-2.217-18.015-4.304-27.091-6.371l13.568-54.429l-33.776-8.424l-13.861,55.521c-7.354-1.676-14.575-3.328-21.587-5.073
                     l0.034-0.171l-46.617-11.64l-8.993,36.102c0,0,25.08,5.746,24.549,6.105c13.689,3.42,16.159,12.478,15.75,19.658L208.93,357.23
@@ -41,54 +41,14 @@
                     l-13.802,55.309l33.801,8.424l13.994-56.061c57.648,10.902,100.998,6.502,119.237-45.627c14.705-41.979-0.731-66.193-31.06-81.984
                     C425.008,305.984,441.655,291.455,446.089,261.45z M368.859,369.754c-10.455,41.983-81.128,19.285-104.052,13.589l18.562-74.404
                     C306.28,314.65,379.774,325.975,368.859,369.754z M379.302,260.846c-9.527,38.187-68.358,18.781-87.442,14.023l16.828-67.489
-                    C327.767,212.14,389.234,221.02,379.302,260.846z"/>       
+                    C327.767,212.14,389.234,221.02,379.302,260.846z"/>
             </svg>
         </div>
     </div>
 
     <div class="wrapper">
         <header class="header">
-            <div class="container">
-                <div class="row">
-                    <div class="main-logo col-12 col-lg-3 col-lg-2 col-xl-2 hidden-xsd-none d-sm-block"> 
-                        <a href="{{route('front.index')}}">
-							<img class="img-responsive" src="{{asset('assets/images/'.$gs->logo)}}" alt="logo">
-						</a>
-                    </div>
-
-                    <div class="col-lg-7 col-xl-7">
-                        <ul class="unstyled bitcoin-stats text-center">
-                            <li>
-                                <h6>9,450 USD</h6><span>Last trade price</span>
-                            </li>
-                            <li>
-                                <h6>+5.26%</h6><span>24 hour price</span>
-                            </li>
-                            <li>
-                                <h6>12.820 BTC</h6><span>24 hour volume</span>
-                            </li>
-                            <li>
-                                <h6>2,231,775</h6><span>active traders</span>
-                            </li>
-                            <li>
-                                <div class="btcwdgt-price" data-bw-theme="light" data-bw-cur="usd"></div> <span>Live Bitcoin price</span>
-                            </li>
-                        </ul>
-                    </div>
-
-                    <div class="col-lg-3 col-xl-3 mx-auto">
-                        <ul class="unstyled user">
-                            @if (!auth()->user())
-                                <li class="sign-in"><a href="{{route('user.login')}}" class="btn btn-primary"><i class="fa fa-user"></i> {{__('sign in')}}</a></li>
-                                <li class="sign-up"><a href="{{route('user.register')}}" class="btn btn-primary"><i class="fa fa-user-plus"></i> {{__('register')}}</a></li>
-                            @else 
-                                <li class="sign-in"><a href="{{route('user.dashboard')}}" class="btn btn-primary"><i class="fa fa-user"></i> {{__('Dashboard')}}</a></li>
-                            @endif
-                        </ul>
-                    </div>
-                </div>
-            </div>
-
+            
             @includeIf('partials.front.navbar')
         </header>
 
