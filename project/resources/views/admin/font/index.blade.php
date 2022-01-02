@@ -81,7 +81,7 @@
             			{ data: 'action', searchable: false, orderable: false }
                      ],
                language: {
-
+					processing: '<img src="{{asset('assets/images/'.$gs->admin_loader)}}">'
                 }
             });
 

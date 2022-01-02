@@ -38,6 +38,6 @@
 
 @endsection
 
-@section('scripts')
+@push('js')
 
-@endsection
+@endpush

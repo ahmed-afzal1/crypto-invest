@@ -57,13 +57,14 @@
 
 @endsection
 
-@section('scripts')
+@push('js')
 
 <script type="text/javascript">
+'use strict';
 	   $('#example').DataTable({
-               ordering: false
-            });
+          ordering: false
+      });
 </script>
 
-@endsection
+@endpush
 

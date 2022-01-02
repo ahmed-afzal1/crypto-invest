@@ -21,36 +21,18 @@
             <div class="gocover" style="background: url({{asset('assets/images/'.$gs->admin_loader)}}) no-repeat scroll center center rgba(45, 45, 45, 0.5);"></div>
             <form action="{{route('admin.slider.store')}}" enctype="multipart/form-data" method="POST" class="geniusform">
                @csrf
+
                @include('includes.admin.form-both')
 
-               <div class="panel panel-default slider-panel">
-                  <div class="panel-heading text-center">
-                     <h3>{{ __('Sub Title') }}</h3>
-                  </div>
-                  <div class="panel-body">
-                     <div class="form-group">
-                        <div class="col-sm-12">
-                           <label class="control-label" for="subtitle_text">{{ __('Text') }}*</label>
-                           <textarea class="form-control" name="subtitle_text" id="subtitle_text" rows="5"  placeholder="{{ __('Enter Title Text') }}"></textarea>
-                        </div>
-                     </div>
-                  </div>
+               <div class="form-group">
+                  <label for="title">{{ __('Title') }}</label>
+                  <input type="text" class="form-control" id="title" name="title_text" placeholder="{{ __('Enter Title') }}" value="" required>
                </div>
 
-               <div class="panel panel-default slider-panel">
-                  <div class="panel-heading text-center">
-                     <h3>{{ __('Title') }}</h3>
-                  </div>
-                  <div class="panel-body">
-                     <div class="form-group">
-                        <div class="col-sm-12">
-                           <label class="control-label" for="title_text">{{ __('Text') }}*</label>
-                           <textarea class="form-control" name="title_text" id="title_text" rows="5"  placeholder="{{ __('Enter Title Text') }}"></textarea>
-                        </div>
-                     </div>
-                  </div>
+              <div class="form-group">
+                  <label for="subtitle_text">{{ __('Sub Title') }}</label>
+                  <input type="text" class="form-control" id="subtitle_text" name="subtitle_text" placeholder="{{ __('Enter Sub Title') }}" value="" required>
                </div>
-
 
                <div class="row">
                   <div class="col-lg-6 mx-auto">

@@ -4,19 +4,17 @@
 
 <div class="card">
 	<div class="d-sm-flex align-items-center justify-content-between">
-	<h5 class=" mb-0 text-gray-800 pl-3">{{ __('Posts') }}</h5>
-	<ol class="breadcrumb">
-		<li class="breadcrumb-item"><a href="{{ route('admin.dashboard') }}">{{ __('Dashboard') }}</a></li>
-		<li class="breadcrumb-item"><a href="javascript:;">{{ __('Blog') }}</a></li>
-		<li class="breadcrumb-item"><a href="{{ route('admin.blog.index') }}">{{ __('Posts') }}</a></li>
-	</ol>
+        <h5 class=" mb-0 text-gray-800 pl-3">{{ $data->name }}</h5>
+        <ol class="breadcrumb">
+            <li class="breadcrumb-item"><a href="{{ route('admin.dashboard') }}">{{ __('Dashboard') }}</a></li>
+            <li class="breadcrumb-item"><a href="javascript:;">{{ __('User') }}</a></li>
+            <li class="breadcrumb-item"><a href="{{ route('admin.user.index') }}">{{ __('Users') }}</a></li>
+        </ol>
 	</div>
 </div>
 
 
-<!-- Row -->
 <div class="row mt-3">
-  <!-- Datatables -->
   <div class="col-lg-12">
 
 	@include('includes.admin.form-success')
@@ -35,49 +33,52 @@
                 </div>
             </div>
             <div class="col-md-4 mt-5">
-            <div class="table-responsive show-table">
-                <table class="table">
-                <tr>
-                    <th>{{__('ID#')}}</th>
-                    <td>{{$data->id}}</td>
-                </tr>
-                <tr>
-                    <th>{{__('Username')}}</th>
-                    <td>{{$data->username}}</td>
-                </tr>
-                <tr>
-                    <th>{{__('Email')}}</th>
-                    <td>{{$data->email}}</td>
-                </tr>
-                <tr>
-                    <th>{{__('Address')}}</th>
-                    <td>{{$data->billing_address}}</td>
-                </tr>
+                <div class="table-responsive show-table">
+                    <table class="table">
+                    <tr>
+                        <th>{{__('ID#')}}</th>
+                        <td>{{$data->id}}</td>
+                    </tr>
+                    <tr>
+                        <th>{{__('Username')}}</th>
+                        <td>{{$data->name}}</td>
+                    </tr>
+                    <tr>
+                        <th>{{__('Email')}}</th>
+                        <td>{{$data->email}}</td>
+                    </tr>
+                    <tr>
+                        <th>{{__('Address')}}</th>
+                        <td>{{$data->address}}</td>
+                    </tr>
 
-                </table>
+                    </table>
                 </div>
             </div>
             <div class="col-md-4 mt-5">
-            <div class="table-responsive show-table">
-            <table class="table">
+                <div class="table-responsive show-table">
+                    <table class="table">
 
-                    <tr>
-                        <th>{{__('State')}}</th>
-                        <td>{{$data->billing_state}}</td>
-                    </tr>
-                    <tr>
-                        <th>{{__('Zip Code')}}</th>
-                        <td>{{$data->billing_zip}}</td>
-                    </tr>
-                    <tr>
-                        <th>{{__('Country')}}</th>
-                        <td>{{$data->billing_country}}</td>
-                    </tr>
-                    <tr>
-                        <th>{{__('Joined')}}</th>
-                        <td>{{$data->created_at->diffForHumans()}}</td>
-                    </tr>
-                </table>
+                        <tr>
+                            <th>{{__('City')}}</th>
+                            <td>{{$data->city}}</td>
+                        </tr>
+
+                        <tr>
+                            <th>{{__('Zip Code')}}</th>
+                            <td>{{$data->zip}}</td>
+                        </tr>
+
+                        <tr>
+                            <th>{{__('KYC')}}</th>
+                            <td>{{$data->details}}</td>
+                        </tr>
+
+                        <tr>
+                            <th>{{__('Joined')}}</th>
+                            <td>{{$data->created_at->diffForHumans()}}</td>
+                        </tr>
+                    </table>
                 </div>
             </div>
         </div>
@@ -87,23 +88,53 @@
             <table class="table align-items-center table-flush" id="geniustable">
               <thead class="thead-light">
                 <tr>
-                    <th>{{ __('Product ID#') }}</th>
-                    <th>{{ __('Product Title') }}</th>
-                    <th>{{ __('Author') }}</th>
-                    <th>{{ __('License') }}</th>
-                    <th>{{ __('Support') }}</th>
-                    <th>{{ __('Total Price') }}</th>
+                    <th>{{ __('Order ID#') }}</th>
+                    <th>{{__('Plan')}}</th>
+                    <th>{{__('Invest')}}</th>
+                    <th>{{__('Get')}}</th>
+                    <th>{{__('Method')}}</th>
+                    <th>{{__('Payment Status')}}</th>
+                    <th>{{__('Status')}}</th>
                 </tr>
               </thead>
               <tbody>
-                  <tr>
-                      <td>Dynamic</td>
-                      <td>Dynamic</td>
-                      <td>Dynamic</td>
-                      <td>Dynamic</td>
-                      <td>Dynamic</td>
-                      <td>Dynamic</td>
-                  </tr>
+                  @if (count($orders) == 0)
+                    <tr>
+                        <td>
+                            {{__('NO INVEST FOUND')}}
+                        </td>
+                    </tr>
+                    @else 
+
+                    @foreach ($orders as $key=>$data) 
+                      <tr>
+                          <td>{{$data->order_number}}</td>
+                          <td>{{$data->title}}</td>
+                          <td>{{$data->invest}}</td>
+                          <td>{{$data->pay_amount}}</td>
+                          <td>{{$data->method}}</td>
+                          <td>
+                              @if ($data->payment_status == 'pending')
+                                  <span class="badge badge-warning">{{__('pending')}}</span>
+                                @else 
+                                  <span class="badge badge-success">{{__('completed')}}</span>
+                              @endif
+                          </td>
+                          <td>
+                            @if ($data->status == 'pending')
+                                <span class="badge badge-warning">{{__('pending')}}</span>
+                                @elseif($data->status == 'running')
+                                    <span class="badge badge-info">{{__('running')}}</span>
+                                 @elseif($data->status == 'declined')
+                                    <span class="badge badge-warning">{{__('declined')}}</span>
+                                @else
+                                <span class="badge badge-success">{{__('completed')}}</span>
+                            @endif
+                          </td>
+                      </tr>
+                    @endforeach
+                  @endif
+                  {{$orders->links()}}
               </tbody>
             </table>
           </div>

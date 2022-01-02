@@ -36,10 +36,10 @@ class InstamojoController extends Controller
         $total =  $request->invest;
         $paydata = $data->convertAutoData();
 
-        // if($request->currency_code != "INR")
-        // {
-        //     return redirect()->back()->with('unsuccess',__('Please Select INR Currency For This Payment.'));
-        // }
+        if($request->currency_code != "INR")
+        {
+            return redirect()->back()->with('unsuccess',__('Please Select INR Currency For This Payment.'));
+        }
 
 
         $order['item_name'] = $gs->title." Order";
@@ -80,7 +80,6 @@ class InstamojoController extends Controller
 
     public function notify(Request $request)
     {
-        dd('ok');
         $input_data = $request->all();
 
         $payment_id = Session::get('order_payment_id');

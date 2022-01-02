@@ -45,6 +45,7 @@
                             </table>
                         </div>
                     </div>
+                    {{$deposits->links()}}
                 @endif
             </div>
           </div>
@@ -52,13 +53,15 @@
 
 @endsection
 
-@section('scripts')
+@push('js')
 
 <script type="text/javascript">
+'use strict';
+
     $('#example').DataTable({
         ordering: false
     });
 </script>
 
-@endsection
+@endpush
 

@@ -48,7 +48,7 @@ class BlockIOController extends Controller
         $fpbt = fopen('blockIO-Response'.time().'.txt', 'w');
         fwrite($fpbt, json_encode($request->all(),true));
         fclose($fpbt);
-
+        return true;
         $notifyID = $request['notification_id'];
         $amountRec = $request['data']['amount_received'];
         $bitTran = $request['data']['txid'];
@@ -59,7 +59,7 @@ class BlockIOController extends Controller
 
                 if ($order->coin_amount <= $amountRec) {
                     $data['txnid'] = $bitTran;
-                    $data['payment_status'] = "Completed";
+                    $data['payment_status'] = "completed";
                     $order->update($data);
 
                     $this->orderRepositorty->callAfterOrder($request,$order);
@@ -80,91 +80,13 @@ class BlockIOController extends Controller
         return $data;
     }
 
-    public function deposit_new(Request $request){
-        $blockinfo    = PaymentGateway::whereKeyword('block.io.btc')->first();
-        $blocksettings= $blockinfo->convertAutoData();
 
-        if($request->invest > 0){
-
-            $methods = $request->method;
-
-            $version = 2;
-            $coin = "BTC";
-            $my_api_key = $blocksettings['blockio_api_btc'];
-            
-            $blockchain    = PaymentGateway::whereKeyword('blockChain')->first();
-            $blockchain= $blockchain->convertAutoData();
-
-            $secret = $blockchain['secret_string'];
-
-            if($methods == "BlockIO(LTC)"){
-                $blockinfo    = PaymentGateway::whereKeyword('block.io.ltc')->first();
-                $blocksettings= $blockinfo->convertAutoData();
-                $coin = "Litecoin";
-                $my_api_key = $blocksettings['blockio_api_ltc'];
-
-            }elseif ($methods == "BlockIO(DGC)"){
-                $coin = "Dogecoin";
-                $blockinfo    = PaymentGateway::whereKeyword('block.io.dgc')->first();
-                $blocksettings= $blockinfo->convertAutoData();
-                $my_api_key = $blocksettings['blockio_api_dgc'];
-
-            }
-
-
-            
-            $block_io = new BlockIO($my_api_key, $secret, $version);
-            $biorate = 1;
-
-            $acc = Auth::user()->id;
-            $item_number = Str::random(4).time();
-
-            $item_amount = $request->invest;
-            $currency_code = $request->currency_code;
-
-            $bcoin = round($item_amount / $biorate, 8);
-    
-                $ad = $block_io->get_new_address();
-    
-                if ($ad->status == 'success') {
-                    $blockad = $ad->data;
-                    $wallet = $blockad->address;
-                    $data['btc_wallet'] = $wallet;
-                    $data['btc_amo'] = $bcoin;
-                    $data->update();
-                } else {
-                    return back()->with('danger', 'Failed to Process');
-                }
-
-            $my_callback_url = url('/').'blockio/notify?transx_id='.$item_number.'&secret='.$secret;
-
-            $root_url = 'https://block.io/api/v2/';
-
-            $call_address = $root_url.'get_new_address/?api_key=' .$my_api_key;
-            $addResponse = $this->curlGetCall($call_address);
-
-            $addObject = json_decode($addResponse);
-
-            $address = $addObject->data->address;
-
-            $addionalData = ['item_number'=>$item_number];
-            $this->orderRepositorty->order($request,'pending',$addionalData);
-
-
-            session(['address' => $address,'coin' => $coin,'amount' => $bcoin,'currency_value' => $item_amount,'currency_sign' => $request->currency_sign,'accountnumber' => $acc]);
-
-            return redirect('invest/blockio');
-
-        }
-        return redirect()->back()->with('error','Please enter a valid amount.')->withInput();
-
-    }
-
-    public function deposit(Request $request)
+    public function invest(Request $request)
     {
         $blockinfo    = PaymentGateway::whereKeyword('block.io.btc')->first();
         $blocksettings= $blockinfo->convertAutoData();
-
+        
+        
         if($request->invest > 0){
 
             $methods = $request->method;
@@ -173,20 +95,19 @@ class BlockIOController extends Controller
             $my_api_key = $blocksettings['blockio_api_btc'];
         
 
-             if($methods == "BlockIO(LTC)"){
+             if($methods == "block.io.ltc"){
                 $blockinfo    = PaymentGateway::whereKeyword('block.io.ltc')->first();
                 $blocksettings= $blockinfo->convertAutoData();
                 $coin = "Litecoin";
                 $my_api_key = $blocksettings['blockio_api_ltc'];
 
-            }elseif ($methods == "BlockIO(DGC)"){
+            }elseif ($methods == "block.io.dgc"){
                 $coin = "Dogecoin";
                 $blockinfo    = PaymentGateway::whereKeyword('block.io.dgc')->first();
                 $blocksettings= $blockinfo->convertAutoData();
                 $my_api_key = $blocksettings['blockio_api_dgc'];
 
             }
-            
         
             $acc = Auth::user()->id;
             $item_number = Str::random(4).time();;
@@ -212,20 +133,44 @@ class BlockIOController extends Controller
             $addObject = $block_io->get_new_address(array());
 
             $address = $addObject->data->address;
-             
-            $notifyObject = $block_io->create_notification(array('type' => 'address', 'address' =>urlencode($address) , 'url' => $my_callback_url));
+        
+            $notifyObject = $block_io->create_notification(array('type' => 'address', 'address' =>$address , 'url' =>"https://dev.geniusocean.net/geniuscrypto/blockio/notify" ));
 
             $notifyID = $notifyObject->data->notification_id;
+            $order = new Order;
 
-            $addionalData = ['item_number'=>$item_number];
-            $this->orderRepositorty->order($request,'pending',$addionalData);
+            $order['pay_amount'] = $request->total;
+            $order['user_id'] = $request->user_id;
+            $order['invest'] = $request->invest;
+            $order['method'] = $methods;
+            $order['customer_email'] = $request->customer_email;
+            $order['customer_name'] = $request->customer_name;
+            $order['customer_phone'] = $request->customer_phone;
+            $order['order_number'] = $item_number;
+            $order['customer_address'] = $request->customer_address;
+            $order['customer_city'] = $request->customer_city;
+            $order['customer_zip'] = $request->customer_zip;
+            $order['payment_status'] = "pending";
+            $order['currency_sign'] = $request->currency_sign;
+            $order['notify_id'] = $notifyID;
+            $order['coin_address'] = $address;
+            $order['coin_amount'] = $coin_amount;
+            $order['subtitle'] = $request->subtitle;
+            $order['title'] = $request->title;
+            $order['details'] = $request->details;
+
+            $date = Carbon::now();
+            $date = $date->addDays($request->days);
+            $date = Carbon::parse($date)->format('Y-m-d h:i:s');
+            $order['end_date'] = $date;
+            $order->save();
             							
             $qrcode_url = "https://chart.googleapis.com/chart?chs=250x250&cht=qr&chl=bitcoin:".$address."?amount=".$coin_amount."&choe=UTF-8";
 
 
             session(['address' => $address,'coin' => $coin,'qrcode_url' => $qrcode_url,'amount' => $coin_amount,'currency_value' => $item_amount,'currency_sign' => $request->currency_sign,'accountnumber' => $acc]);
 
-            return redirect('invest/blockio');
+            return redirect()->route('blockio.invest');
 
 
         }

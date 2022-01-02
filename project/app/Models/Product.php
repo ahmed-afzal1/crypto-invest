@@ -19,4 +19,8 @@ class Product extends Model
         return $rate;
     }
 
+    public function setPrice($price,$currencyValue){
+        return round($price * $currencyValue,2);
+    }
+
 }

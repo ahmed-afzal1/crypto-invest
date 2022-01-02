@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Deposit;
 use App\Classes\GeniusMailer;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
+use App\Models\Currency;
 use App\Models\Deposit;
 use App\Models\Generalsetting;
 use Carbon\Carbon;
@@ -15,10 +16,10 @@ class PaytmController extends Controller
 {
     public function store(Request $request){
 
-        // if($request->currency_code != "INR")
-        // {
-        //     return redirect()->back()->with('unsuccess','Please Select INR Currency For Paytm.');
-        // }
+        if($request->currency_code != "INR")
+        {
+            return redirect()->back()->with('unsuccess','Please Select INR Currency For Paytm.');
+        }
 
         $settings = Generalsetting::findOrFail(1);
         $deposit = new Deposit();
@@ -36,12 +37,13 @@ class PaytmController extends Controller
         $deposit->save();
 
         Session::put('deposit_number',$item_number);
+        session('input_data',$request->all());
 
         $data_for_request = $this->handlePaytmRequest( $item_number, $item_amount );
 	    $paytm_txn_url = 'https://securegw-stage.paytm.in/theia/processTransaction';
 	    $paramList = $data_for_request['paramList'];
 	    $checkSum = $data_for_request['checkSum'];
-	    return view( 'front.paytm-merchant-form', compact( 'paytm_txn_url', 'paramList', 'checkSum' ) );
+	    return view( 'frontend.paytm-merchant-form', compact( 'paytm_txn_url', 'paramList', 'checkSum' ) );
     }
 
     public function handlePaytmRequest( $transaction_id, $amount) {
@@ -350,6 +352,7 @@ class PaytmController extends Controller
     public function paytmCallback( Request $request ) {
         
         $deposit_number = Session::get('deposit_number');
+        $input = Session::get('input_data');
 
         $transaction_id = $request['ORDERID'];
         if ( 'TXN_SUCCESS' === $request['STATUS'] ) {
@@ -361,8 +364,14 @@ class PaytmController extends Controller
             $deposit->update($data);
 
 
-            $user = auth()->user();
             $gs =  Generalsetting::findOrFail(1);
+            $currency = Currency::where('id',$input['currency_id'])->first();
+            $amountToAdd = $input['amount']/$currency->value;
+
+            $user = auth()->user();
+            $user->income += $amountToAdd;
+            $user->save();
+
             if($gs->is_smtp == 1)
             {
                 $data = [
@@ -388,7 +397,7 @@ class PaytmController extends Controller
 
             Session::forget('deposit_number');
 
-            return redirect()->back()->with('success','Deposit amount successfully!');
+            return redirect()->route('user.deposit.create')->with('success','Deposit amount ('.$input['amount'].') successfully!');
 
         } else if( 'TXN_FAILURE' === $request['STATUS'] ){
 

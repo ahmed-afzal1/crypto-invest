@@ -6,11 +6,10 @@ use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use Auth;
 use App\Models\Order;
+use Carbon\Carbon;
 
 class OrderController extends Controller
-
 {
-
     public function __construct()
     {
         $this->middleware('auth');
@@ -18,7 +17,6 @@ class OrderController extends Controller
 
     public function orders()
     {
-        
         $user = Auth::guard('web')->user();
         $orders = Order::where('user_id','=',$user->id)->where('payment_status','=','completed')->where('status','=','pending')->orderBy('id','desc')->get();
         return view('user.order.invests',compact('user','orders'));
@@ -28,7 +26,7 @@ class OrderController extends Controller
     public function payouts()
     {
         $user = Auth::guard('web')->user();
-        $orders = Order::where('user_id','=',$user->id)->where('status','=','Completed')->where('end_date','<',date('Y-m-d'))->orderBy('id','desc')->get();
+        $orders = Order::where('user_id','=',$user->id)->where('status','=','Completed')->orderBy('id','desc')->get();
         return view('user.order.payouts',compact('user','orders'));
     }
 

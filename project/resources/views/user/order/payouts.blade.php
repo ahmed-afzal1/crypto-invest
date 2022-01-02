@@ -25,7 +25,7 @@
 									<th>{{ __('Method') }}</th>
 									<th>{{ __('Paid') }}</th>
 									<th>{{ __('Get') }}</th>
-									<th></th>
+									<th>{{__('Details')}}</th>
 								</tr>
 							</thead>
 							<tbody>
@@ -41,17 +41,17 @@
 
 										<td>
 											@if($gs->currency_format == 0)
-												{{ $gs->currency_sign }}{{ round($data->invest , 2) }}
+											{{ $defaultCurrency->sign }}{{ round($data->invest * $defaultCurrency->value, 2) }}
 											@else
-												{{ round($data->invest , 2) }}{{ $gs->currency_sign }}
+											{{ round($data->invest * $defaultCurrency->value, 2) }}{{ $defaultCurrency->sign }}
 											@endif
 										</td>
 
 										<td>
 											@if($gs->currency_format == 0)
-												{{ $gs->currency_sign }}{{ round($data->pay_amount , 2) }}
+												{{ $defaultCurrency->sign }} {{ round($data->pay_amount * $defaultCurrency->value, 2) }}
 											@else
-												{{ round($data->pay_amount , 2) }}{{ $gs->currency_sign }}
+												{{ round($data->pay_amount * $defaultCurrency->value, 2) }}{{ $defaultCurrency->sign }}
 											@endif
 										</td>
 										
@@ -74,12 +74,14 @@
 
 @endsection
 
-@section('scripts')
+@push('js')
 
 <script type="text/javascript">
+'use strict';
+
 	$('#example').DataTable({
 		ordering: false
 	});
 </script>
 
-@endsection
+@endpush

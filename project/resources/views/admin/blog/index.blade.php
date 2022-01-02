@@ -13,12 +13,8 @@
 	</div>
 </div>
 
-
-<!-- Row -->
 <div class="row mt-3">
-  <!-- Datatables -->
   <div class="col-lg-12">
-
 	@include('includes.admin.form-success')
 
 	<div class="card mb-4">
@@ -36,8 +32,6 @@
 	  </div>
 	</div>
   </div>
-  <!-- DataTable with Hover -->
-
 </div>
 
 
@@ -118,7 +112,7 @@
 			$(function() {
             $(".btn-area").append('<div class="col-sm-12 col-md-4 pr-3 text-right">'+
                 '<a class="btn btn-primary" href="{{route('admin.blog.create')}}">'+
-            '<i class="fas fa-plus"></i> Add New Post'+
+            '<i class="fas fa-plus"></i> {{__('Add New Post')}}'+
             '</a>'+
             '</div>');
         });

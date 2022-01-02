@@ -1,13 +1,11 @@
 (function($) {
   "use strict"; 
   
-  // Start of use strict
   $(window).on('load', function () {
 		$('.Loader').delay(350).fadeOut('slow');
 		$('body').delay(350).css({ 'overflow': 'visible' });
 	})
 
-  // Toggle the side navigation
   $("#sidebarToggle, #sidebarToggleTop").on('click', function(e) {
     $("body").toggleClass("sidebar-toggled");
     $(".sidebar").toggleClass("toggled");
@@ -20,43 +18,37 @@
     var pageUrl = window.location.href.split(/[#]/)[0];
     if (this.href == pageUrl) {
       if($(this).parent().hasClass('collapse-inner')){
-        $(this).addClass("active"); // add active to li of the current link
+        $(this).addClass("active");
         $(this).parent().parent().parent().addClass("active");
         $(this).parent().parent().prev().click();
       }else{
-				$(this).parent().addClass("active"); // add active to li of the current link
+				$(this).parent().addClass("active");
       }
 
 
     }
   });
 
-// Attribute Modal
-$(document).on('click','.attribute',function(){
-   if(admin_loader == 1)
-    {
-   $('.Loader').show();
-  }
-    $('#attribute').find('.modal-title').html($('#attribute_data').val());
-    $('#attribute .modal-content .modal-body').html('').load($(this).attr('data-href'),function(response, status, xhr){
-        if(status == "success")
-        {
-          if(admin_loader == 1)
-            {
-              $('.Loader').hide();
-            }
-        }
+
+  $(document).on('click','.attribute',function(){
+    if(admin_loader == 1)
+      {
+    $('.Loader').show();
+    }
+      $('#attribute').find('.modal-title').html($('#attribute_data').val());
+      $('#attribute .modal-content .modal-body').html('').load($(this).attr('data-href'),function(response, status, xhr){
+          if(status == "success")
+          {
+            if(admin_loader == 1)
+              {
+                $('.Loader').hide();
+              }
+          }
+    
+        });
+    });
   
-      });
-  });
-  
-  // Attribute Modal Ends
 
-
-  // Close any open menu accordions when window is resized below 768px
-
-
-  // Prevent the content wrapper from scrolling when the fixed side navigation hovered over
   $('body.fixed-nav .sidebar').on('mousewheel DOMMouseScroll wheel', function(e) {
     if ($(window).width() > 768) {
       var e0 = e.originalEvent,
@@ -66,7 +58,7 @@ $(document).on('click','.attribute',function(){
     }
   });
 
-  // Scroll to top button appear
+
   $(document).on('scroll', function() {
     var scrollDistance = $(this).scrollTop();
     if (scrollDistance > 100) {
@@ -76,7 +68,7 @@ $(document).on('click','.attribute',function(){
     }
   });
 
-  // Smooth scrolling using jQuery easing
+
   $(document).on('click', 'a.scroll-to-top', function(e) {
     var $anchor = $(this);
     $('html, body').stop().animate({
@@ -85,52 +77,50 @@ $(document).on('click','.attribute',function(){
     e.preventDefault();
   });
 
-               // IMAGE UPLOADING 1:)
-               $(".image-upload").on( "change", function() {
-                var imgpath = $(this).parent().prev();
-                var file = $(this);
-                readURL(this,imgpath);
-              });
-      
-              function readURL(input,imgpath) {
-              if (input.files && input.files[0]) {
-                  var reader = new FileReader();
-                  reader.onload = function (e) {
-                    imgpath.css('background', 'url('+e.target.result+')');
-                  }
-                  reader.readAsDataURL(input.files[0]);
-              }
-          }
-              // IMAGE UPLOADING ENDS :)
-      
-        // IMAGE UPLOADING 1:)
-        $(".image-upload1").on( "change", function() {
-          var imgpath = $(this).parent().prev();
-          var file = $(this);
-          readURL(this,imgpath);
-        });
-      
-        function readURL(input,imgpath) {
-        if (input.files && input.files[0]) {
-            var reader = new FileReader();
-            reader.onload = function (e) {
-              imgpath.css('background', 'url('+e.target.result+')');
-            }
-            reader.readAsDataURL(input.files[0]);
-        }
-      }
-        // IMAGE UPLOADING ENDS :)
 
-  // NORMAL FORM
+  $(".image-upload").on( "change", function() {
+    var imgpath = $(this).parent().prev();
+    var file = $(this);
+    readURL(this,imgpath);
+  });
+      
+  function readURL(input,imgpath) {
+    if (input.files && input.files[0]) {
+        var reader = new FileReader();
+        reader.onload = function (e) {
+          imgpath.css('background', 'url('+e.target.result+')');
+        }
+        reader.readAsDataURL(input.files[0]);
+    }
+  }
+
+  $(".image-upload1").on( "change", function() {
+    var imgpath = $(this).parent().prev();
+    var file = $(this);
+    readURL(this,imgpath);
+  });
+      
+  function readURL(input,imgpath) {
+    if (input.files && input.files[0]) {
+        var reader = new FileReader();
+        reader.onload = function (e) {
+          imgpath.css('background', 'url('+e.target.result+')');
+        }
+        reader.readAsDataURL(input.files[0]);
+    }
+  }
+
   $(document).on('submit','#geniusformdata',function(e){
     e.preventDefault();
-  if(admin_loader == 1)
-    {
-    $('.Loader').show();
-  }
+
+    if(admin_loader == 1)
+      {
+      $('.Loader').show();
+    }
+
     $('button.addProductSubmit-btn').prop('disabled',true);
     disablekey();
-        $.ajax({
+    $.ajax({
          method:"POST",
          url:$(this).prop('action'),
          data:new FormData(this),
@@ -148,10 +138,11 @@ $(document).on('click','.attribute',function(){
               {
                 $('.alert-danger ul').append('<li>'+ data.errors[error] +'</li>');
               }
-          if(admin_loader == 1)
-            {
-              $('.Loader').hide();
-            }
+
+              if(admin_loader == 1)
+              {
+                $('.Loader').hide();
+              }
               $("#modal1 .modal-content .modal-body .alert-danger").focus();
               $('button.addProductSubmit-btn').prop('disabled',false);
               $('#geniusformdata input , #geniusformdata select , #geniusformdata textarea').eq(1).focus();
@@ -161,29 +152,28 @@ $(document).on('click','.attribute',function(){
               table.ajax.reload();
               $('.alert-success').show();
               $('.alert-success p').html(data);
-          if(admin_loader == 1)
-            {
-              $('.Loader').hide();
-            }
+
+              if(admin_loader == 1)
+              {
+                $('.Loader').hide();
+              }
               $('button.addProductSubmit-btn').prop('disabled',false);
               $('#attribute,#modal1,#modal2,#verify-modal').modal('hide');
   
              }
             enablekey();
          }
-  
-        });
-  
+    });
   });
 
   $(document).on('submit','.geniusform',function(e){
-
       var $this = $(this);
 
       e.preventDefault();
+
       if(admin_loader == 1)
       {
-      $('.Loader').show();
+        $('.Loader').show();
       }
 
     $('#submit-btn').prop('disabled',true);
@@ -231,53 +221,48 @@ $(document).on('click','.attribute',function(){
     $('.eml-val').val($(this).data('email'));
   });
   
-            $(document).on("submit", "#emailreply1" , function(){
-            var token = $(this).find('input[name=_token]').val();
-            var subject = $(this).find('input[name=subject]').val();
-            var message =  $(this).find('textarea[name=message]').val();
-            var to = $(this).find('input[name=to]').val();
-            $('#eml1').prop('disabled', true);
-            $('#subj1').prop('disabled', true);
-            $('#msg1').prop('disabled', true);
-            $('#emlsub1').prop('disabled', true);
-              $.ajax({
-              type: 'post',
-              url: mainurl+'/admin/user/send/message',
-              data: {
-                  '_token': token,
-                  'subject'   : subject,
-                  'message'  : message,
-                  'to'   : to
-                    },
-                   success: function( data) {
-                    $('#eml1').prop('disabled', false);
-                    $('#subj1').prop('disabled', false);
-                    $('#msg1').prop('disabled', false);
-                    $('#subj1').val('');
-                    $('#msg1').val('');
-                    $('#emlsub1').prop('disabled', false);
-                    if(data == 0)
-                    toastr.error("Oops Something Goes Wrong !!");
-                      
-                    else
-                    toastr.success("Successfully Sent");
-                    $('#vendorform').modal('hide');
-              }
-          });
-            return false;
-          });
+  $(document).on("submit", "#emailreply1" , function(){
+    var token = $(this).find('input[name=_token]').val();
+    var subject = $(this).find('input[name=subject]').val();
+    var message =  $(this).find('textarea[name=message]').val();
+    var to = $(this).find('input[name=to]').val();
+    $('#eml1').prop('disabled', true);
+    $('#subj1').prop('disabled', true);
+    $('#msg1').prop('disabled', true);
+    $('#emlsub1').prop('disabled', true);
+
+      $.ajax({
+        type: 'post',
+        url: mainurl+'/admin/user/send/message',
+        data: {
+            '_token': token,
+            'subject'   : subject,
+            'message'  : message,
+            'to'   : to
+              },
+            success: function( data) {
+              $('#eml1').prop('disabled', false);
+              $('#subj1').prop('disabled', false);
+              $('#msg1').prop('disabled', false);
+              $('#subj1').val('');
+              $('#msg1').val('');
+              $('#emlsub1').prop('disabled', false);
+              if(data == 0)
+              toastr.error("Oops Something Goes Wrong !!");
+                
+              else
+              toastr.success("Successfully Sent");
+              $('#vendorform').modal('hide');
+        }
+    });
+    return false;
+  });
   
-  // SEND MESSAGE SECTION ENDS
-  // NORMAL FORM ENDS
 
-  // NORMAL TAB FORM
-
-    $(document).on('submit','.geniusform-tab',function(e){
-
+  $(document).on('submit','.geniusform-tab',function(e){
       var $this = $(this);
 
       e.preventDefault();
-
       var pass = 1;
 
       $('form.geniusform-tab').find('input, select').each(function(){
@@ -321,12 +306,10 @@ $(document).on('click','.attribute',function(){
               $this.find('.alert-danger').hide();
               $this.find('.alert-success').show();
               $this.find('.alert-success p').html(data);
-
-
             }
             if(admin_loader == 1)
             {
-                $('.Loader').hide();
+              $('.Loader').hide();
             }
 
             $('#submit-btn').prop('disabled',false);
@@ -338,50 +321,42 @@ $(document).on('click','.attribute',function(){
         });
 
       }
-
-
-
   });
 
-  // NORMAL TAB FORM ENDS
 
-  // POPUP MODAL
 
   $('.confirm-modal').on('show.bs.modal', function(e) {
     $(this).find('.btn-ok').attr('href', $(e.relatedTarget).data('href'));
   });
 
   $('.confirm-modal .btn-ok').on('click', function(e) {
-
-  if(admin_loader == 1)
-  {
-  $('.Loader').show();
-  }
-
-    $.ajax({
-    type:"GET",
-    url:$(this).attr('href'),
-    success:function(data)
+    if(admin_loader == 1)
     {
-          $('.confirm-modal').modal('hide');
-          table.ajax.reload();
-          $('.alert-danger').hide();
-          $('.alert-success').show();
-          $('.alert-success p').html(data);
-
-          if(admin_loader == 1)
-          {
-            $('.Loader').hide();
-          }
-
+      $('.Loader').show();
     }
-    });
-    return false;
+
+      $.ajax({
+      type:"GET",
+      url:$(this).attr('href'),
+      success:function(data)
+      {
+            $('.confirm-modal').modal('hide');
+            table.ajax.reload();
+            $('.alert-danger').hide();
+            $('.alert-success').show();
+            $('.alert-success p').html(data);
+
+            if(admin_loader == 1)
+            {
+              $('.Loader').hide();
+            }
+
+      }
+      });
+      return false;
   });
 
-  // POPUP MODAL ENDS
 
-// STATUS SECTION
 
 $('.drop-change').on('click',function(){
   var $this = $(this);
@@ -403,7 +378,7 @@ $('.drop-change').on('click',function(){
 
 });
 
-// STATUS SECTION ENDS
+
 
 $('.mytags').tagify();
 
@@ -417,7 +392,6 @@ $(document).on('click','.hide-close',function(){
     $(this).parent().hide();
 });
 
-// Modal Javascript
 
 $(document).ready(function () {
   
@@ -439,28 +413,26 @@ $(document).ready(function () {
 
 });
 
-// Popover Javascript
 
-$(function () {
-  $('[data-toggle="popover"]').popover()
-});
+  $(function () {
+    $('[data-toggle="popover"]').popover()
+  });
 
-$('.popover-dismiss').popover({
-  trigger: 'focus'
-});
+  $('.popover-dismiss').popover({
+    trigger: 'focus'
+  });
 
-function shownotification(){
-  $("#notclear").html('0');
-  $route = $("#notclear").data("href");
-  $.get($route);
-  $('#notf-show').load($('#notf-show').data('href'));
-}
+  function shownotification(){
+    $("#notclear").html('0');
+    $route = $("#notclear").data("href");
+    $.get($route);
+    $('#notf-show').load($('#notf-show').data('href'));
+  }
 
-$(document).on('click','#clear-notf',function(){
-  $.get($(this).data('href'));
-});
+  $(document).on('click','#clear-notf',function(){
+    $.get($(this).data('href'));
+  });
 
-  // Status Start
   $(document).on('click','.status',function () {
     var link = $(this).attr('data-href');
         $.get( link, function() {
@@ -472,21 +444,20 @@ $(document).on('click','#clear-notf',function(){
               $('.alert-success p').html(data);
         })
   });
-// Status Ends
-
-$(document).on('click','.dropdown-toggle',function(){
-  let $this = $(this);
-  if($this.parent().hasClass('show')){
-    $this.parent().removeClass('show');
-    $this.next().removeClass('show');
-  }else{
-    $this.parent().addClass('show');
-    $this.next().addClass('show');
-  }
-});
 
 
-  // Display Subcategories & attributes
+  $(document).on('click','.dropdown-toggle',function(){
+    let $this = $(this);
+    if($this.parent().hasClass('show')){
+      $this.parent().removeClass('show');
+      $this.next().removeClass('show');
+    }else{
+      $this.parent().addClass('show');
+      $this.next().addClass('show');
+    }
+  });
+
+
   $(document).on('change','#cat',function () {
     var link = $(this).find(':selected').attr('data-href');
     if(link != "")
@@ -498,58 +469,60 @@ $(document).on('click','.dropdown-toggle',function(){
   });
 
 
-    // Display Childcategories & Attributes
-    $(document).on('change','#subcat',function () {
-      var link = $(this).find(':selected').attr('data-href');
+  $(document).on('change','#subcat',function () {
+    var link = $(this).find(':selected').attr('data-href');
 
-      if(link != "")
-      {
-        $('#childcat').load(link);
-        $('#childcat').prop('disabled',false);
-      }
-    });
-    $(document).on('submit','#messageform',function(e){
-      e.preventDefault();
-      var href = $(this).data('href');
-      if(admin_loader == 1)
-      {
+    if(link != "")
+    {
+      $('#childcat').load(link);
+      $('#childcat').prop('disabled',false);
+    }
+  });
+
+  $(document).on('submit','#messageform',function(e){
+    e.preventDefault();
+
+    var href = $(this).data('href');
+    if(admin_loader == 1)
+    {
       $('.Loader').show();
-      }
-      $('button.mybtn1').prop('disabled',true);
-          $.ajax({
-           method:"POST",
-           url:$(this).prop('action'),
-           data:new FormData(this),
-           contentType: false,
-           cache: false,
-           processData: false,
-           success:function(data)
-           {
-              if ((data.errors)) {
-              $('.alert-success').hide();
-              $('.alert-danger').show();
-              $('.alert-danger ul').html('');
-                for(var error in data.errors)
-                {
-                  $('.alert-danger ul').append('<li>'+ data.errors[error] +'</li>')
-                }
-                $('#messageform textarea').val('');
-              }
-              else
-              {
-                $('.alert-danger').hide();
-                $('.alert-success').show();
-                $('.alert-success p').html(data);
-                $('#messageform textarea').val('');
-                $('#messages').load(href);
-              }
-              if(admin_loader == 1)
-              {
-                $('.Loader').hide();
-              }
-              $('button.mybtn1').prop('disabled',false);
-           }
-          });
+    }
+    $('button.mybtn1').prop('disabled',true);
+
+      $.ajax({
+        method:"POST",
+        url:$(this).prop('action'),
+        data:new FormData(this),
+        contentType: false,
+        cache: false,
+        processData: false,
+        success:function(data)
+        {
+          if ((data.errors)) {
+          $('.alert-success').hide();
+          $('.alert-danger').show();
+          $('.alert-danger ul').html('');
+            for(var error in data.errors)
+            {
+              $('.alert-danger ul').append('<li>'+ data.errors[error] +'</li>')
+            }
+            $('#messageform textarea').val('');
+          }
+          else
+          {
+            $('.alert-danger').hide();
+            $('.alert-success').show();
+            $('.alert-success p').html(data);
+            $('#messageform textarea').val('');
+            $('#messages').load(href);
+          }
+          if(admin_loader == 1)
+          {
+            $('.Loader').hide();
+          }
+          $('button.mybtn1').prop('disabled',false);
+        }
+      });
     });
 
     $(document).on('click','.addToMenu',function(){
@@ -622,7 +595,14 @@ $(document).on('click','.dropdown-toggle',function(){
   
   });
 
-  // Sorting Section
+  $("#seo").on('change',function() {
+    if(this.checked) {
+        $('.showbox').removeClass('d-none');
+    }else{
+        $('.showbox').addClass('d-none');
+    }
+});
+
   if( $('#section-list').length > 0 ){
       var el = document.getElementById('section-list');
       Sortable.create(el, {
@@ -637,6 +617,6 @@ $(document).on('click','.dropdown-toggle',function(){
   }
 
 
-})(jQuery); // End of use strict
+})(jQuery);
 
 

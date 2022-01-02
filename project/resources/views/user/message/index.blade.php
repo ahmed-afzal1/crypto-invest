@@ -90,41 +90,15 @@
   </div>
 </div>
 
-{{-- MESSAGE MODAL ENDS --}}
 
-{{-- CONFIRM DELETE MODAL --}}
-
-{{-- <div class="modal fade" id="confirm-delete" tabindex="-1" role="dialog" aria-labelledby="modal1" aria-hidden="true">
-  <div class="modal-dialog">
-    <div class="modal-content">
-
-    <div class="modal-header d-block text-center">
-        <h4 class="modal-title d-inline-block">{{ $langg->lang390 }}</h4>
-            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                <span aria-hidden="true">&times;</span>
-            </button>
-    </div>
-
-                <div class="modal-body">
-            <p class="text-center">{{ $langg->lang391 }}</p>
-            <p class="text-center">{{ $langg->lang393 }}</p>
-                </div>
-                <div class="modal-footer justify-content-center">
-                    <button type="button" class="btn btn-default" data-dismiss="modal">{{ $langg->lang394 }}</button>
-                    <a class="btn btn-danger btn-ok">{{ $langg->lang395 }}</a>
-                </div>
-            </div>
-        </div>
-    </div> --}}
-
-{{-- CONFIRM DELETE MODAL ENDS --}}
 
 
 @endsection
 
-@section('scripts')
+@push('js')
 
 <script type="text/javascript">
+'use strict';
 
           $(document).on("submit", "#emailreply1" , function(){
           var token = $(this).find('input[name=_token]').val();
@@ -162,6 +136,7 @@
 </script>
 
 <script type="text/javascript">
+    'use strict';
 
       $('#confirm-delete').on('show.bs.modal', function(e) {
           $(this).find('.btn-ok').attr('href', $(e.relatedTarget).data('href'));
@@ -169,4 +144,4 @@
 
 </script>
 
-@endsection
+@endpush

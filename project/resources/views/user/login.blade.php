@@ -26,7 +26,7 @@
                     </div>
                     <div class="form-group">
                         <button class="btn btn-primary" type="submit">{{__('login')}}</button>
-                        <p class="text-center">{{__("don't have an account ?")}} <a href="register.html">{{__('register now')}}</a>
+                        <p class="text-center">{{__("don't have an account ?")}} <a href="{{route('user.register')}}">{{__('register now')}}</a>
                     </div>
                 </form>
             </div>

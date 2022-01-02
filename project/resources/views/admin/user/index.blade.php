@@ -91,10 +91,7 @@
         </div>
     </div>
 </div>
-{{-- ATTRIBUTE MODAL ENDS --}}
 
-
-{{-- DELETE MODAL --}}
 
 <div class="modal fade confirm-modal" id="deleteModal" tabindex="-1" role="dialog"
 aria-labelledby="deleteModalTitle" aria-hidden="true">
@@ -107,7 +104,7 @@ aria-labelledby="deleteModalTitle" aria-hidden="true">
     </button>
     </div>
     <div class="modal-body">
-        <p class="text-center">{{__("You are about to delete this Category. Every informtation under this category will be deleted.")}}</p>
+        <p class="text-center">{{__("You are about to delete this User. Every informtation under this user will be deleted.")}}</p>
         <p class="text-center">{{ __("Do you want to proceed?") }}</p>
     </div>
     <div class="modal-footer">
@@ -118,10 +115,7 @@ aria-labelledby="deleteModalTitle" aria-hidden="true">
 </div>
 </div>
 
-{{-- DELETE MODAL ENDS --}}
 
-
-{{-- MESSAGE MODAL --}}
 <div class="sub-categori">
 <div class="modal fade confirm-modal" id="vendorform" tabindex="-1" role="dialog"
 aria-labelledby="vendorformLabel" aria-hidden="true">
@@ -164,8 +158,6 @@ aria-labelledby="vendorformLabel" aria-hidden="true">
 </div>
 </div>
 </div>
-{{-- MESSAGE MODAL ENDS --}}
-
 
 @endsection
 
@@ -173,8 +165,9 @@ aria-labelledby="vendorformLabel" aria-hidden="true">
 @section('scripts')
 
 <script type="text/javascript">
+    'use strict';
 
-var table = $('#geniustable').DataTable({
+        var table = $('#geniustable').DataTable({
 			   ordering: false,
                processing: true,
                serverSide: true,
@@ -187,7 +180,7 @@ var table = $('#geniustable').DataTable({
             			{ data: 'action', searchable: false, orderable: false }
                      ],
                 language : {
-
+                    processing: '<img src="{{asset('assets/images/'.$gs->admin_loader)}}">'
                 }
             });
 

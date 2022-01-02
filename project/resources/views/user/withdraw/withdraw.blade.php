@@ -67,11 +67,11 @@
 
 @endsection
 
-@section('scripts')
+@push('js')
 
 
 <script type="text/javascript">
-  
+    'use strict';
 
     $("#withmethod").change(function(){
         var method = $(this).val();
@@ -100,4 +100,4 @@
 
 </script>
 
-@endsection
+@endpush

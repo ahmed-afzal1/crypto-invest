@@ -3,19 +3,17 @@
 @section('content')
 <div class="card">
   <div class="d-sm-flex align-items-center justify-content-between">
-  <h5 class=" mb-0 text-gray-800 pl-3">{{ __('Add New Plan') }} <a class="btn btn-primary btn-rounded btn-sm" href="{{route('admin.plan.index')}}"><i class="fas fa-arrow-left"></i> {{ __('Back') }}</a></h5>
+  <h5 class=" mb-0 text-gray-800 pl-3">{{ __('Plans') }} <a class="btn btn-primary btn-rounded btn-sm" href="{{route('admin.plan.index')}}"><i class="fas fa-arrow-left"></i> {{ __('Back') }}</a></h5>
   <ol class="breadcrumb">
       <li class="breadcrumb-item"><a href="{{ route('admin.dashboard') }}">{{ __('Dashboard') }}</a></li>
-      <li class="breadcrumb-item"><a href="javascript:;">{{ __('Faq') }}</a></li>
       <li class="breadcrumb-item"><a href="{{route('admin.plan.index')}}">{{ __('Plan') }}</a></li>
-      <li class="breadcrumb-item"><a href="{{route('admin.plan.create')}}">{{ __('Add New Plan') }}</a></li>
+      <li class="breadcrumb-item"><a href="{{route('admin.plan.edit',$data->id)}}">{{ __('Edit Plan') }}</a></li>
   </ol>
   </div>
 </div>
 
 <div class="row justify-content-center mt-3">
 <div class="col-lg-6">
-  <!-- Form Basic -->
   <div class="card mb-4">
     <div class="card-header py-3 d-flex flex-row align-items-center justify-content-between">
       <h6 class="m-0 font-weight-bold text-primary">{{ __('Add New Plan Form') }}</h6>
@@ -30,13 +28,13 @@
           {{ csrf_field() }}
 
           <div class="form-group">
-            <label for="subtitle">{{ __('Sub Title') }}</label>
-            <input type="text" class="form-control" id="subtitle" name="subtitle" placeholder="{{ __('Enter Sub Title') }}" value="{{$data->subtitle}}" required>
+            <label for="title">{{ __('Title') }}</label>
+            <input type="text" class="form-control" id="title" name="title" placeholder="{{ __('Enter Title') }}" value="{{$data->title}}" required>
           </div>
 
           <div class="form-group">
-            <label for="title">{{ __('Title') }}</label>
-            <input type="text" class="form-control" id="title" name="title" placeholder="{{ __('Enter Title') }}" value="{{$data->title}}" required>
+            <label for="subtitle">{{ __('Sub Title') }}</label>
+            <input type="text" class="form-control" id="subtitle" name="subtitle" placeholder="{{ __('Enter Sub Title') }}" value="{{$data->subtitle}}" required>
           </div>
 
           <div class="form-group">
@@ -56,7 +54,7 @@
 
           <div class="form-group">
             <label for="percentage">{{ __('Payout Rate') }}</label>
-            <input type="number" class="form-control" id="percentage" name="percentage" placeholder="{{ __('Enter Payout Rate') }}" min="1" value="{{$data->percentage}}" required>
+            <input type="number" class="form-control" id="percentage" name="percentage" placeholder="{{ __('Payout Rate should be greater than hundreed') }}" min="1" value="{{$data->percentage}}" required>
           </div>
 
 
@@ -66,15 +64,10 @@
     </div>
   </div>
 
-  <!-- Form Sizing -->
-
-  <!-- Horizontal Form -->
 
 </div>
 
 </div>
-<!--Row-->
-
 
 @endsection
 

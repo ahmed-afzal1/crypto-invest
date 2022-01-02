@@ -28,7 +28,7 @@ class ManualController extends Controller
         $item_number = Str::random(4).time();
 
         $addionalData = ['item_number'=>$item_number,'txnid'=>$request->txn_id4];
-        $this->orderRepositorty->order($request,'complete',$addionalData);
+        $this->orderRepositorty->order($request,'manual',$addionalData);
 
         return redirect()->route('front.payreturn');
     }

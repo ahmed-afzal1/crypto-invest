@@ -9,6 +9,9 @@ use App\Classes\GeniusMailer;
 use App\Models\Order;
 use App\Models\User;
 use App\Models\Generalsetting;
+use App\Models\Notification;
+use App\Models\Transaction;
+use App\Models\UserNotification;
 
 class InvestController extends Controller
 {
@@ -60,8 +63,8 @@ class InvestController extends Controller
                                   '.$status .'
                                 </button>
                                 <div class="dropdown-menu" x-placement="bottom-start">
-                                  <a href="javascript:;" data-toggle="modal" data-target="#statusModal" class="dropdown-item" data-href="'. route('admin.invest.paymentstatus',['id1' => $data->id, 'status' => 'pending']).'">'.__("Completed").'</a>
-                                  <a href="javascript:;" data-toggle="modal" data-target="#statusModal" class="dropdown-item" data-href="'. route('admin.invest.paymentstatus',['id1' => $data->id, 'status' => 'completed']).'">'.__("Not completed").'</a>
+                                  <a href="javascript:;" data-toggle="modal" data-target="#statusModal" class="dropdown-item" data-href="'. route('admin.invest.paymentstatus',['id1' => $data->id, 'status' => 'completed']).'">'.__("Completed").'</a>
+                                  <a href="javascript:;" data-toggle="modal" data-target="#statusModal" class="dropdown-item" data-href="'. route('admin.invest.paymentstatus',['id1' => $data->id, 'status' => 'pending']).'">'.__("Not completed").'</a>
                                 </div>
                               </div>';
                             })
@@ -188,11 +191,93 @@ class InvestController extends Controller
 
         $stat['status'] = $status;
         $mainorder->update($stat);
-        
-        //--- Redirect Section        
+              
         $msg = 'Invest Status Updated Successfully';
+        return response()->json($msg);       
+        }
+    }
+
+    public function paymentstatus ($id,$status)
+    {
+        $mainorder = Order::findOrFail($id);
+
+        if ($mainorder->payment_status == "completed"){      
+            $msg = 'This Payment is Already Completed';
+            return response()->json($msg);      
+        }else{
+        if ($status == "completed"){
+
+            $notification = new Notification();
+            $notification->order_id = $mainorder->id;
+            $notification->save();
+    
+            $trans = new Transaction();
+            $trans->email = $mainorder->customer_email;
+            $trans->amount = $mainorder->invest;
+            $trans->type = "Invest";
+            $trans->txnid = $mainorder->order_number;
+            $trans->user_id = $mainorder->user_id;
+            $trans->save();
+    
+            $notf = new UserNotification();
+            $notf->user_id = $mainorder->user_id;
+            $notf->order_id = $mainorder->id;
+            $notf->type = "Invest";
+            $notf->save();
+
+            $gs = Generalsetting::findOrFail(1);
+            if($gs->is_smtp == 1)
+            {
+                $data = [
+                    'to' => $mainorder->customer_email,
+                    'subject' => 'Your Payment '.$mainorder->order_number.' is Confirmed!',
+                    'body' => "Hello ".$mainorder->customer_name.","."\n Thank you for shopping with us. We are looking forward to your next visit.",
+                ];
+
+                $mailer = new GeniusMailer();
+                $mailer->sendCustomMail($data);                
+            }
+            else
+            {
+               $to = $mainorder->customer_email;
+               $subject = 'Your Payment '.$mainorder->order_number.' is Confirmed!';
+               $msg = "Hello ".$mainorder->customer_name.","."\n Thank you for shopping with us. We are looking forward to your next visit.";
+               $headers = "From: ".$gs->from_name."<".$gs->from_email.">";
+               mail($to,$subject,$msg,$headers);                
+            }
+
+            if($gs->is_affilate == 1)
+            {
+                $user = User::find($mainorder->user_id);
+                if ($user->referral_id != 0) 
+                {
+                    $val = $mainorder->invest / 100;
+                    $sub = $val * $gs->affilate_charge;
+                    $sub = round($sub,2);
+                    $ref = User::find($user->referral_id);
+                    if(isset($ref))
+                    {
+                        $ref->income += $sub;
+                        $ref->update();
+    
+                        $trans = new Transaction;
+                        $trans->email = $ref->email;
+                        $trans->amount = $sub;
+                        $trans->type = "Referral Bonus";
+                        $trans->txnid = $mainorder->order_number;
+                        $trans->user_id = $ref->id;
+                        $trans->save();
+                    }
+                }
+            }
+        }
+
+        $stat['payment_status'] = ucfirst($status);
+        $mainorder->update($stat);
+     
+        $msg = 'Payment Status Updated Successfully';
         return response()->json($msg);      
-        //--- Redirect Section Ends   
+ 
         }
     }
 }

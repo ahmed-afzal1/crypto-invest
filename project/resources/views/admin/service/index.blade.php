@@ -16,9 +16,7 @@
 
 <div class="row mt-3">
   <div class="col-lg-12">
-
 	@include('includes.admin.form-success')
-
 	<div class="card mb-4">
 	  <div class="table-responsive p-3">
 		<table id="geniustable" class="table table-hover dt-responsive" cellspacing="0" width="100%">
@@ -33,11 +31,7 @@
 	  </div>
 	</div>
   </div>
-  <!-- DataTable with Hover -->
-
 </div>
-<!--Row-->
-
 
 <div class="modal fade confirm-modal" id="statusModal" tabindex="-1" role="dialog" aria-labelledby="statusModalTitle" aria-hidden="true">
 	<div class="modal-dialog modal-dialog-centered" role="document">
@@ -110,15 +104,11 @@
 			$(function() {
             $(".btn-area").append('<div class="col-sm-12 col-md-4 pr-3 text-right">'+
                 '<a class="btn btn-primary" href="{{route('admin.service.create')}}">'+
-					'<i class="fas fa-plus"></i> Add New Service'+
+					'<i class="fas fa-plus"></i> {{__('Add New Service')}}'+
 				'</a>'+
             '</div>');
         });
 
 	</script>
-
-
-
-
 
 @endsection

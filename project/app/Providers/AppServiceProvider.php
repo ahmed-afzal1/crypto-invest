@@ -37,6 +37,9 @@ class AppServiceProvider extends ServiceProvider
             $settings->with('gs', DB::table('generalsettings')->find(1));
             $settings->with('pages', DB::table('pages')->get());
             $settings->with('ps', DB::table('pagesettings')->first());
+            $settings->with('social', DB::table('socialsettings')->first());
+            $settings->with('default_font', Font::where('is_default','=',1)->first());
+            $settings->with('defaultCurrency', Session::get('currency') ?  DB::table('currencies')->where('id','=',Session::get('currency'))->first() : DB::table('currencies')->where('is_default','=',1)->first());
 
         });
         Paginator::useBootstrap();

@@ -113,7 +113,7 @@ class RegisterController extends Controller
     public function token($token)
     {
             $gs = Generalsetting::findOrFail(1);
-            if($gs->is_verification_email == 0)
+            if($gs->is_verification_email == 1)
             {       
                 $user = User::where('verification_link','=',$token)->first();
                 if(isset($user))
@@ -128,7 +128,7 @@ class RegisterController extends Controller
                                 $user->update();
                             }
 
-                            if($gs->is_affilate == 1){
+                            if($gs->is_affilate == 1 && Session::has('affilate')){
                                 $mainUser = $referral;
                                 $mainUser->income += $gs->affilate_user;
                                 $mainUser->update();
@@ -142,11 +142,11 @@ class RegisterController extends Controller
                     $notification->user_id = $user->id;
                     $notification->save();
                     Auth::guard('web')->login($user); 
-                    return redirect()->route('user-dashboard')->with('success','Email Verified Successfully');
+                    return redirect()->route('user.dashboard')->with('success','Email Verified Successfully');
                 }
             }
             else {
-            return redirect()->back();  
+                return redirect()->back();  
             }
     }
 }

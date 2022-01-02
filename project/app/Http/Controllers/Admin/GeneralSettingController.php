@@ -119,6 +119,13 @@ class GeneralSettingController extends Controller
                 $input['cert_sign'] = $name;
             }
 
+            if ($file = $request->file('affilate_banner'))
+            {
+                $name = time().str_replace(' ', '', $file->getClientOriginalName());
+                $data->upload($name,$file,$data->affilate_banner);
+                $input['affilate_banner'] = $name;
+            }
+
         $data->update($input);
 
 

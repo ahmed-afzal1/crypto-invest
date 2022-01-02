@@ -23,7 +23,7 @@
 								<th>{{ __('Method') }}</th>
 								<th>{{ __('Paid') }}</th>
 								<th>{{ __('Time Left')}}</th>
-								<th></th>
+								<th>{{__('Details')}}</th>
 							</tr>
 						</thead>
 						<tbody>
@@ -37,9 +37,9 @@
 									</td>
 									<td>
 										@if($gs->currency_format == 0)
-											{{ $gs->currency_sign }}{{ round($data->invest , 2) }}
+											{{ $defaultCurrency->sign }}{{ round($data->invest * $defaultCurrency->value, 2) }}
 										@else
-											{{ round($data->invest , 2) }}{{ $gs->currency_sign }}
+											{{ round($data->invest * $defaultCurrency->value, 2) }}{{ $defaultCurrency->sign }}
 										@endif
 									</td>
 

@@ -7,7 +7,7 @@
                         <h2>{{$ps->footer_top_title}}</h2>
                         <p class="lead">{{$ps->footer_top_text}}</p>
                     </div>
-                    <p class="action-btn"><a class="btn btn-primary" href="register.html">{{__('Register Now')}}</a></p>
+                    <p class="action-btn"><a class="btn btn-primary" href="{{route('user.register')}}">{{__('Register Now')}}</a></p>
                 </div>
             </div>
         </div>

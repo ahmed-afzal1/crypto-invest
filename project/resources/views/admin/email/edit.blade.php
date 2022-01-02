@@ -17,7 +17,6 @@
 
 <div class="row justify-content-center mt-3">
   <div class="col-lg-10">
-    <!-- Form Basic -->
     <div class="card mb-4">
       <div class="card-header py-3 text-center">
         <div class="row" >
@@ -65,7 +64,7 @@
       <div class="card-body">
         <div class="gocover" style="background: url({{asset('assets/images/'.$gs->admin_loader)}}) no-repeat scroll center center rgba(45, 45, 45, 0.5);"></div>
           <form class="geniusform" action="{{route('admin.mail.update',$data->id)}}" method="POST" enctype="multipart/form-data">
-		@include('includes.admin.form-both')
+		        @include('includes.admin.form-both')
             {{ csrf_field() }}
 
             <div class="form-group">

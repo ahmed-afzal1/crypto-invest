@@ -16,6 +16,21 @@
     <link rel="stylesheet" href="{{asset('assets/front/css/custom.css')}}">
 	<link rel="stylesheet" href="{{asset('assets/front/css/skins/orange.css')}}">
     <script src="{{asset('assets/front/js/modernizr.js')}}"></script>
+
+    <link rel="stylesheet" href="{{ asset('assets/front/css/rtl/styles.php?color='.str_replace('#','',$gs->colors)) }}">
+
+    @if ($default_font->font_value)
+        <link href="https://fonts.googleapis.com/css?family={{ $default_font->font_value }}&display=swap" rel="stylesheet">
+    @else
+        <link href="https://fonts.googleapis.com/css?family=Open+Sans&display=swap" rel="stylesheet">
+    @endif
+
+    @if ($default_font->font_family)
+        <link rel="stylesheet" id="colorr" href="{{ asset('assets/front/css/font.php?font_familly='.$default_font->font_family) }}">
+    @else
+        <link rel="stylesheet" id="colorr" href="{{ asset('assets/front/css/font.php?font_familly='."Open Sans") }}">
+    @endif
+
 	@stack('css')
 </head>
 
@@ -48,122 +63,12 @@
 
     <div class="wrapper">
         <header class="header">
-            
             @includeIf('partials.front.navbar')
         </header>
 
 		@yield('contents')
 
-        <footer class="footer">
-            <div class="top-footer">
-                <div class="container">
-                    <div class="row">
-                        <div class="col-md-4 col-lg-2">
-                            <h4>Our Company</h4>
-                            <div class="menu">
-                                <ul>
-                                    <li><a href="index.html">Home</a>
-                                    </li>
-                                    <li><a href="about.html">About</a>
-                                    </li>
-                                    <li><a href="services.html">Services</a>
-                                    </li>
-                                    <li><a href="pricing.html">Pricing</a>
-                                    </li>
-                                    <li><a href="blog-right-sidebar.html">Blog</a>
-                                    </li>
-                                    <li><a href="contact.html">Contact</a>
-                                    </li>
-                                </ul>
-                            </div>
-                        </div>
-
-                        <div class="col-md-4 col-lg-2">
-                            <h4>Help &amp; Support</h4>
-                            <div class="menu">
-                                <ul>
-                                    <li><a href="faq.html">FAQ</a>
-                                    </li>
-                                    <li><a href="terms-of-services.html">Terms of Services</a>
-                                    </li>
-                                    <li><a href="404.html">404</a>
-                                    </li>
-                                    <li><a href="register.html">Register</a>
-                                    </li>
-                                    <li><a href="login.html">Login</a>
-                                    </li>
-                                    <li><a href="coming-soon.html">Coming Soon</a>
-                                    </li>
-                                </ul>
-                            </div>
-                        </div>
-
-                        <div class="col-md-4 col-lg-3">
-                            <h4>Contact Us </h4>
-                            <div class="contacts">
-                                <div> <span>contact@website.com</span>
-                                </div>
-                                <div> <span>00216 21 184 010</span>
-                                </div>
-                                <div> <span>London, England</span>
-                                </div>
-                                <div> <span>mon-sat 08am &#x21FE; 05pm</span>
-                                </div>
-                            </div>
-
-                            <div class="social-footer">
-                                <ul>
-                                    <li><a href="#" target="_blank"><i class="fa fa-facebook"></i></a>
-                                    </li>
-                                    <li><a href="#" target="_blank"><i class="fa fa-twitter"></i></a>
-                                    </li>
-                                    <li><a href="#" target="_blank"><i class="fa fa-google-plus"></i></a>
-                                    </li>
-                                    <li><a href="#" target="_blank"><i class="fa fa-linkedin"></i></a>
-                                    </li>
-                                </ul>
-                            </div>
-                        </div>
-
-                        <div class="col-md-12 col-lg-5">
-                            <div class="facts-footer">
-                                <div>
-                                    <h5>$198.76B</h5>
-                                    <span>Market cap</span>
-                                </div>
-                                <div>
-                                    <h5>243K</h5>
-                                    <span>daily transactions</span>
-                                </div>
-                                <div>
-                                    <h5>369K</h5>
-                                    <span>active accounts</span>
-                                </div>
-                                <div>
-                                    <h5>127</h5>
-                                    <span>supported countries</span>
-                                </div>
-                            </div>
-                            <hr>
-                        </div>
-                    </div>
-                </div>
-            </div>
-
-            <div class="bottom-footer">
-                <div class="container">
-                    <div class="row">
-                        <div class="col-12">
-                            <p class="text-center">Copyright &#xA9; 2018 Bayya All Rights Reserved | Created with Love by
-                                <a
-                                href="https://themeforest.net/user/celtano" target="_blank">celtano</a>
-                            </p>
-                        </div>
-                    </div>
-                </div>
-            </div>
-            <!-- Footer Bottom Area Ends -->
-        </footer>
+        @includeIf('partials.front.footer')
         <a href="#" id="back-to-top" class="back-to-top fa fa-arrow-up"></a>
 
         <script src="{{asset('assets/front/js/jquery-3.6.0.min.js')}}"></script>
@@ -173,6 +78,7 @@
         <script src="{{asset('assets/front/js/jquery.magnific-popup.min.js')}}"></script>
         <script src="{{asset('assets/front/js/notify.min.js')}}"></script>
         <script src="{{asset('assets/front/js/custom.js')}}"></script>
+        <script src="{{asset('assets/front/js/rangeslider.min.js') }}"></script>
 		@stack('js')
     </div>
 </body>

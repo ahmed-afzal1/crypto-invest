@@ -85,7 +85,7 @@
 									@endphp
 								</p>
 								<a href="{{route('blog.details',$data->slug)}}" class="btn btn-primary btn-readmore">
-									Read more
+									{{__('Read more')}}
 								</a>
 							</article>
 						@endforeach

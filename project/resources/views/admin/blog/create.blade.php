@@ -14,41 +14,39 @@
 </div>
 
 <div class="row justify-content-center mt-3">
-<div class="col-lg-6">
-  <!-- Form Basic -->
-  <div class="card mb-4">
-    <div class="card-header py-3 d-flex flex-row align-items-center justify-content-between">
-      <h6 class="m-0 font-weight-bold text-primary">{{ __('Add New Post Form') }}</h6>
-    </div>
+  <div class="col-lg-6">
+    <div class="card mb-4">
+      <div class="card-header py-3 d-flex flex-row align-items-center justify-content-between">
+        <h6 class="m-0 font-weight-bold text-primary">{{ __('Add New Post Form') }}</h6>
+      </div>
 
-    <div class="card-body">
-      <div class="gocover" style="background: url({{asset('assets/images/'.$gs->admin_loader)}}) no-repeat scroll center center rgba(45, 45, 45, 0.5);"></div>
-      <form class="geniusform" action="{{route('admin.blog.create')}}" method="POST" enctype="multipart/form-data">
+      <div class="card-body">
+        <div class="gocover" style="background: url({{asset('assets/images/'.$gs->admin_loader)}}) no-repeat scroll center center rgba(45, 45, 45, 0.5);"></div>
+        <form class="geniusform" action="{{route('admin.blog.create')}}" method="POST" enctype="multipart/form-data">
 
-          @include('includes.admin.form-both')
+            @include('includes.admin.form-both')
 
-          {{ csrf_field() }}
+            {{ csrf_field() }}
 
           <div class="form-group">
             <label for="title">{{ __('Title') }}</label>
             <input type="text" class="form-control" id="title" name="title"  placeholder="{{ __('Enter Title') }}" value="" required>
-        </div>
-        <div class="form-group">
+          </div>
+
+          <div class="form-group">
             <label for="title">{{ __('Slug') }}</label>
             <input type="text" class="form-control" id="slug" name="slug"  placeholder="{{ __('Enter Slug') }}" value="" required>
-        </div>
+          </div>
 
-        <div class="form-group">
-          <label for="inp-name">{{ __('Category') }}</label>
-          <select class="form-control mb-3" name="category_id">
-            <option value="" selected>{{__('Select Category')}}</option>
-            @foreach ($cats as $cat)
-            <option value="{{$cat->id}}">{{$cat->name}}</option>
-            @endforeach
-          </select>
-        </div>
-
-
+          <div class="form-group">
+            <label for="inp-name">{{ __('Category') }}</label>
+            <select class="form-control mb-3" name="category_id">
+              <option value="" selected>{{__('Select Category')}}</option>
+                @foreach ($cats as $cat)
+                <option value="{{$cat->id}}">{{$cat->name}}</option>
+                @endforeach
+            </select>
+          </div>
 
           <div class="form-group">
               <label>{{ __('Set Picture') }} <small class="small-font">({{ __('Preferred Size 600 X 600') }})</small></label>
@@ -62,8 +60,6 @@
                   </div>
               </div>
           </div>
-
-
 
           <div class="form-group">
               <label for="details">{{ __('Description ') }}</label>
@@ -89,48 +85,27 @@
           </div>
 
           <div class="showbox d-none">
-          <div class="form-group">
-            <label for="meta_tag">{{ __('Meta Tags') }}</label>
-            <input type="text" class="mytags" name="meta_tag" placeholder="{{ __('Meta Tags') }}">
+            <div class="form-group">
+              <label for="meta_tag">{{ __('Meta Tags') }}</label>
+              <input type="text" class="mytags" name="meta_tag" placeholder="{{ __('Meta Tags') }}">
+            </div>
+
+            <div class="form-group">
+              <label for="meta_description">{{ __('Meta Description') }}</label>
+              <textarea class="form-control nic-edit"  id="meta_description" name="meta_description" rows="3"  placeholder="{{__('Meta Description')}}"></textarea>
+            </div>
           </div>
 
-          <div class="form-group">
-            <label for="meta_description">{{ __('Meta Description') }}</label>
-            <textarea class="form-control nic-edit"  id="meta_description" name="meta_description" rows="3"  placeholder="{{__('Meta Description')}}"></textarea>
-        </div>
-        </div>
-
-
           <button type="submit" id="submit-btn" class="btn btn-primary">{{ __('Submit') }}</button>
-
-      </form>
+        </form>
+      </div>
     </div>
   </div>
-
-  <!-- Form Sizing -->
-
-  <!-- Horizontal Form -->
-
 </div>
-
-</div>
-<!--Row-->
-
 
 @endsection
 
 @section('scripts')
 
-<script>
-
-$("#seo").change(function() {
-    if(this.checked) {
-        $('.showbox').removeClass('d-none');
-    }else{
-        $('.showbox').addClass('d-none');
-    }
-});
-
-</script>
 
 @endsection

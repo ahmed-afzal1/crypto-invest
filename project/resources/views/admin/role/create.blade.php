@@ -39,35 +39,62 @@
             <div class="col-md-6">
               <div class="form-group">
                 <div class="custom-control custom-switch">
-                  <input type="checkbox" name="section[]" value="Manage Categories" class="custom-control-input" id="manage_category">
-                  <label class="custom-control-label" for="manage_category">{{__('Manage Categories')}}</label>
+                  <input type="checkbox" name="section[]" value="Menu Builder" class="custom-control-input" id="menu_builder">
+                  <label class="custom-control-label" for="menu_builder">{{__('Menu Builder')}}</label>
                   </div>
               </div>
             </div>
             <div class="col-md-6">
               <div class="form-group">
                 <div class="custom-control custom-switch">
-                  <input type="checkbox" name="section[]" value="Manage Orders" class="custom-control-input" id="manage_order">
-                  <label class="custom-control-label" for="manage_order">{{__('Manage Orders')}}</label>
+                  <input type="checkbox" name="section[]" value="Invests" class="custom-control-input" id="invests">
+                  <label class="custom-control-label" for="invests">{{__('Invests')}}</label>
                   </div>
               </div>
             </div>
             <div class="col-md-6">
               <div class="form-group">
                 <div class="custom-control custom-switch">
-                  <input type="checkbox" name="section[]" value="Manage Products" class="custom-control-input" id="manage_products">
-                  <label class="custom-control-label" for="manage_products">{{__('Manage Products')}}</label>
+                  <input type="checkbox" name="section[]" value="Transactions" class="custom-control-input" id="transactions">
+                  <label class="custom-control-label" for="transactions">{{__('Transactions')}}</label>
                   </div>
               </div>
             </div>
             <div class="col-md-6">
               <div class="form-group">
                 <div class="custom-control custom-switch">
-                  <input type="checkbox" name="section[]" value="Author Level" class="custom-control-input" id="author_level">
-                  <label class="custom-control-label" for="author_level">{{__('Author Level')}}</label>
+                  <input type="checkbox" name="section[]" value="Deposits" class="custom-control-input" id="Deposits">
+                  <label class="custom-control-label" for="Deposits">{{__('Deposits')}}</label>
                   </div>
               </div>
             </div>
+            <div class="col-md-6">
+              <div class="form-group">
+                <div class="custom-control custom-switch">
+                  <input type="checkbox" name="section[]" value="Manage Plans" class="custom-control-input" id="manage_plans">
+                  <label class="custom-control-label" for="manage_plans">{{__('Manage Plans')}}</label>
+                  </div>
+              </div>
+            </div>
+
+            <div class="col-md-6">
+              <div class="form-group">
+                <div class="custom-control custom-switch">
+                  <input type="checkbox" name="section[]" value="Manage Customers" class="custom-control-input" id="manage_customers">
+                  <label class="custom-control-label" for="manage_customers">{{__('Manage Customers')}}</label>
+                  </div>
+              </div>
+            </div>
+
+            <div class="col-md-6">
+              <div class="form-group">
+                <div class="custom-control custom-switch">
+                  <input type="checkbox" name="section[]" value="Manage Blog" class="custom-control-input" id="manage_blog">
+                  <label class="custom-control-label" for="manage_blog">{{__('Manage Blog')}}</label>
+                  </div>
+              </div>
+            </div>
+
             <div class="col-md-6">
               <div class="form-group">
                 <div class="custom-control custom-switch">
@@ -94,14 +121,16 @@
                   </div>
               </div>
             </div>
+
             <div class="col-md-6">
               <div class="form-group">
                 <div class="custom-control custom-switch">
-                  <input type="checkbox" name="section[]" value="Users" class="custom-control-input" id="user">
-                  <label class="custom-control-label" for="user">{{__('Users')}}</label>
+                  <input type="checkbox" name="section[]" value="Message" class="custom-control-input" id="Message">
+                  <label class="custom-control-label" for="Message">{{__('Message')}}</label>
                   </div>
               </div>
             </div>
+
             <div class="col-md-6">
               <div class="form-group">
                 <div class="custom-control custom-switch">
@@ -110,30 +139,17 @@
                   </div>
               </div>
             </div>
+
             <div class="col-md-6">
               <div class="form-group">
                 <div class="custom-control custom-switch">
-                  <input type="checkbox" name="section[]" value="Messages" class="custom-control-input" id="message">
-                  <label class="custom-control-label" for="message">{{__('Messages')}}</label>
+                  <input type="checkbox" name="section[]" value="Manage Staff" class="custom-control-input" id="manage_staff">
+                  <label class="custom-control-label" for="Message">{{__('Manage Staff')}}</label>
                   </div>
               </div>
             </div>
-            <div class="col-md-6">
-              <div class="form-group">
-                <div class="custom-control custom-switch">
-                  <input type="checkbox" name="section[]" value="Manage Blog" class="custom-control-input" id="manage_blog">
-                  <label class="custom-control-label" for="manage_blog">{{__('Manage Blog')}}</label>
-                  </div>
-              </div>
-            </div>
-            <div class="col-md-6">
-              <div class="form-group">
-                <div class="custom-control custom-switch">
-                  <input type="checkbox" name="section[]" value="Menupage Setting" class="custom-control-input" id="menupage_setting">
-                  <label class="custom-control-label" for="menupage_setting">{{__('Menupage Setting')}}</label>
-                  </div>
-              </div>
-            </div>
+
+
             <div class="col-md-6">
               <div class="form-group">
                 <div class="custom-control custom-switch">
@@ -142,27 +158,12 @@
                   </div>
               </div>
             </div>
-            <div class="col-md-6">
-              <div class="form-group">
-                <div class="custom-control custom-switch">
-                  <input type="checkbox" name="section[]" value="Seo Tools" class="custom-control-input" id="seo_tools">
-                  <label class="custom-control-label" for="seo_tools">{{__('Seo Tools')}}</label>
-                  </div>
-              </div>
-            </div>
+
             <div class="col-md-6">
               <div class="form-group">
                 <div class="custom-control custom-switch">
                   <input type="checkbox" name="section[]" value="Payment Setting" class="custom-control-input" id="payment_setting">
                   <label class="custom-control-label" for="payment_setting">{{__('Payment Setting')}}</label>
-                  </div>
-              </div>
-            </div>
-            <div class="col-md-6">
-              <div class="form-group">
-                <div class="custom-control custom-switch">
-                  <input type="checkbox" name="section[]" value="Manage Staff" class="custom-control-input" id="staff">
-                  <label class="custom-control-label" for="staff">{{__('Manage Staff')}}</label>
                   </div>
               </div>
             </div>
@@ -176,6 +177,7 @@
                   </div>
               </div>
             </div>
+
             <div class="col-md-6">
                 <div class="form-group">
                   <div class="custom-control custom-switch">
@@ -183,7 +185,35 @@
                     <label class="custom-control-label" for="font">{{__('Fonts')}}</label>
                     </div>
                 </div>
+            </div>
+
+            <div class="col-md-6">
+              <div class="form-group">
+                <div class="custom-control custom-switch">
+                  <input type="checkbox" name="section[]" value="Menupage Setting" class="custom-control-input" id="menupage_setting">
+                  <label class="custom-control-label" for="menupage_setting">{{__('Menupage Setting')}}</label>
+                  </div>
               </div>
+            </div>
+
+            <div class="col-md-6">
+              <div class="form-group">
+                <div class="custom-control custom-switch">
+                  <input type="checkbox" name="section[]" value="Seo Tools" class="custom-control-input" id="seo_tools">
+                  <label class="custom-control-label" for="seo_tools">{{__('Seo Tools')}}</label>
+                  </div>
+              </div>
+            </div>
+
+            <div class="col-md-6">
+              <div class="form-group">
+                <div class="custom-control custom-switch">
+                  <input type="checkbox" name="section[]" value="Sitemaps" class="custom-control-input" id="Sitemaps">
+                  <label class="custom-control-label" for="Sitemaps">{{__('Sitemaps')}}</label>
+                  </div>
+              </div>
+            </div>
+
             <div class="col-md-6">
               <div class="form-group">
                 <div class="custom-control custom-switch">
@@ -192,6 +222,7 @@
                   </div>
               </div>
             </div>
+
           </div>
           <hr>
 

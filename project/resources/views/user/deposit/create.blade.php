@@ -48,10 +48,12 @@
                                 <select name="method" id="withmethod" class="form-control" required>
                                     <option value="">{{ __('Select Payment Method') }}</option>
                                     @foreach ($gateways as $gateway)
-                                        @if ($gateway->type == 'manual')
-                                            <option value="Manual" data-details="{{$gateway->details}}">{{ $gateway->title }}</option>
-                                        @else
-                                            <option value="{{$gateway->keyword}}">{{ $gateway->name }}</option>
+                                        @if (in_array($gateway->keyword,$availableGatways))
+                                            @if ($gateway->type == 'manual')
+                                                <option value="Manual" data-details="{{$gateway->details}}">{{ $gateway->title }}</option>
+                                            @else
+                                                <option value="{{$gateway->keyword}}">{{ $gateway->name }}</option>
+                                            @endif
                                         @endif
                                     @endforeach                   
                                 </select>
@@ -63,7 +65,6 @@
                                 <input type="hidden" name="cmd" value="_xclick">
                                 <input type="hidden" name="no_note" value="1">
                                 <input type="hidden" name="lc" value="UK">
-                                <input type="hidden" id="currencyCode" name="currency_code" value="{{ $gs->currency_code }}">
                                 <input type="hidden" name="bn" value="PP-BuyNowBF:btn_buynow_LG.gif:NonHostedGuest">
 
                                 <div class="col-lg-6">
@@ -86,6 +87,10 @@
 
                             </div>
                         </div>
+
+                        <input type="hidden" name="currency_sign" value="{{ $defaultCurrency->sign }}">
+                        <input type="hidden" id="currencyCode" name="currency_code" value="{{ $defaultCurrency->name }}">
+                        <input type="hidden" name="currency_id" value="{{ $defaultCurrency->id }}">
     
                         <div class="col-lg-12">
                             <div class="form-group bmd-form-group">
@@ -118,6 +123,7 @@
 
 
 <script type="text/javascript">
+'use strict';
 
 $(document).on('change','#withmethod',function(){
 	var val = $(this).val();
@@ -129,7 +135,15 @@ $(document).on('change','#withmethod',function(){
 		$('.card-elements').prop('required',true);
         $('#manual_transaction_id').prop('required',false);
         $('.manual-payment').addClass('d-none');
+	}
 
+    if(val == 'flutterwave')
+	{
+		$('#deposit-form').prop('action','{{ route('deposit.flutter.submit') }}');
+        $('#card-view').addClass('d-none');
+        $('.card-elements').prop('required',false);
+        $('#manual_transaction_id').prop('required',false);
+        $('.manual-payment').addClass('d-none');
 	}
 
     if(val == 'authorize.net')
@@ -139,7 +153,6 @@ $(document).on('change','#withmethod',function(){
 		$('.card-elements').prop('required',true);
         $('#manual_transaction_id').prop('required',false);
         $('.manual-payment').addClass('d-none');
-
 	}
 
     if(val == 'paypal') {
@@ -168,7 +181,14 @@ $(document).on('change','#withmethod',function(){
         $('.manual-payment').addClass('d-none');
     }
 
-
+    if(val == 'paystack') {
+        $('#deposit-form').prop('action','{{ route('deposit.paystack.submit') }}');
+        $('#deposit-form').prop('class','step1-form');
+        $('#card-view').addClass('d-none');
+        $('.card-elements').prop('required',false);
+        $('#manual_transaction_id').prop('required',false);
+        $('.manual-payment').addClass('d-none');
+    }
 
     if(val == 'instamojo') {
         $('#deposit-form').prop('action','{{ route('deposit.instamojo.submit') }}');
@@ -228,6 +248,8 @@ $(document).on('submit','.step1-form',function(){
 <script src="//voguepay.com/js/voguepay.js"></script>
 
 <script>
+    'use strict';
+
     closedFunction=function() {
         alert('Payment Cancelled!');
     }
@@ -249,6 +271,8 @@ $(document).on('submit','.step1-form',function(){
 
 
   <script type="text/javascript">
+  'use strict';
+  
     var cnstatus = false;
     var dateStatus = false;
     var cvcStatus = false;

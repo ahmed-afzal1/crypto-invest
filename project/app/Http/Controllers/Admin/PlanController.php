@@ -20,8 +20,7 @@ class PlanController extends Controller
     public function datatables()
     {
          $datas = Product::orderBy('id','desc')->get();
-         
-         //--- Integrating This Collection Into Datatables
+
          return Datatables::of($datas)
 
                             ->editColumn('price', function(Product $data) {
@@ -43,11 +42,10 @@ class PlanController extends Controller
   
                               })
                             ->rawColumns(['action'])
-                            ->toJson(); //--- Returning Json Data To Client Side
+                            ->toJson();
     }
 
 
-    //*** GET Request
     public function index()
     {
         return view('admin.plan.index');
@@ -58,14 +56,12 @@ class PlanController extends Controller
         return view('admin.product.info');
     }
 
-    //*** GET Request
     public function create()
     {
         $data['currency'] = Currency::where('is_default','=',1)->first();
         return view('admin.plan.create',$data);
     }
 
-    //*** GET Request
     public function status($id1,$id2)
     {
         $data = Product::findOrFail($id1);
@@ -73,7 +69,6 @@ class PlanController extends Controller
         $data->update();
     }
 
-    //*** POST Request
     public function store(Request $request)
     {
         $rules = [
@@ -81,7 +76,7 @@ class PlanController extends Controller
             'min_price'=> 'required',
             'min_price'=> 'required',
             'days'=> 'required',
-            'percentage'=> 'required',
+            'percentage'=> 'required|numeric|gt:100',
         ];
 
         $validator = Validator::make($request->all(), $rules);
@@ -89,7 +84,7 @@ class PlanController extends Controller
         if ($validator->fails()) {
             return response()->json(array('errors' => $validator->getMessageBag()->toArray()));
         }
-        //--- Logic Section 
+ 
         $percentage = $request->percentage;  
         $data = new Product;
         $input = $request->all();
@@ -98,12 +93,9 @@ class PlanController extends Controller
         {
             $input['percentage'] =  $percentage;
             $data->fill($input)->save();
-            //logic Section Ends
-
-            //--- Redirect Section        
+      
             $msg = 'New Plan Added Successfully.<a href="'.route('admin.plan.index').'">View Plan Lists.</a>';
             return response()->json($msg);      
-            //--- Redirect Section Ends  
         }
         else{
             $msg = 'Payout Rate Must be Larger than 100%';
@@ -112,7 +104,7 @@ class PlanController extends Controller
               
     }
  
-    //*** GET Request
+
     public function edit($id)
     {
         $data = Product::findOrFail($id);
@@ -120,7 +112,7 @@ class PlanController extends Controller
         return view('admin.plan.edit',compact('data','currency'));
     }
 
-    //*** POST Request
+
     public function update(Request $request, $id)
     {
         $rules = [
@@ -128,7 +120,7 @@ class PlanController extends Controller
             'min_price'=> 'required',
             'min_price'=> 'required',
             'days'=> 'required',
-            'percentage'=> 'required',
+            'percentage'=> 'required|numeric|gt:100',
         ];
 
         $validator = Validator::make($request->all(), $rules);
@@ -137,7 +129,6 @@ class PlanController extends Controller
             return response()->json(array('errors' => $validator->getMessageBag()->toArray()));
         }
 
-        //-- Logic Section
         $data = Product::findOrFail($id);
         $input = $request->all();
         $percentage = $request->percentage; 
@@ -145,12 +136,9 @@ class PlanController extends Controller
             {
                 $input['percentage'] =  $percentage;
                 $data->update($input);
-                //logic Section Ends
-                
-                //--- Redirect Section        
+      
                 $msg = 'Plan Updated Successfully.<a href="'.route('admin.plan.index').'">View Plan Lists.</a>';
-                return response()->json($msg);      
-                //--- Redirect Section Ends    
+                return response()->json($msg);       
             }
             else{
                 $msg = 'Payout Rate Must be Larger than 100%';
@@ -159,16 +147,12 @@ class PlanController extends Controller
         
     }
 
-    //*** GET Request
     public function destroy($id)
     {
         $data = Product::findOrFail($id);
         $data->delete();
-        //--- Redirect Section     
-        $msg = 'Plan Deleted Successfully.';
-        return response()->json($msg);      
-        //--- Redirect Section Ends    
 
-        // PRODUCT DELETE ENDS  
+        $msg = 'Plan Deleted Successfully.';
+        return response()->json($msg);       
     }
 }

@@ -7,7 +7,6 @@
   <ol class="breadcrumb">
       <li class="breadcrumb-item"><a href="{{ route('admin.dashboard') }}">{{ __('Dashboard') }}</a></li>
       <li class="breadcrumb-item"><a href="javascript:;">{{ __('Faq') }}</a></li>
-      <li class="breadcrumb-item"><a href="{{route('admin.faq.index')}}">{{ __('Faq') }}</a></li>
       <li class="breadcrumb-item"><a href="{{route('admin.faq.create')}}">{{ __('Add New Faq') }}</a></li>
   </ol>
   </div>
@@ -15,7 +14,6 @@
 
 <div class="row justify-content-center mt-3">
 <div class="col-lg-6">
-  <!-- Form Basic -->
   <div class="card mb-4">
     <div class="card-header py-3 d-flex flex-row align-items-center justify-content-between">
       <h6 class="m-0 font-weight-bold text-primary">{{ __('Add New Faq Form') }}</h6>
@@ -45,17 +43,9 @@
       </form>
     </div>
   </div>
-
-  <!-- Form Sizing -->
-
-  <!-- Horizontal Form -->
-
 </div>
 
 </div>
-<!--Row-->
-
-
 @endsection
 
 @section('scripts')

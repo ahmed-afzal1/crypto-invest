@@ -4,12 +4,11 @@
 
 <div class="card">
 	<div class="d-sm-flex align-items-center justify-content-between">
-	<h5 class=" mb-0 text-gray-800 pl-3">{{ __('Invests') }}</h5>
-	<ol class="breadcrumb">
-		<li class="breadcrumb-item"><a href="{{ route('admin.dashboard') }}">{{ __('Dashboard') }}</a></li>
-
-		<li class="breadcrumb-item"><a href="{{ route('admin.invests.index') }}">{{ __('Invests') }}</a></li>
-	</ol>
+		<h5 class=" mb-0 text-gray-800 pl-3">{{ __('Invests') }}</h5>
+		<ol class="breadcrumb">
+			<li class="breadcrumb-item"><a href="{{ route('admin.dashboard') }}">{{ __('Dashboard') }}</a></li>
+			<li class="breadcrumb-item"><a href="{{ route('admin.invests.index') }}">{{ __('Invests') }}</a></li>
+		</ol>
 	</div>
 </div>
 

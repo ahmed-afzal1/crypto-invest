@@ -116,12 +116,13 @@
         </div>
     </section>
 
+
     <section class="pricing">
         <div class="container">
             <div class=" text-center">
-                <h2 class="title-head">affordable <span>packages</span></h2>
+                <h2 class="title-head">{{ __('affordable') }} <span>{{ __('packages') }}</span></h2>
                 <div class="title-head-subtitle">
-                    <p>Purchase Bitcoin using a credit card or with your linked bank account</p>
+                    <p>{{ __('Purchase Bitcoin using a credit card or with your linked bank account')}}</p>
                 </div>
             </div>
 
@@ -143,27 +144,27 @@
                                             {{ __('Minimum Invest') }} 
                                         </div>
                                         <div class="right">
-                                            {{ $gs->currency_format == 0 ? $gs->currency_sign.$data->min_price : $data->min_price .$gs->currency_sign }}<i class="fa fa-btc"></i>
+                                            {{ $gs->currency_format == 0 ? $defaultCurrency->sign.$data->setPrice($data->min_price,$defaultCurrency->value) : $data->setPrice($data->min_price,$defaultCurrency->value) .$defaultCurrency->sign }}
                                         </div>
                                     </div>
                                     <div class="invest-range-slider">
                                         <div class="range-slider">
-                                            <input class="range-slider__range" type="range" value="{{ $data->min_price }}" min="{{ $data->min_price }}" max="{{ $data->max_price }}" style="background: linear-gradient(90deg, rgba(2,0,36,1) 0%, rgba(253,150,26,1) 21%, rgba(9,9,121,1) 35%, rgba(8,25,131,1) 40%, rgba(0,212,255,1) 100%);">
+                                            <input class="range-slider__range" type="range" value="{{ $data->setPrice($data->min_price,$defaultCurrency->value) }}" min="{{ $data->setPrice($data->min_price,$defaultCurrency->value) }}" max="{{ $data->setPrice($data->max_price,$defaultCurrency->value) }}" style="background: linear-gradient(90deg, rgba(2,0,36,1) 0%, rgba(253,150,26,1) 21%, rgba(9,9,121,1) 35%, rgba(8,25,131,1) 40%, rgba(0,212,255,1) 100%);">
                                         </div> 
                                     </div>
                                     <div class="invest-get">
                                         <div class="left">
                                             {{ __('Invest')}}  <br>
-                                            <input type="hidden" value="{{ $data->min_price }}" class="invest-min-price" />
-                                            <input type="hidden" value="{{ round($data->max_price ) }}" class="invest-max-price" />
-                                            <input type="number" min="{{ $data->min_price }}" max="{{ round($data->max_price ) }}"  class="payprice" value="{{ $data->min_price }}">
-                                            <span style="display:none;" class="range-slider__value ck">{{ $data->min_price }}</span>
+                                            <input type="hidden" value="{{ $data->setPrice($data->min_price,$defaultCurrency->value) }}" class="invest-min-price" />
+                                            <input type="hidden" value="{{ $data->setPrice($data->max_price,$defaultCurrency->value) }}" class="invest-max-price" />
+                                            <input type="number" min="{{ $data->setPrice($data->min_price,$defaultCurrency->value) }}" max="{{ $data->setPrice($data->max_price,$defaultCurrency->value) }}"  class="payprice" value="{{ $data->setPrice($data->min_price,$defaultCurrency->value) }}">
+                                            <span style="display:none;" class="range-slider__value ck">{{ $data->setPrice($data->min_price,$defaultCurrency->value) }}</span>
                                         </div>
                                         <input type="hidden" class="dbl" value="{{ $data->interest() }}">
                                         <div class="right">
-                                            {{ __('Get') }}  <span class="dk">{{ round($data->min_price * $data->interest()) }}</span>
+                                            {{ __('Get') }}  <span class="dk">{{ round($data->setPrice($data->min_price,$defaultCurrency->value) * $data->interest()) }}</span>
                                             <input type="hidden" class="prodid" value="{{ $data->id }}">
-                                            <input type="hidden" class="getprice" value="{{ round($data->min_price * $data->interest()) }}">
+                                            <input type="hidden" class="getprice" value="{{ round($data->setPrice($data->min_price,$defaultCurrency->value) * $data->interest()) }}">
                                         </div>
                                     </div>
                                 </div>
@@ -182,111 +183,12 @@
         </div>
     </section>
 
-
-    <section class="team">
-        <div class="container">
-            <!-- Section Title Starts -->
-            <div class=" text-center">
-                <h2 class="title-head">our <span>experts</span></h2>
-                <div class="title-head-subtitle">
-                    <p> A talented team of Cryptocurrency experts based in London</p>
-                </div>
-            </div>
-
-            <div class="row team-content team-members">
-                <div class="col-xs-6 col-sm-3 col-md-3 col-lg-3">
-                    <div class="team-member">
-                        <img src="images/team/member1.jpg" class="img-responsive" alt="team member">
-                        <div class="team-member-caption social-icons">
-                            <h4>Lina Marzouki</h4>
-                            <p>Ceo Founder</p>
-                            <ul class="list list-inline social">
-                                <li>
-                                    <a href="#" class="fa fa-facebook"></a>
-                                </li>
-                                <li>
-                                    <a href="#" class="fa fa-twitter"></a>
-                                </li>
-                                <li>
-                                    <a href="#" class="fa fa-google-plus"></a>
-                                </li>
-                            </ul>
-                        </div>
-                    </div>
-                </div>
-
-                <div class="col-xs-6 col-sm-3 col-md-3 col-lg-3">
-                    <div class="team-member">
-                        <img src="images/team/member2.jpg" class="img-responsive" alt="team member">
-                        <div class="team-member-caption social-icons">
-                            <h4>Marco Verratti</h4>
-                            <p>Director</p>
-                            <ul class="list list-inline social">
-                                <li>
-                                    <a href="#" class="fa fa-facebook"></a>
-                                </li>
-                                <li>
-                                    <a href="#" class="fa fa-twitter"></a>
-                                </li>
-                                <li>
-                                    <a href="#" class="fa fa-google-plus"></a>
-                                </li>
-                            </ul>
-                        </div>
-                    </div>
-                </div>
-
-                <div class="col-xs-6 col-sm-3 col-md-3 col-lg-3">
-                    <div class="team-member">
-                        <img src="images/team/member3.jpg" class="img-responsive" alt="team member">
-                        <div class="team-member-caption social-icons">
-                            <h4>Emilia Bella</h4>
-                            <p>Bitcoin Consultant</p>
-                            <ul class="list list-inline social">
-                                <li>
-                                    <a href="#" class="fa fa-facebook"></a>
-                                </li>
-                                <li>
-                                    <a href="#" class="fa fa-twitter"></a>
-                                </li>
-                                <li>
-                                    <a href="#" class="fa fa-google-plus"></a>
-                                </li>
-                            </ul>
-                        </div>
-                    </div>
-                </div>
-
-                <div class="col-xs-6 col-sm-3 col-md-3 col-lg-3">
-                    <div class="team-member">
-                        <img src="images/team/member4.jpg" class="img-responsive" alt="team member">
-                        <div class="team-member-caption social-icons">
-                            <h4>Antonio Conte</h4>
-                            <p>Bitcoin Developer</p>
-                            <ul class="list list-inline social">
-                                <li>
-                                    <a href="#" class="fa fa-facebook"></a>
-                                </li>
-                                <li>
-                                    <a href="#" class="fa fa-twitter"></a>
-                                </li>
-                                <li>
-                                    <a href="#" class="fa fa-google-plus"></a>
-                                </li>
-                            </ul>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </section>
-
     <section class="blog">
         <div class="container">
             <div class="row text-center">
-                <h2 class="title-head">Bitcoin <span>News</span></h2>
+                <h2 class="title-head">{{ __('Bitcoin') }} <span>{{ __('News') }}</span></h2>
                 <div class="title-head-subtitle">
-                    <p>Discover latest news about Bitcoin on our blog</p>
+                    <p>{{ __('Discover latest news about Bitcoin on our blog')}}</p>
                 </div>
             </div>
 

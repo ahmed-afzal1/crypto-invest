@@ -24,11 +24,7 @@ options.modal = {
 };
 
 var rzp = new Razorpay(options);
-
-//document.getElementById('rzp-button1').onclick = function(e){
-    rzp.open();
-   // e.preventDefault();
-//}
+rzp.open();
 
 
 </script>

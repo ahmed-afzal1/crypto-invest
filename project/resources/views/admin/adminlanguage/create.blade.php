@@ -15,7 +15,6 @@
 
   <div class="row justify-content-center mt-3">
     <div class="col-lg-12">
-      <!-- Form Basic -->
       <div class="card mb-4">
         <div class="card-header py-3 d-flex flex-row align-items-center justify-content-between">
         </div>
@@ -1453,17 +1452,13 @@
           </form>
         </div>
       </div>
-      <!-- Form Sizing -->
-
-      <!-- Horizontal Form -->
     </div>
   </div>
-  <!--Row-->
 @endsection
 
 @section('scripts')
 <script type="text/javascript">
-
+  'use strict';
   function isEmpty(el){
       return !$.trim(el.html())
   }

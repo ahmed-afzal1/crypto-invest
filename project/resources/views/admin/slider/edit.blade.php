@@ -1,5 +1,7 @@
 @extends('layouts.admin')
+
 @section('content')
+
 <div class="card">
    <div class="d-sm-flex align-items-center justify-content-between">
       <h5 class=" mb-0 text-gray-800 pl-3">{{ __('Update Slider') }} <a class="btn btn-primary btn-rounded btn-sm" href="{{route('admin.slider.index')}}"><i class="fas fa-arrow-left"></i> {{ __('Back') }}</a></h5>
@@ -10,9 +12,9 @@
       </ol>
    </div>
 </div>
+
 <div class="row justify-content-center mt-3">
    <div class="col-lg-10">
-      <!-- Form Basic -->
       <div class="card mb-4">
          <div class="card-header py-3 d-flex flex-row align-items-center justify-content-between">
             <h6 class="m-0 font-weight-bold text-primary">{{ __('Update Slider Form') }}</h6>
@@ -24,34 +26,16 @@
 
                @include('includes.admin.form-both')
 
-               <div class="panel panel-default slider-panel">
-                  <div class="panel-heading text-center">
-                     <h3>{{ __('Sub Title') }}</h3>
-                  </div>
-                  <div class="panel-body">
-                     <div class="form-group">
-                        <div class="col-sm-12">
-                           <label class="control-label" for="subtitle_text">{{ __('Text') }}*</label>
-                           <textarea class="form-control" name="subtitle_text" id="subtitle_text" rows="5"  placeholder="{{ __('Enter Title Text') }}">{{$data->subtitle_text}}</textarea>
-                        </div>
-                     </div>
-                  </div>
+
+               <div class="form-group">
+                  <label for="title">{{ __('Title') }}</label>
+                  <input type="text" class="form-control" id="title" name="title_text" placeholder="{{ __('Enter Title') }}" value="{{$data->title_text}}" required>
                </div>
 
-               <div class="panel panel-default slider-panel">
-                  <div class="panel-heading text-center">
-                     <h3>{{ __('Title') }}</h3>
-                  </div>
-                  <div class="panel-body">
-                     <div class="form-group">
-                        <div class="col-sm-12">
-                           <label class="control-label" for="title_text">{{ __('Text') }}*</label>
-                           <textarea class="form-control" name="title_text" id="title_text" rows="5" placeholder="{{ __('Enter Title Text') }}">{{$data->title_text}}</textarea>
-                        </div>
-                     </div>
-                  </div>
+              <div class="form-group">
+                  <label for="subtitle_text">{{ __('Sub Title') }}</label>
+                  <input type="text" class="form-control" id="subtitle_text" name="subtitle_text" placeholder="{{ __('Enter Sub Title') }}" value="{{$data->subtitle_text}}" required>
                </div>
-
 
                <div class="row">
                   <div class="col-md-6 mx-auto">

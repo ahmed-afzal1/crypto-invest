@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
 use App\Models\Blog;
+use App\Models\Deposit;
 use App\Models\Item;
 use App\Models\Order;
 use App\Models\OrderedItem;
@@ -29,14 +30,18 @@ class DashboardController extends Controller
 
     public function index()
     {
-        $data['pending'] = Order::where('status','=','pending')->where('payment_status','pending')->orderBy('id','desc')->get();
-        $data['running'] = Order::where('status','=','pending')->where('payment_status','completed')->orderBy('id','desc')->get();
-        $data['processing'] =Order::where('status','=','processing')->where('payment_status','completed')->orderBy('id','desc')->get();
-        $data['completed'] = Order::where('status','=','completed')->where('payment_status','completed')->orderBy('id','desc')->get();
-        $data['products'] = Product::all();
+        $data['pending'] = Order::where('status','=','pending')->orderBy('id','desc')->get();
+        $data['running'] = Order::where('status','=','running')->orderBy('id','desc')->get();
+        $data['completed'] = Order::where('status','=','completed')->orderBy('id','desc')->get();
+        $data['declined'] =Order::where('status','=','declined')->orderBy('id','desc')->get();
+        $data['invests'] = Order::all();
         $data['blogs'] = Blog::all();
-        $data['rorders'] = Order::orderBy('id','desc')->take(5)->get();
-        $data['rusers'] = User::orderBy('id','desc')->take(5)->get();
+        $data['plans'] = Product::all();
+        $data['deposits'] = Deposit::all();
+        $data['pdeposits'] = Deposit::where('status','pending')->get();
+        $data['cdeposits'] = Deposit::where('status','completed')->get();
+        $data['acustomers'] = User::orderBy('id','desc')->whereIsBanned(0)->get();
+        $data['bcustomers'] = User::orderBy('id','desc')->whereIsBanned(1)->get();
         $data['payouts'] = Withdraw::where('status','completed')->sum('amount');
 
         $data['activation_notify'] = "";

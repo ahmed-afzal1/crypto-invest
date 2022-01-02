@@ -124,14 +124,8 @@
           </form>
         </div>
       </div>
-
-      <!-- Form Sizing -->
-
-      <!-- Horizontal Form -->
-
     </div>
   </div>
-  <!--Row-->
 @endsection
 
 
@@ -139,7 +133,7 @@
 @section('scripts')
 
 <script type="text/javascript">
-
+'use strict';
   function isEmpty(el){
       return !$.trim(el.html())
   }

@@ -50,11 +50,6 @@
       </form>
     </div>
   </div>
-
-  <!-- Form Sizing -->
-
-  <!-- Horizontal Form -->
-
 </div>
 
 </div>

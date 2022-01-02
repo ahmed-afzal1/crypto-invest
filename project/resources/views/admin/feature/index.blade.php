@@ -16,7 +16,6 @@
 
 <div class="row mt-3">
   <div class="col-lg-12">
-
 	@include('includes.admin.form-success')
 
 	<div class="card mb-4">
@@ -33,10 +32,7 @@
 	  </div>
 	</div>
   </div>
-  <!-- DataTable with Hover -->
-
 </div>
-<!--Row-->
 
 
 <div class="modal fade confirm-modal" id="statusModal" tabindex="-1" role="dialog" aria-labelledby="statusModalTitle" aria-hidden="true">
@@ -116,9 +112,5 @@
         });
 
 	</script>
-
-
-
-
 
 @endsection

@@ -89,9 +89,9 @@ class GeniusMailer
 
     public function sendAutoMail(array $mailData)
     {
-        $setup = Generalsetting::find(1);
+        $gs = Generalsetting::first();
 
-        $temp = EmailTemplate::whereRegisterId(0)->where('email_type','=',$mailData['type'])->first();
+        $temp = EmailTemplate::where('email_type','=',$mailData['type'])->first();
 
         try{
 
@@ -99,11 +99,11 @@ class GeniusMailer
             $body = preg_replace("/{order_amount}/", $mailData['oamount'] ,$body);
             $body = preg_replace("/{admin_name}/", $mailData['aname'] ,$body);
             $body = preg_replace("/{admin_email}/", $mailData['aemail'] ,$body);
-            $body = preg_replace("/{order_number}/", $mailData['onumber'] ,$body);
-            $body = preg_replace("/{website_title}/", $setup->title ,$body);
+            $body = preg_replace("/{order_number}/", $mailData['oamount'] ,$body);
+            $body = preg_replace("/{website_title}/", $gs->title ,$body);
 
             //Recipients
-            $this->mail->setFrom($this->gs->from_email, $this->gs->from_name);
+            $this->mail->setFrom($gs->from_email, $gs->from_name);
             $this->mail->addAddress($mailData['to']);     // Add a recipient
 
             // Content

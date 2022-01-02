@@ -4,18 +4,17 @@
 
 <div class="card">
     <div class="d-sm-flex align-items-center justify-content-between">
-    <h5 class=" mb-0 text-gray-800 pl-3">{{ __('Error Banner') }}</h5>
-    <ol class="breadcrumb">
-        <li class="breadcrumb-item"><a href="{{ route('admin.dashboard') }}">{{ __('Dashboard') }}</a></li>
-        <li class="breadcrumb-item"><a href="javascript:;">{{ __('General Settings') }}</a></li>
-        <li class="breadcrumb-item"><a href="{{ route('admin.gs.error.banner') }}">{{ __('Error Banner') }}</a></li>
-    </ol>
+      <h5 class=" mb-0 text-gray-800 pl-3">{{ __('Error Banner') }}</h5>
+      <ol class="breadcrumb">
+          <li class="breadcrumb-item"><a href="{{ route('admin.dashboard') }}">{{ __('Dashboard') }}</a></li>
+          <li class="breadcrumb-item"><a href="javascript:;">{{ __('General Settings') }}</a></li>
+          <li class="breadcrumb-item"><a href="{{ route('admin.gs.error.banner') }}">{{ __('Error Banner') }}</a></li>
+      </ol>
     </div>
 </div>
 
 <div class="row justify-content-center mt-3">
   <div class="col-lg-6">
-    <!-- Form Basic -->
     <div class="card mb-4">
       <div class="card-header py-3 d-flex flex-row align-items-center justify-content-between">
         <h6 class="m-0 font-weight-bold text-primary">{{ __('Error Section') }}</h6>
@@ -58,13 +57,8 @@
       </div>
     </div>
 
-    <!-- Form Sizing -->
-
-    <!-- Horizontal Form -->
-
   </div>
 
 </div>
-<!--Row-->
 
 @endsection

@@ -63,15 +63,6 @@
                 <input type="text" class="form-control" id="inp-address" name="address"  placeholder="{{ __('Enter Address') }}" value="{{ $data->address }}" required>
             </div>
 
-            <div class="form-group">
-                <label for="inp-country">{{ __('Country') }}</label>
-                <input type="text" class="form-control" id="inp-country" name="country"  placeholder="{{ __('Enter Country') }}" value="{{ $data->country }}" required>
-            </div>
-
-            <div class="form-group">
-                <label for="inp-state">{{ __('State') }}</label>
-                <input type="text" class="form-control" id="inp-state" name="state"  placeholder="{{ __('Enter State') }}" value="{{ $data->state }}" required>
-            </div>
 
             <div class="form-group">
                 <label for="inp-city">{{ __('City') }}</label>

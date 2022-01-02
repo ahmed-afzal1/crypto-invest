@@ -30,6 +30,13 @@
   </li>
 
   <li class="nav-item">
+    <a class="nav-link" href="{{ route('admin.deposits.index') }}">
+      <i class="fas fa-piggy-bank"></i>
+      <span>{{ __('Deposits') }}</span>
+    </a>
+  </li>
+
+  <li class="nav-item">
     <a class="nav-link" href="{{ route('admin.plan.index') }}">
       <i class="fas fa-paper-plane"></i>
       <span>{{ __('Manage Plans') }}</span></a>
@@ -46,7 +53,7 @@
         <a class="collapse-item" href="{{ route('admin.user.index') }}">{{ __('User List') }}</a>
         <a class="collapse-item" href="{{ route('admin.withdraw.index') }}">{{ __('Withdraw Request') }} @if( DB::table('withdraws')->where('status','pending')->count() > 0)
         <span class="badge badge-sm badge-danger badge-counter">{{ DB::table('withdraws')->where('status','pending')->count() }}</span>@endif</a>
-        <a class="collapse-item" href="{{ route('admin.user.bonus') }}">{{ __('Registration Bonus') }}</a>
+        <a class="collapse-item" href="{{ route('admin.user.bonus') }}">{{ __('Refferel Bonus') }}</a>
       </div>
     </div>
   </li>
@@ -79,7 +86,6 @@
         <a class="collapse-item" href="{{ route('admin.gs.load') }}">{{ __('Loader') }}</a>
         <a class="collapse-item" href="{{ route('admin.gs.breadcumb') }}">{{ __('Breadcumb Banner') }}</a>
         <a class="collapse-item" href="{{ route('admin.gs.contents') }}">{{ __('Website Contents') }}</a>
-        <a class="collapse-item" href="{{ route('admin.gs.theme') }}">{{ __('Themes') }}</a>
         <a class="collapse-item" href="{{ route('admin.gs.footer') }}">{{ __('Footer') }}</a>
         <a class="collapse-item" href="{{ route('admin.gs.error.banner') }}">{{ __('Error Banner') }}</a>
       </div>
@@ -100,7 +106,6 @@
         <a class="collapse-item" href="{{ route('admin.ps.topservice') }}">{{ __('Service Top Section') }}</a>
         <a class="collapse-item" href="{{ route('admin.service.index') }}">{{ __('Service Section') }}</a>
         <a class="collapse-item" href="{{ route('admin.ps.footertop') }}">{{ __('Footer Top Section') }}</a>
-        <a class="collapse-item" href="{{ route('admin.ps.newsletter') }}">{{ __('Newsletter Section') }}</a>
       </div>
     </div>
   </li>
@@ -204,6 +209,12 @@
         <a class="collapse-item" href="{{route('admin.social.index')}}">{{ __('Social Links') }}</a>
       </div>
     </div>
+  </li>
+
+  <li class="nav-item">
+    <a class="nav-link" href="{{ route('admin.sitemap.index') }}">
+      <i class="fa fa-sitemap"></i>
+      <span>{{ __('Sitemaps') }}</span></a>
   </li>
 
   <li class="nav-item">

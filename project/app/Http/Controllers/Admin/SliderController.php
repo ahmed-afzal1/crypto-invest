@@ -59,8 +59,9 @@ class SliderController extends Controller
     public function store(Request $request)
     {
         $rules = [
-               'photo'      => 'required|mimes:jpeg,jpg,png,svg',
-                ];
+            'title_text' => 'required|unique:sliders',
+            'photo'      => 'required|mimes:jpeg,jpg,png,svg',
+          ];
 
         $validator = Validator::make($request->all(), $rules);
         
@@ -93,8 +94,9 @@ class SliderController extends Controller
     public function update(Request $request, $id)
     {
         $rules = [
+              'title_text' => 'required|unique:sliders,title_text,'.$id,
                'photo'      => 'mimes:jpeg,jpg,png,svg',
-                ];
+          ];
 
         $validator = Validator::make($request->all(), $rules);
         

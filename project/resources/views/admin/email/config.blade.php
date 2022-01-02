@@ -43,13 +43,6 @@
                   </div>
             </div>
 
-            {{-- <div class="form-group">
-              <label>{{ __('Mail Driver') }} *</label>
-              <select name="mail_driver" class="input-field" required>
-                <option value="smtp" {{ $gs->mail_driver == 'smtp' ? 'selected' : '' }}>SMTP</option>
-                <option value="sendmail" {{ $gs->mail_driver == 'sendmail' ? 'selected' : '' }}>SENDMAIL</option>
-              </select>
-            </div> --}}
 
             <div class="form-group">
               <label>{{ __('SMTP Host') }} *</label>

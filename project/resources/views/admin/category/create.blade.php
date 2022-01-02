@@ -4,19 +4,18 @@
 
 <div class="card">
     <div class="d-sm-flex align-items-center justify-content-between">
-    <h5 class=" mb-0 text-gray-800 pl-3">{{ __('Add New Category') }} <a class="btn btn-primary btn-rounded btn-sm" href="{{route('admin.cat.index')}}"><i class="fas fa-arrow-left"></i> {{ __('Back') }}</a></h5>
-    <ol class="breadcrumb">
-        <li class="breadcrumb-item"><a href="{{ route('admin.dashboard') }}">{{ __('Dashboard') }}</a></li>
-        <li class="breadcrumb-item"><a href="javascript:;">{{ __('Manage Categories') }}</a></li>
-        <li class="breadcrumb-item"><a href="{{ route('admin.cat.index') }}">{{ __('Main Categories') }}</a></li>
-        <li class="breadcrumb-item"><a href="{{route('admin.cat.create')}}">{{ __('Add New Category') }}</a></li>
-    </ol>
+      <h5 class=" mb-0 text-gray-800 pl-3">{{ __('Add New Category') }} <a class="btn btn-primary btn-rounded btn-sm" href="{{route('admin.cat.index')}}"><i class="fas fa-arrow-left"></i> {{ __('Back') }}</a></h5>
+      <ol class="breadcrumb">
+          <li class="breadcrumb-item"><a href="{{ route('admin.dashboard') }}">{{ __('Dashboard') }}</a></li>
+          <li class="breadcrumb-item"><a href="javascript:;">{{ __('Manage Categories') }}</a></li>
+          <li class="breadcrumb-item"><a href="{{ route('admin.cat.index') }}">{{ __('Main Categories') }}</a></li>
+          <li class="breadcrumb-item"><a href="{{route('admin.cat.create')}}">{{ __('Add New Category') }}</a></li>
+      </ol>
     </div>
 </div>
 
 <div class="row justify-content-center mt-3">
   <div class="col-lg-6">
-    <!-- Form Basic -->
     <div class="card mb-4">
       <div class="card-header py-3 d-flex flex-row align-items-center justify-content-between">
         <h6 class="m-0 font-weight-bold text-primary">{{ __('Add New Category Form') }}</h6>
@@ -94,27 +93,14 @@
         </form>
       </div>
     </div>
-
-    <!-- Form Sizing -->
-
-    <!-- Horizontal Form -->
-
   </div>
 
 </div>
-<!--Row-->
+
 
 @endsection
 
 
 @section('scripts')
-
-<script>
-
-$(document).ready(function() {
-
-});
-
-</script>
 
 @endsection

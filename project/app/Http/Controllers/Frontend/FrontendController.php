@@ -45,7 +45,23 @@ class FrontendController extends Controller
     {
         //  $this->auth_guests();
     }
-    public function index(){
+    public function index(Request $request){
+        if(!empty($request->reff))
+        {
+           $affilate_user = User::where('affilate_code','=',$request->reff)->first();
+
+           if(!empty($affilate_user))
+           {
+               $gs = Generalsetting::findOrFail(1);
+               if($gs->is_affilate == 1)
+               {
+                   Session::put('affilate', $affilate_user->id);
+                   return redirect()->route('user.login');                    
+               }
+
+           } 
+        }
+
         $data['sliders'] = Slider::orderBy('id','desc')->get();
         $data['blogs'] = Blog::orderBy('id','desc')->orderBy('id','desc')->limit(3);
         $data['features'] = Feature::orderBy('id','desc')->orderBy('id','desc')->limit(3)->get();

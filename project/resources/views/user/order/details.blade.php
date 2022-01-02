@@ -30,11 +30,11 @@
                             </tr>
                             <tr>
                                 <th>{{ __('Invest') }}</th>
-                                <td>{{$order->invest}}{{ $gs->currency_sign }}</td>
+                                <td>{{ round($order->invest * $defaultCurrency->value)}}{{ $defaultCurrency->sign }}</td>
                             </tr>
                             <tr>
                                 <th>{{ __('Get') }}</th>
-                                <td>{{$order->pay_amount}}{{ $gs->currency_sign }}</td>
+                                <td>{{ round($order->pay_amount * $defaultCurrency->value)}}{{ $defaultCurrency->sign }}</td>
                             </tr>
                             <tr>
                                 <th>{{$order->method}} {{ __('Transaction ID') }}</th>
@@ -72,6 +72,8 @@
 
 @push('js')
 <script type="text/javascript">
+    'use strict';
+    
     $('#example').DataTable({
         ordering: false
     });

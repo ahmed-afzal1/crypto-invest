@@ -14,9 +14,7 @@
 </div>
 
 
-<!-- Row -->
 <div class="row mt-3">
-  <!-- Datatables -->
   <div class="col-lg-12">
 
 	@include('includes.admin.form-success')
@@ -36,10 +34,8 @@
 	  </div>
 	</div>
   </div>
-  <!-- DataTable with Hover -->
-
 </div>
-<!--Row-->
+
 
 {{-- STATUS MODAL --}}
 <div class="modal fade confirm-modal" id="statusModal" tabindex="-1" role="dialog" aria-labelledby="statusModalTitle" aria-hidden="true">
@@ -94,7 +90,6 @@
 @endsection
 
 
-
 @section('scripts')
 
 <script type="text/javascript">
@@ -107,12 +102,11 @@
            searching: false,
            ajax: '{{ route('admin.plan.datatables') }}',
            columns: [
-						{ data: 'title', name: 'title' },
-                        { data: 'min_price', name: 'min_price' },
-                        { data: 'max_price', name: 'max_price' },
-            			{ data: 'action', searchable: false, orderable: false }
-
-                 ],
+				{ data: 'title', name: 'title' },
+				{ data: 'min_price', name: 'min_price' },
+				{ data: 'max_price', name: 'max_price' },
+				{ data: 'action', searchable: false, orderable: false }
+            ],
             language : {
                 processing: '<img src="{{asset('assets/images/'.$gs->admin_loader)}}">'
             }
@@ -128,11 +122,6 @@
 
 
 </script>
-
-
-
-
-
 
 @endsection
 

@@ -11,8 +11,7 @@ class BonusController extends Controller
 {
     public function index()
     {
-            $bonus=RegisterBonus::first();
-            return view('admin.user.bonus',compact('bonus'));
+      return view('admin.user.bonus');
     }
 
     public function update(Request $request){

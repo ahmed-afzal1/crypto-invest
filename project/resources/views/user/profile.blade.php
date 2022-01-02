@@ -5,10 +5,10 @@
             <div class="account-box">
               <div class="header-area">
                 <h4 class="title">
-                    Edit Profile
+                    {{__('Edit Profile')}}
                 </h4>
                 <a href="javascript:;" class="edit"  data-toggle="modal" data-target="#edit-account">
-                    <i class="material-icons">edit</i>
+                    <i class="material-icons">{{__('edit')}}</i>
                 </a>
               </div>
               <div class="content">
@@ -18,7 +18,7 @@
                 <table>
                   <tr>
                     <td>
-                        User Name<span>:</span>
+                        {{__('User Name')}}<span>:</span>
                     </td>
                     <td>
                         {{ $user->name }}
@@ -26,7 +26,7 @@
                   </tr>
                   <tr>
                     <td>
-                        Email Address<span>:</span>
+                        {{__('Email Address')}}<span>:</span>
                     </td>
                     <td>
                          {{ $user->email }}
@@ -34,7 +34,7 @@
                   </tr>
                   <tr>
                     <td>
-                        Phone Number<span>:</span>
+                        {{__('Phone Number')}}<span>:</span>
                     </td>
                     <td>
                         {{ $user->phone }}
@@ -42,7 +42,7 @@
                   </tr>
                   <tr>
                     <td>
-                        Address<span>:</span>
+                        {{__('Address')}}<span>:</span>
                     </td>
                     <td>
                         {{ $user->address }}
@@ -50,7 +50,7 @@
                   </tr>
                   <tr>
                     <td>
-                        City<span>:</span>
+                        {{__('City')}}<span>:</span>
                     </td>
                     <td>
                         {{ $user->city }}
@@ -58,7 +58,7 @@
                   </tr>
                   <tr>
                     <td>
-                        Fax<span>:</span>
+                        {{__('Fax')}}<span>:</span>
                     </td>
                     <td>
                         {{ $user->fax }}
@@ -66,7 +66,7 @@
                   </tr>
                   <tr>
                     <td>
-                        Zip<span>:</span>
+                        {{__('Zip')}}<span>:</span>
                     </td>
                     <td>
                         {{ $user->zip }}
@@ -90,12 +90,12 @@
                           <span aria-hidden="true">&times;</span>
                       </button>
 
-                      <h4 class="card-title">Edit Profile</h4>
+                      <h4 class="card-title">{{__('Edit Profile')}}</h4>
                     </div>
                   </div>
                   <div class="modal-body">
 
-                                                <div class="gocover" style="background: url({{ asset('assets/images/'.$gs->loader) }}) no-repeat scroll center center rgba(45, 45, 45, 0.5);"></div>
+                      <div class="gocover" style="background: url({{ asset('assets/images/'.$gs->loader) }}) no-repeat scroll center center rgba(45, 45, 45, 0.5);"></div>
 
                       <form class="form" method="POST" action="{{route('user-profile-update')}}" enctype="multipart/form-data">
 
@@ -109,51 +109,51 @@
                             <img src="{{ $user->photo ? asset('assets/images/users/'.$user->photo):asset('assets/images/noimage.png') }}">
                           @endif
                         </div>
-                        <a href="javascript:;" class="mybtn1 edit-profile">Upload Image</a>
+                        <a href="javascript:;" class="mybtn1 edit-profile">{{__('Upload Image')}}</a>
                         <input class="d-none upload" type="file" name="photo">
                       </div>
 
                           <div class="card-body">
 
                               <div class="form-group">
-                                <label for="name" class="bmd-label-floating">User Name *</label>
+                                <label for="name" class="bmd-label-floating">{{__('User Name')}} *</label>
                                 <input type="text" class="form-control" name="name" id="name" value="{{ $user->name }}" required="">
                               </div>
 
                               <div class="form-group">
-                                <label for="email" class="bmd-label-floating">Email Address *</label>
+                                <label for="email" class="bmd-label-floating">{{__('Email Address')}} *</label>
                                 <input type="email" class="form-control" name="email" id="email" value="{{ $user->email }}" required="">
                               </div>
 
 
                               <div class="form-group">
-                                <label for="phone" class="bmd-label-floating">Phone Number *</label>
+                                <label for="phone" class="bmd-label-floating">{{__('Phone Number')}} *</label>
                                 <input type="tel" class="form-control" name="phone" id="phone" value="{{ $user->phone }}" required="">
                               </div>
 
                               <div class="form-group">
-                                <label for="address" class="bmd-label-floating">Address *</label>
+                                <label for="address" class="bmd-label-floating">{{__('Address')}} *</label>
                                 <input type="text" class="form-control" name="address" id="address" value="{{ $user->address }}" required="">
                               </div>
 
                               <div class="form-group">
-                                <label for="city" class="bmd-label-floating">City</label>
+                                <label for="city" class="bmd-label-floating">{{__('City')}}</label>
                                 <input type="text" class="form-control" name="city" id="city" value="{{ $user->city }}">
                               </div>
 
                               <div class="form-group">
-                                <label for="fax" class="bmd-label-floating">Fax</label>
+                                <label for="fax" class="bmd-label-floating">{{__('Fax')}}</label>
                                 <input type="text" class="form-control" name="fax"  id="fax" value="{{ $user->fax }}">
                               </div>
 
                               <div class="form-group">
-                                <label for="zip" class="bmd-label-floating">Zip</label>
+                                <label for="zip" class="bmd-label-floating">{{__('Zip')}}</label>
                                 <input type="text" class="form-control" name="zip" id="zip" value="{{ $user->zip }}">
                               </div>
 
                               <div class="form-group">
                                   <button type="submit" class="btn submit-btn btn-round">
-                                    Save
+                                    {{__('Save')}}
                                   </button>
                               </div>
                           </div>
@@ -172,7 +172,8 @@
 @section('scripts')
 
 <script type="text/javascript">
-
+  'use strict';
+  
   $('.edit-profile').on('click',function(){
     $('.upload').click();
 

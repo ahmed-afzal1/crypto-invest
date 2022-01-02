@@ -4,7 +4,7 @@
             <div class="col-lg-4 sm-mx-none">
                 <div class="d-flex align-items-center text-general">
                     <i class="flaticon-phone-call flat-mini me-2 text-general"></i>
-                    <span>+1 029 312 9131</span>
+                    <span>{{$ps->phone}}</span>
                 </div>
             </div>
             <div class="col-lg-8 ">
@@ -57,10 +57,11 @@
 
                 <div class="collapse navbar-collapse" id="navbarSupportedContent">
                   <ul class="navbar-nav mx-auto text-center">
-                    <li class="active"><a href="{{route('front.index')}}">{{__('Home')}}</a></li>
-                    <li><a href="{{route('front.services')}}">{{__('Services')}}</a></li>
-                    <li><a href="{{route('front.pricing')}}">{{__('Plan')}}</a></li>
-                    <li><a href="{{route('front.blog')}}">{{__('Blog')}}</a></li>
+
+                    @foreach(json_decode($gs->menu,true) as $key => $menue)
+                        <li><a href="{{ $menue['href'] }}" target="{{ $menue['target'] == 'blank' ? '_blank' : '_self' }}">{{ $menue['title'] }}</a></li>
+                    @endforeach
+                    
                     @if (count($pages) > 0)
                         <li class="dropdown">
                             <a href="#" class="" data-toggle="dropdown">{{__('pages')}} <i class="fa fa-angle-down"></i></a>
@@ -70,9 +71,8 @@
                                 @endforeach
                             </ul>
                         </li>
+                        <li class="search"><button class="fa fa-search"></button></li>
                     @endif
-                    <li><a href="{{route('front.contact')}}">{{(__('Contact'))}}</a></li>
-                    <li class="search"><button class="fa fa-search"></button></li>
                   </ul>
 
                 </div>

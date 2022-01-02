@@ -63,6 +63,7 @@
 @endsection
 
 @section('scripts')
+
 <script src="{{asset('assets/user/js/sweetalert2@9.js')}}"></script>
 
 @if($errors->any())

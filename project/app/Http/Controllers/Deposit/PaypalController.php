@@ -181,7 +181,7 @@ class PaypalController extends Controller
                 Session::forget('paypal_payment_id');
                 Session::forget('deposit_number');
 
-                return redirect()->back()->with('success','Deposit amount ('.$deposit_data['amount'].') successfully!');
+                return redirect()->route('user.deposit.create')->with('success','Deposit amount ('.$deposit_data['amount'].') successfully!');
         }
 
     }

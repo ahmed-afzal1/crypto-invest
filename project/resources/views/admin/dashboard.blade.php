@@ -26,8 +26,8 @@
         <div class="card-body">
           <div class="row align-items-center">
             <div class="col mr-2">
-              <div class="text-xs font-weight-bold text-uppercase mb-1">{{ __('Active Users') }}</div>
-              <div class="h5 mb-0 font-weight-bold text-gray-800">1</div>
+              <div class="text-xs font-weight-bold text-uppercase mb-1">{{ __('Active Customers') }}</div>
+              <div class="h5 mb-0 font-weight-bold text-gray-800">{{count($acustomers)}}</div>
             </div>
             <div class="col-auto">
               <i class="fas fa-user fa-2x text-success"></i>
@@ -41,8 +41,8 @@
           <div class="card-body">
             <div class="row align-items-center">
               <div class="col mr-2">
-                <div class="text-xs font-weight-bold text-uppercase mb-1">{{ __('Blocked Users') }}</div>
-                <div class="h5 mb-0 font-weight-bold text-gray-800">0</div>
+                <div class="text-xs font-weight-bold text-uppercase mb-1">{{ __('Blocked Customers') }}</div>
+                <div class="h5 mb-0 font-weight-bold text-gray-800">{{ count($bcustomers) }}</div>
               </div>
               <div class="col-auto">
                 <i class="fas fa-user fa-2x text-danger"></i>
@@ -51,31 +51,49 @@
           </div>
         </div>
       </div>
+
       <div class="col-xl-3 col-md-6 mb-4">
         <div class="card h-100">
           <div class="card-body">
             <div class="row align-items-center">
               <div class="col mr-2">
-                <div class="text-xs font-weight-bold text-uppercase mb-1">{{ __('Total Authors') }}</div>
-                <div class="h5 mb-0 font-weight-bold text-gray-800">3</div>
-              </div>
-              <div class="col-auto">
-                <i class="fas fa-user-tie fa-2x text-primary"></i>
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
-      <div class="col-xl-3 col-md-6 mb-4">
-        <div class="card h-100">
-          <div class="card-body">
-            <div class="row align-items-center">
-              <div class="col mr-2">
-                <div class="text-xs font-weight-bold text-uppercase mb-1">{{ __('Active Products') }}</div>
+                <div class="text-xs font-weight-bold text-uppercase mb-1">{{ __('Total Plans') }}</div>
                 <div class="h5 mb-0 font-weight-bold text-gray-800">5</div>
               </div>
               <div class="col-auto">
-                <i class="fas fa-file fa-2x text-success"></i>
+                <i class="fas fa-paper-plane fa-2x text-success"></i>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="col-xl-3 col-md-6 mb-4">
+        <div class="card h-100">
+          <div class="card-body">
+            <div class="row align-items-center">
+              <div class="col mr-2">
+                <div class="text-xs font-weight-bold text-uppercase mb-1">{{ __('Total Invests') }}</div>
+                <div class="h5 mb-0 font-weight-bold text-gray-800">{{ count($invests) }}</div>
+              </div>
+              <div class="col-auto">
+                <i class="fas fa-piggy-bank fa-2x text-primary"></i>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="col-xl-3 col-md-6 mb-4">
+        <div class="card h-100">
+          <div class="card-body">
+            <div class="row align-items-center">
+              <div class="col mr-2">
+                <div class="text-xs font-weight-bold text-uppercase mb-1">{{ __('Pending Invest') }}</div>
+                <div class="h5 mb-0 font-weight-bold text-gray-800">{{ count($pending) }}</div>
+              </div>
+              <div class="col-auto">
+                <i class="fas fa-piggy-bank fa-2x text-warning"></i>
               </div>
             </div>
           </div>
@@ -86,11 +104,11 @@
           <div class="card-body">
             <div class="row align-items-center">
               <div class="col mr-2">
-                <div class="text-xs font-weight-bold text-uppercase mb-1">{{ __('Approval Pending') }}</div>
-                <div class="h5 mb-0 font-weight-bold text-gray-800">0</div>
+                <div class="text-xs font-weight-bold text-uppercase mb-1">{{ __('Running Invest') }}</div>
+                <div class="h5 mb-0 font-weight-bold text-gray-800">{{ count($running) }}</div>
               </div>
               <div class="col-auto">
-                <i class="fas fa-file fa-2x text-primary"></i>
+                <i class="fas fa-piggy-bank fa-2x text-info"></i>
               </div>
             </div>
           </div>
@@ -101,46 +119,97 @@
           <div class="card-body">
             <div class="row align-items-center">
               <div class="col mr-2">
-                <div class="text-xs font-weight-bold text-uppercase mb-1">{{ __('Update Approval Pending') }}</div>
-                <div class="h5 mb-0 font-weight-bold text-gray-800">3</div>
+                <div class="text-xs font-weight-bold text-uppercase mb-1">{{ __('Completed Invest') }}</div>
+                <div class="h5 mb-0 font-weight-bold text-gray-800">{{ count($completed) }}</div>
               </div>
               <div class="col-auto">
-                <i class="fas fa-file fa-2x text-warning"></i>
+                <i class="fas fa-piggy-bank fa-2x text-success"></i>
               </div>
             </div>
           </div>
         </div>
       </div>
+
       <div class="col-xl-3 col-md-6 mb-4">
         <div class="card h-100">
           <div class="card-body">
             <div class="row align-items-center">
               <div class="col mr-2">
-                <div class="text-xs font-weight-bold text-uppercase mb-1">{{ __('Total Sale') }}</div>
-                <div class="h5 mb-0 font-weight-bold text-gray-800">4</div>
+                <div class="text-xs font-weight-bold text-uppercase mb-1">{{ __('Declined Invest') }}</div>
+                <div class="h6 mb-0 mt-2 font-weight-bold text-gray-800">{{ count($declined) }} </div>
               </div>
               <div class="col-auto">
-                <i class="fas fa-shopping-cart fa-2x text-primary"></i>
+                <i class="fas fa-piggy-bank fa-2x text-danger"></i>
               </div>
             </div>
           </div>
         </div>
       </div>
+
       <div class="col-xl-3 col-md-6 mb-4">
         <div class="card h-100">
           <div class="card-body">
             <div class="row align-items-center">
               <div class="col mr-2">
-                <div class="text-xs font-weight-bold text-uppercase mb-1">{{ __('Total Sale profit') }}</div>
-                <div class="h6 mb-0 mt-2 font-weight-bold text-gray-800"><i class='fas fa-dollar-sign'></i> </div>
+                <div class="text-xs font-weight-bold text-uppercase mb-1">{{ __('Total Blogs') }}</div>
+                <div class="h6 mb-0 mt-2 font-weight-bold text-gray-800">{{ count($blogs) }} </div>
               </div>
               <div class="col-auto">
-                <i class="fas fa-money-check-alt fa-2x text-success"></i>
+                <i class="fas fa-fw fa-newspaper fa-2x text-success"></i>
               </div>
             </div>
           </div>
         </div>
       </div>
+
+      <div class="col-xl-3 col-md-6 mb-4">
+        <div class="card h-100">
+          <div class="card-body">
+            <div class="row align-items-center">
+              <div class="col mr-2">
+                <div class="text-xs font-weight-bold text-uppercase mb-1">{{ __('Total Deposits') }}</div>
+                <div class="h6 mb-0 mt-2 font-weight-bold text-gray-800">{{ count($deposits) }} </div>
+              </div>
+              <div class="col-auto">
+                <i class="fas fa-dollar-sign fa-2x text-success"></i>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="col-xl-3 col-md-6 mb-4">
+        <div class="card h-100">
+          <div class="card-body">
+            <div class="row align-items-center">
+              <div class="col mr-2">
+                <div class="text-xs font-weight-bold text-uppercase mb-1">{{ __('Pending Deposits') }}</div>
+                <div class="h6 mb-0 mt-2 font-weight-bold text-gray-800">{{ count($pdeposits) }} </div>
+              </div>
+              <div class="col-auto">
+                <i class="fas fa-dollar-sign fa-2x text-warning"></i>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="col-xl-3 col-md-6 mb-4">
+        <div class="card h-100">
+          <div class="card-body">
+            <div class="row align-items-center">
+              <div class="col mr-2">
+                <div class="text-xs font-weight-bold text-uppercase mb-1">{{ __('Completed Deposits') }}</div>
+                <div class="h6 mb-0 mt-2 font-weight-bold text-gray-800">{{ count($cdeposits) }} </div>
+              </div>
+              <div class="col-auto">
+                <i class="fas fa-dollar-sign fa-2x text-success"></i>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
   </div>
   <!--Row-->
 

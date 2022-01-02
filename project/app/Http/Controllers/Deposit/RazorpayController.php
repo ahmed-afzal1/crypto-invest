@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Deposit;
 
 use App\Http\Controllers\Controller;
+use App\Models\Currency;
 use App\Models\Deposit;
 use App\Models\Generalsetting;
 use App\Models\PaymentGateway;
@@ -27,10 +28,10 @@ class RazorpayController extends Controller
 
     public function store(Request $request)
     {
-        // if($request->currency_code != "INR")
-        // {
-        //     return redirect()->back()->with('unsuccess','Please Select INR Currency For Rezorpay.');
-        // }
+        if($request->currency_code != "INR")
+        {
+            return redirect()->back()->with('unsuccess','Please Select INR Currency For Rezorpay.');
+        }
         
         $settings = Generalsetting::findOrFail(1);
         $deposit = new Deposit();
@@ -107,7 +108,7 @@ class RazorpayController extends Controller
         $json = json_encode($data);
         $displayCurrency = $this->displayCurrency;
         
-        return view( 'front.razorpay-checkout', compact( 'data','displayCurrency','json','notify_url' ) );
+        return view( 'frontend.razorpay-checkout', compact( 'data','displayCurrency','json','notify_url' ) );
     }
 
     public function notify(Request $request)
@@ -115,7 +116,6 @@ class RazorpayController extends Controller
         $input = Session::get('input_data');
         $order_data = Session::get('order_data');
         $input_data = $request->all();
-        $order = new Order();
 
         $payment_id = Session::get('order_payment_id');
 
@@ -145,8 +145,8 @@ class RazorpayController extends Controller
             $deposit = new Deposit();
             $deposit['deposit_number'] = $order_data['item_number'];
             $deposit['user_id'] = auth()->user()->id;
-            $deposit['amount'] = $input_data['amount'];
-            $deposit['method'] = $input_data['method'];
+            $deposit['amount'] = $input['amount'];
+            $deposit['method'] = $input['method'];
             $deposit['status'] = "complete";
             $deposit['txnid'] = $payment_id;
             $deposit->save();
@@ -154,7 +154,12 @@ class RazorpayController extends Controller
 
 
             $gs =  Generalsetting::findOrFail(1);
+            $currency = Currency::where('id',$input['currency_id'])->first();
+            $amountToAdd = $input['amount']/$currency->value;
+
             $user = auth()->user();
+            $user->income += $amountToAdd;
+            $user->save();
 
             if($gs->is_smtp == 1)
             {
@@ -178,9 +183,10 @@ class RazorpayController extends Controller
                $headers = "From: ".$gs->from_name."<".$gs->from_email.">";
                mail($to,$subject,$msg,$headers);            
             }
+
      
             
-            return redirect()->back()->with('success','Deposit amount ('.$input_data['amount'].') successfully!');
+            return redirect()->route('user.deposit.create')->with('success','Deposit amount ('.$input['amount'].') successfully!');
             
         }
         return redirect()->back()->with('unsuccess','Something Went wrong!');

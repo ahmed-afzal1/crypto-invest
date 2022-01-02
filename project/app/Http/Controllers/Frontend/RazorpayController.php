@@ -38,10 +38,10 @@ class RazorpayController extends Controller
 
     public function store(Request $request)
     {
-        // if($request->currency_code != "INR")
-        // {
-        //     return redirect()->back()->with('unsuccess','Please Select INR Currency For Rezorpay.');
-        // }
+        if($request->currency_code != "INR")
+        {
+            return redirect()->back()->with('unsuccess','Please Select INR Currency For Rezorpay.');
+        }
         
         $settings = Generalsetting::findOrFail(1);
         $order = new Order();

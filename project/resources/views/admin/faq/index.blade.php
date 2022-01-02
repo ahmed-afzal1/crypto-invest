@@ -14,9 +14,7 @@
 </div>
 
 
-<!-- Row -->
 <div class="row mt-3">
-  <!-- Datatables -->
   <div class="col-lg-12">
 
 	@include('includes.admin.form-success')
@@ -35,7 +33,6 @@
 	  </div>
 	</div>
   </div>
-  <!-- DataTable with Hover -->
 
 </div>
 <!--Row-->

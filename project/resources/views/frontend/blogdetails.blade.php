@@ -39,7 +39,7 @@
 						</div>
 
 						<div class="comments">
-							<h3 class="comments-heading uppercase">3 Comments</h3>
+							<h3 class="comments-heading uppercase">{{__('3 Comments')}}</h3>
 							<ul class="comments-list">
 								<li>
 									<!-- Comment Starts -->

@@ -11,6 +11,7 @@ use App\Classes\GeniusMailer;
 use Illuminate\Http\Request;
 use Illuminate\Support\Str;
 use App\Classes\Instamojo;
+use App\Models\Currency;
 use App\Models\Deposit;
 
 class InstamojoController extends Controller
@@ -23,10 +24,10 @@ class InstamojoController extends Controller
         $total =  $request->amount;
         $paydata = $data->convertAutoData();
 
-        // if($request->currency_code != "INR")
-        // {
-        //     return redirect()->back()->with('unsuccess',__('Please Select INR Currency For This Payment.'));
-        // }
+        if($request->currency_code != "INR")
+        {
+            return redirect()->back()->with('unsuccess',__('Please Select INR Currency For This Payment.'));
+        }
 
         $user = auth()->user();
         $order['item_name'] = $gs->title." Deposit";
@@ -94,6 +95,12 @@ class InstamojoController extends Controller
 
 
             $gs =  Generalsetting::findOrFail(1);
+            $currency = Currency::where('id',$input['currency_id'])->first();
+            $amountToAdd = $input['amount']/$currency->value;
+
+            $user = auth()->user();
+            $user->income += $amountToAdd;
+            $user->save();
 
             if($gs->is_smtp == 1)
             {

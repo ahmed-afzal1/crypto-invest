@@ -46,20 +46,18 @@ class BlogController extends Controller
                             ->toJson(); //--- Returning Json Data To Client Side
     }
 
-    //*** GET Request
     public function index()
     {
         return view('admin.blog.index');
     }
 
-    //*** GET Request
     public function create()
     {
         $data['cats'] = BlogCategory::all();
         return view('admin.blog.create',$data);
     }
 
-    //*** POST Request
+
     public function store(Request $request)
     {
         //--- Validation Section

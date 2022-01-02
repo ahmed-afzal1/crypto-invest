@@ -15,11 +15,8 @@
 </div>
 
 
-<!-- Row -->
 <div class="row mt-3">
-  <!-- Datatables -->
   <div class="col-lg-12">
-
 	@include('includes.admin.form-success')
 
 	<div class="card mb-4">
@@ -36,12 +33,8 @@
 	  </div>
 	</div>
   </div>
-  <!-- DataTable with Hover -->
-
 </div>
-<!--Row-->
 
-{{-- STATUS MODAL --}}
 
 <div class="modal fade confirm-modal" id="statusModal" tabindex="-1" role="dialog"
 	aria-labelledby="statusModalTitle" aria-hidden="true">
@@ -70,30 +63,26 @@
 
 {{-- DELETE MODAL --}}
 
-<div class="modal fade confirm-modal" id="deleteModal" tabindex="-1" role="dialog"
-aria-labelledby="deleteModalTitle" aria-hidden="true">
-<div class="modal-dialog modal-dialog-centered" role="document">
-<div class="modal-content">
-<div class="modal-header">
-<h5 class="modal-title">{{ __("Confirm Delete") }}</h5>
-<button type="button" class="close" data-dismiss="modal" aria-label="Close">
-	<span aria-hidden="true">&times;</span>
-</button>
+<div class="modal fade confirm-modal" id="deleteModal" tabindex="-1" role="dialog" aria-labelledby="deleteModalTitle" aria-hidden="true">
+	<div class="modal-dialog modal-dialog-centered" role="document">
+		<div class="modal-content">
+			<div class="modal-header">
+				<h5 class="modal-title">{{ __("Confirm Delete") }}</h5>
+				<button type="button" class="close" data-dismiss="modal" aria-label="Close">
+					<span aria-hidden="true">&times;</span>
+				</button>
+			</div>
+			<div class="modal-body">
+				<p class="text-center">{{__("You are about to delete this Category. Every informtation under this category will be deleted.")}}</p>
+				<p class="text-center">{{ __("Do you want to proceed?") }}</p>
+			</div>
+			<div class="modal-footer">
+				<a href="javascript:;" class="btn btn-secondary" data-dismiss="modal">{{ __("Cancel") }}</a>
+				<a href="javascript:;" class="btn btn-danger btn-ok">{{ __("Delete") }}</a>
+			</div>
+		</div>
+	</div>
 </div>
-<div class="modal-body">
-	<p class="text-center">{{__("You are about to delete this Category. Every informtation under this category will be deleted.")}}</p>
-	<p class="text-center">{{ __("Do you want to proceed?") }}</p>
-</div>
-<div class="modal-footer">
-	<a href="javascript:;" class="btn btn-secondary" data-dismiss="modal">{{ __("Cancel") }}</a>
-	<a href="javascript:;" class="btn btn-danger btn-ok">{{ __("Delete") }}</a>
-</div>
-</div>
-</div>
-</div>
-
-{{-- DELETE MODAL ENDS --}}
-
 
 @endsection
 
@@ -123,7 +112,7 @@ aria-labelledby="deleteModalTitle" aria-hidden="true">
 			$(function() {
             $(".btn-area").append('<div class="col-sm-12 col-md-4 pr-3 text-right">'+
                 '<a class="btn btn-primary" href="{{route('admin.cblog.create')}}">'+
-            '<i class="fas fa-plus"></i> Add New Category'+
+            '<i class="fas fa-plus"></i> {{__('Add New Category')}}'+
             '</a>'+
             '</div>');
         });

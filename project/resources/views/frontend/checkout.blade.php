@@ -38,8 +38,7 @@
                     <div class="row justify-content-between">
                         <div class="col-lg-12">
                             <div class="content">
-                                {{-- @include('includes.form-error')
-                                @include('includes.form-success') --}}
+                                @include('includes.admin.form-flash')
 
                                 <form id="payment-form" method="POST" action="">
 
@@ -89,7 +88,7 @@
                                                         
                                                         <div class="col-lg-12">
                                                             <label>{{__('Transaction ID')}}# *</label>
-                                                            <input class="form-control manual_input" name="txn_id4" type="text" placeholder="Transaction ID#" id="manual_transaction_id">
+                                                            <input class="form-control manual_input" name="txn_id4" type="text" placeholder="{{ __('Transaction ID') }}#" id="manual_transaction_id">
                                                         </div>
                                                     </div>
                                                 </div>
@@ -157,6 +156,7 @@
                                     <input type="hidden" name="total" value="{{ Session::get('getprice')}}">
                                     <input type="hidden" name="currency_sign" value="{{ $defaultCurrency->sign }}">
                                     <input type="hidden" name="currency_code" value="{{ $defaultCurrency->name }}">
+                                    <input type="hidden" name="currency_id" value="{{ $defaultCurrency->id }}">
 
 
                                     <input type="hidden" name="email" value="{{ auth()->user()->email }}">
@@ -166,7 +166,7 @@
                                     <input type="hidden" name="paystackInfo" id="paystackInfo" value="{{$paystackdata['key']}}">
 
                                     <div class="col-lg-12">
-                                        <button type="submit" class="btn-checkout btn btn-primary mt-3" id="final-btn">{{ ('Checkout') }}</button>
+                                        <button type="submit" class="btn-checkout btn btn-primary mt-3" id="final-btn">{{ __('Checkout') }}</button>
                                     </div>
                                 </div>
                             </form>
@@ -190,15 +190,15 @@
                         </div>
 
                         <div class="price-range-area-checkout">
-                            {{-- <div class="invest-get">
+                            <div class="invest-get">
                                 <div class="left">
-                                    {{ $langg->lang66 }} 
-                                    <span>{{ $gs->currency_format == 0 ? $gs->currency_sign.Session::get('payprice') : Session::get('payprice').$gs->currency_sign }}</span>
+                                    {{ __('Invest') }} 
+                                    <span>{{ $gs->currency_format == 0 ? $defaultCurrency->sign.Session::get('payprice') : Session::get('payprice').$defaultCurrency->sign }}</span>
                                 </div>
                                 <div class="right">
-                                    {{ $langg->lang67 }} <span>{{ $gs->currency_format == 0 ? $gs->currency_sign.Session::get('getprice') : Session::get('getprice').$gs->currency_sign }}</span>
+                                    {{ __('Get') }} <span>{{ $gs->currency_format == 0 ? $defaultCurrency->sign.Session::get('getprice') : Session::get('getprice').$defaultCurrency->sign }}</span>
                                 </div>
-                            </div> --}}
+                            </div>
                         </div>
                     </div>
                 </div>
@@ -210,9 +210,9 @@
                     </p>
                     <div class="bonus">
                         @if($gs->currency_format == 0)
-                            <p class="persent">{{ $gs->currency_sign }}{{ round(Auth::user()->income,2) }}</p>
+                            <p class="persent">{{ $defaultCurrency->sign }}{{ round(Auth::user()->income,2) }}</p>
                         @else 
-                            <p class="persent">{{ round(Auth::user()->income,2) }}{{ $gs->currency_sign }}</p>
+                            <p class="persent">{{ round(Auth::user()->income,2) }}{{ $defaultCurrency->sign }}</p>
                         @endif
                     </div>
                 </div>

@@ -6,7 +6,6 @@
   <h5 class=" mb-0 text-gray-800 pl-3">{{ __('Edit Service') }} <a class="btn btn-primary btn-rounded btn-sm" href="{{route('admin.service.index')}}"><i class="fas fa-arrow-left"></i> {{ __('Back') }}</a></h5>
   <ol class="breadcrumb">
       <li class="breadcrumb-item"><a href="{{ route('admin.dashboard') }}">{{ __('Dashboard') }}</a></li>
-      <li class="breadcrumb-item"><a href="javascript:;">{{ __('Service') }}</a></li>
       <li class="breadcrumb-item"><a href="{{route('admin.service.index')}}">{{ __('Service') }}</a></li>
       <li class="breadcrumb-item"><a href="{{route('admin.service.edit',$data->id)}}">{{ __('Edit Service') }}</a></li>
   </ol>

@@ -45,11 +45,6 @@
         </form>
       </div>
     </div>
-
-    <!-- Form Sizing -->
-
-    <!-- Horizontal Form -->
-
   </div>
 </div>
 <!--Row-->
@@ -57,9 +52,6 @@
 
 
 @section('scripts')
-  <script type="text/javascript">
 
-
-  </script>
 @endsection
 

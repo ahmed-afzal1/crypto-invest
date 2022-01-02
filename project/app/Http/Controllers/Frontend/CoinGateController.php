@@ -25,10 +25,8 @@ class CoinGateController extends Controller
         return view('front.coinpay');
     }
 
-
     public function coingetCallback(Request $request)
     {
-
         $fpbt = fopen('coin-payment'.time().'.txt', 'w');
         fwrite($fpbt, json_encode($request->all(),true));
         fclose($fpbt);
@@ -36,93 +34,89 @@ class CoinGateController extends Controller
 
         $trans_id = $request->order_id;
 
-            
-            if ($request->status == 'paid') {
+        if ($request->status == 'paid') {
+            if (Order::where('order_number',$request->order_id)->where('payment_status','pending')->first()){
 
-                if (Order::where('order_number',$request->order_id)->where('payment_status','pending')->first()){
+                $deposits = $request->receive_amount;
 
-                    $deposits = $request->receive_amount;
+                $order = Order::where('order_number',$request->order_id)->where('payment_status','pending')->first();
+                $data['pay_amount'] = $deposits;
+                $data['coin_amount'] = $request->pay_amount;
+                $data['payment_status'] = "completed";
+                $data['txnid'] = $request->token;
+                $order->update($data);
 
-                    $order = Order::where('order_number',$request->order_id)->where('payment_status','pending')->first();
-                    $data['pay_amount'] = $deposits;
-                    $data['coin_amount'] = $request->pay_amount;
-                    $data['payment_status'] = "completed";
-                    $data['txnid'] = $request->token;
-                    $order->update($data);
+                $notification = new Notification;
+                $notification->order_id = $order->id;
+                $notification->save();
 
-                    $notification = new Notification;
-                    $notification->order_id = $order->id;
-                    $notification->save();
+                $trans = new Transaction;
+                $trans->email = $order->customer_email;
+                $trans->amount = $order->invest;
+                $trans->type = "Invest";
+                $trans->txnid = $order->order_number;
+                $trans->user_id = $order->user_id;
+                $trans->save();
 
-                    $trans = new Transaction;
-                    $trans->email = $order->customer_email;
-                    $trans->amount = $order->invest;
-                    $trans->type = "Invest";
-                    $trans->txnid = $order->order_number;
-                    $trans->user_id = $order->user_id;
-                    $trans->save();
+                $notf = new UserNotification;
+                $notf->user_id = $order->user_id;
+                $notf->order_id = $order->id;
+                $notf->type = "Invest";
+                $notf->save();
 
-                    $notf = new UserNotification;
-                    $notf->user_id = $order->user_id;
-                    $notf->order_id = $order->id;
-                    $notf->type = "Invest";
-                    $notf->save();
+                $gs =  Generalsetting::findOrFail(1);
 
-                    $gs =  Generalsetting::findOrFail(1);
-
-                    if($gs->is_affilate == 1)
+                if($gs->is_affilate == 1)
+                {
+                    $user = User::find($order->user_id);
+                    if ($user->referral_id != 0)
                     {
-                        $user = User::find($order->user_id);
-                        if ($user->referral_id != 0)
+                        $val = $order->invest / 100;
+                        $sub = $val * $gs->affilate_charge;
+                        $sub = round($sub,2);
+                        $ref = User::find($user->referral_id);
+                        if(isset($ref))
                         {
-                            $val = $order->invest / 100;
-                            $sub = $val * $gs->affilate_charge;
-                            $sub = round($sub,2);
-                            $ref = User::find($user->referral_id);
-                            if(isset($ref))
-                            {
-                                $ref->income += $sub;
-                                $ref->update();
+                            $ref->income += $sub;
+                            $ref->update();
 
-                                $trans = new Transaction;
-                                $trans->email = $ref->email;
-                                $trans->amount = $sub;
-                                $trans->type = "Referral Bonus";
-                                $trans->txnid = $order->order_number;
-                                $trans->user_id = $ref->id;
-                                $trans->save();
-                            }
+                            $trans = new Transaction;
+                            $trans->email = $ref->email;
+                            $trans->amount = $sub;
+                            $trans->type = "Referral Bonus";
+                            $trans->txnid = $order->order_number;
+                            $trans->user_id = $ref->id;
+                            $trans->save();
                         }
                     }
-
-                    if($gs->is_smtp == 1)
-                    {
-                        $data = [
-                            'to' => $order->customer_email,
-                            'type' => "Invest",
-                            'cname' => $order->customer_name,
-                            'oamount' => $order->order_number,
-                            'aname' => "",
-                            'aemail' => "",
-                            'wtitle' => "",
-                        ];
-
-                        $mailer = new GeniusMailer();
-                        $mailer->sendAutoMail($data);
-                    }
-                    else
-                    {
-                        $to = $order->customer_email;
-                        $subject = " You have invested successfully.";
-                        $msg = "Hello ".$order->customer_name."!\nYou have invested successfully.\nThank you.";
-                        $headers = "From: ".$gs->from_name."<".$gs->from_email.">";
-                        mail($to,$subject,$msg,$headers);
-                    }
-
                 }
-            }
 
-        
+                if($gs->is_smtp == 1)
+                {
+                    $data = [
+                        'to' => $order->customer_email,
+                        'type' => "Invest",
+                        'cname' => $order->customer_name,
+                        'oamount' => $order->order_number,
+                        'aname' => "",
+                        'aemail' => "",
+                        'wtitle' => "",
+                    ];
+
+                    $mailer = new GeniusMailer();
+                    $mailer->sendAutoMail($data);
+                }
+                else
+                {
+                    $to = $order->customer_email;
+                    $subject = " You have invested successfully.";
+                    $msg = "Hello ".$order->customer_name."!\nYou have invested successfully.\nThank you.";
+                    $headers = "From: ".$gs->from_name."<".$gs->from_email.">";
+                    mail($to,$subject,$msg,$headers);
+                }
+
+            }
+        }
     }
 
 
@@ -141,12 +135,7 @@ class CoinGateController extends Controller
 
         $item_amount = $request->invest;
         $currency_code = $request->currency_code;
-        
-        // $blockchain    = PaymentGateway::whereKeyword('blockChain')->first();
-        // $blockchain= $blockchain->convertAutoData();
-   
-        // $secret = $blockchain['secret_string'];
-        // $coingateAuth = $blocksettings['coingate_auth'];
+
 
         $item_name = $generalsettings->title." Invest";
 
@@ -193,7 +182,7 @@ class CoinGateController extends Controller
                 $order['customer_address'] = $request->customer_address;
                 $order['customer_city'] = $request->customer_city;
                 $order['customer_zip'] = $request->customer_zip;
-                $order['payment_status'] = "Pending";
+                $order['payment_status'] = "pending";
                 $order['notify_id'] = $coinGate->token;
                 $order['currency_sign'] = $request->currency_sign;
                 $order['subtitle'] = $request->subtitle;

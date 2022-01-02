@@ -1,6 +1,8 @@
 <?php
 namespace App\Repositories;
 
+use App\Classes\GeniusMailer;
+use App\Models\Currency;
 use App\Models\Generalsetting;
 use App\Models\Notification;
 use Illuminate\Http\Request;
@@ -24,13 +26,28 @@ class OrderRepository
     public function order($request,$status,$addionalData){
         $order = new Order();
 
-        $order['pay_amount'] = $request->total;
+        if($request->currency_id){
+            $currencyValue = Currency::where('id',$request->currency_id)->first();
+        }
+
+        if($request->currency_id){
+            $order['pay_amount'] = $request->total/$currencyValue->value;
+        }else{
+            $order['pay_amount'] = $request->total;
+        }
+
         $order['user_id'] = $request->user_id;
-        $order['invest'] = $request->invest;
+
+        if($request->currency_id){
+            $order['invest'] = $request->invest/$currencyValue->value;
+        }else{
+            $order['invest'] = $request->invest;
+        }
         $order['method'] = $request->method;
         $order['customer_email'] = $request->customer_email;
         $order['customer_name'] = $request->customer_name;
         $order['customer_phone'] = $request->customer_phone;
+
         if(isset($addionalData['item_number'])){
             $order['order_number'] = $addionalData['item_number'];
         }
@@ -49,6 +66,10 @@ class OrderRepository
             $order['payment_status'] = "pending";
         }
 
+        if($status == 'manual'){
+            $order['payment_status'] = "pending";
+        }
+
         if(isset($addionalData['txnid'])){
             $order['txnid'] = $addionalData['txnid'];
         }
@@ -63,7 +84,7 @@ class OrderRepository
         $order['end_date'] = $date;
         $order->save();
 
-        if($status == 'complete'){
+        if($status == 'complete' || $status == 'manual'){
             $this->callAfterOrder($request,$order);
         }
     }
@@ -73,9 +94,23 @@ class OrderRepository
 
         $order = new Order();
 
-        $order['pay_amount'] = $input['total'];
+        if($input['currency_id']){
+            $currencyValue = Currency::where('id',$input['currency_id'])->first();
+        }
+
+        if($input['currency_id']){
+            $order['pay_amount'] = $input['total']/$currencyValue->value;
+        }else{
+            $order['pay_amount'] = $input['total'];
+        }
+
+        if($input['currency_id']){
+            $order['invest'] = $input['invest']/$currencyValue->value;
+        }else{
+            $order['invest'] = $input['invest'];
+        }
+
         $order['user_id'] = auth()->user()->id;
-        $order['invest'] = $input['invest'];
         $order['method'] = $input['method'];
         $order['customer_email'] = $input['customer_email'];
         $order['customer_name'] = $input['customer_name'];

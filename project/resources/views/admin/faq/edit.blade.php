@@ -8,7 +8,6 @@
     <ol class="breadcrumb">
         <li class="breadcrumb-item"><a href="{{ route('admin.dashboard') }}">{{ __('Dashboard') }}</a></li>
         <li class="breadcrumb-item"><a href="javascript:;">{{ __('Menu Page Setting') }}</a></li>
-        <li class="breadcrumb-item"><a href="{{ route('admin.faq.index') }}">{{ __('Faq') }}</a></li>
         <li class="breadcrumb-item"><a href="{{route('admin.faq.create')}}">{{ __('Edit Faq') }}</a></li>
     </ol>
     </div>
@@ -46,11 +45,6 @@
         </form>
       </div>
     </div>
-
-    <!-- Form Sizing -->
-
-    <!-- Horizontal Form -->
-
   </div>
 
 </div>
@@ -60,14 +54,6 @@
 
 
 @section('scripts')
-
-<script>
-
-$(document).ready(function() {
-
-});
-
-</script>
 
 @endsection
 

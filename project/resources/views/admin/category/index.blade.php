@@ -5,19 +5,17 @@
 
     <div class="card">
         <div class="d-sm-flex align-items-center justify-content-between">
-        <h5 class=" mb-0 text-gray-800 pl-3">{{ __('Main Categories') }}</h5>
-        <ol class="breadcrumb">
-            <li class="breadcrumb-item"><a href="{{ route('admin.dashboard') }}">{{ __('Dashboard') }}</a></li>
-            <li class="breadcrumb-item"><a href="javascript:;">{{ __('Manage Categories') }}</a></li>
-            <li class="breadcrumb-item"><a href="{{ route('admin.cat.index') }}">{{ __('Main Categories') }}</a></li>
-        </ol>
+            <h5 class=" mb-0 text-gray-800 pl-3">{{ __('Main Categories') }}</h5>
+            <ol class="breadcrumb">
+                <li class="breadcrumb-item"><a href="{{ route('admin.dashboard') }}">{{ __('Dashboard') }}</a></li>
+                <li class="breadcrumb-item"><a href="javascript:;">{{ __('Manage Categories') }}</a></li>
+                <li class="breadcrumb-item"><a href="{{ route('admin.cat.index') }}">{{ __('Main Categories') }}</a></li>
+            </ol>
         </div>
     </div>
 
 
-    <!-- Row -->
     <div class="row mt-3">
-      <!-- Datatables -->
       <div class="col-lg-12">
 
         @include('includes.admin.form-success')
@@ -38,12 +36,8 @@
           </div>
         </div>
       </div>
-      <!-- DataTable with Hover -->
-
     </div>
-    <!--Row-->
 
-{{-- STATUS MODAL --}}
 
     <div class="modal fade confirm-modal" id="statusModal" tabindex="-1" role="dialog"
         aria-labelledby="statusModalTitle" aria-hidden="true">
@@ -67,9 +61,6 @@
         </div>
     </div>
 
-{{-- STATUS MODAL ENDS --}}
-
-{{-- ATTRIBUTE MODAL --}}
 <div class="modal fade" id="attribute" tabindex="-1" role="dialog" aria-labelledby="attribute" aria-hidden="true">
     <div class="modal-dialog modal-dialog-centered" role="document">
         <div class="modal-content">
@@ -92,10 +83,7 @@
         </div>
     </div>
 </div>
-{{-- ATTRIBUTE MODAL ENDS --}}
 
-
-{{-- DELETE MODAL --}}
 
 <div class="modal fade confirm-modal" id="deleteModal" tabindex="-1" role="dialog"
 aria-labelledby="deleteModalTitle" aria-hidden="true">
@@ -118,8 +106,6 @@ aria-labelledby="deleteModalTitle" aria-hidden="true">
 </div>
 </div>
 </div>
-
-{{-- DELETE MODAL ENDS --}}
 
 
 @endsection
@@ -155,7 +141,7 @@ aria-labelledby="deleteModalTitle" aria-hidden="true">
             $(function() {
                 $(".btn-area").append('<div class="col-sm-12 col-md-4 pr-3 text-right">'+
                     '<a class="btn btn-primary" href="{{route('admin.cat.create')}}">'+
-                '<i class="fas fa-plus"></i> Add New Category'+
+                '<i class="fas fa-plus"></i> {{__('Add New Category')}}'+
                 '</a>'+
                 '</div>');
             });

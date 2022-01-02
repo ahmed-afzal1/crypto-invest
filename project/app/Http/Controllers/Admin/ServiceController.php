@@ -15,7 +15,6 @@ class ServiceController extends Controller
         $this->middleware('auth:admin');
     }
 
-    //*** JSON Request
     public function datatables()
     {
          $datas = Service::orderBy('id','desc')->get();

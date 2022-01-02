@@ -25,3 +25,15 @@ h5,
 h6 {
   font-family: <?php echo $font_familly?>;
 }
+
+p{
+  font-family: <?php echo $font_familly?>;
+}
+
+ul.navbar-nav > li > a{
+  font-family: <?php echo $font_familly?>;
+}
+
+.footer .top-footer .menu ul li a{
+  font-family: <?php echo $font_familly?>;
+}

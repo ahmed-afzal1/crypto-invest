@@ -27,19 +27,19 @@
           @include('includes.admin.form-both')
 
           {{ csrf_field() }}
+
           <div class="form-group">
             <label for="footer">{{ __('Footer Text') }}</label>
-              <textarea class="form-control "  id="footer"    name="footer" rows="3" placeholder="{{__('Footer Text')}}">{{$gs->footer}}</textarea>
-        </div>
+            <textarea class="form-control "  id="footer"    name="footer" rows="3" placeholder="{{__('Footer Text')}}">{{$gs->footer}}</textarea>
+          </div>
+
           <div class="form-group">
             <label for="copyright">{{ __('Copyright') }}</label>
               <textarea class="form-control "  id="copyright"   name="copyright" rows="3" placeholder="{{__('Copyright')}}">{{$gs->copyright}}</textarea>
-        </div>
-
-        </div>
-
+          </div>
 
           <button type="submit" id="submit-btn" class="btn btn-primary">{{ __('Submit') }}</button>
+        </div>
 
       </form>
     </div>
@@ -59,16 +59,5 @@
 
 @section('scripts')
 
-<script>
-'use strict';
-$("#seo").change(function() {
-    if(this.checked) {
-        $('.showbox').removeClass('d-none');
-    }else{
-        $('.showbox').addClass('d-none');
-    }
-});
-
-</script>
 
 @endsection

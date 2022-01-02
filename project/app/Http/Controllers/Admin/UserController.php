@@ -23,11 +23,10 @@ class UserController extends Controller
             $this->middleware('auth:admin');
         }
 
-        //*** JSON Request
         public function datatables()
         {
              $datas = User::orderBy('id','desc');
-             //--- Integrating This Collection Into Datatables
+
              return Datatables::of($datas)
                                 ->addColumn('action', function(User $data) {
 
@@ -45,8 +44,8 @@ class UserController extends Controller
                                 })
 
                                 ->addColumn('status', function(User $data) {
-                                    $status      = $data->ban == 1 ? __('Block') : __('Unblock');
-                                   $status_sign = $data->ban == 1 ? 'danger'   : 'success';
+                                    $status      = $data->is_banned == 1 ? __('Block') : __('Unblock');
+                                   $status_sign = $data->is_banned == 1 ? 'danger'   : 'success';
 
                                 return '<div class="btn-group mb-1">
                                    <button type="button" class="btn btn-'.$status_sign.' btn-sm btn-rounded dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
@@ -60,50 +59,45 @@ class UserController extends Controller
 
                                })
                                 ->rawColumns(['action','status'])
-                                ->toJson(); //--- Returning Json Data To Client Side
+                                ->toJson();
         }
 
-        //*** GET Request
         public function index()
         {
             return view('admin.user.index');
         }
 
-        //*** GET Request
         public function image()
         {
             return view('admin.generalsetting.user_image');
         }
 
-        //*** GET Request
         public function show($id)
         {
             $data = User::findOrFail($id);
-            return view('admin.user.show',compact('data'));
+            $data['orders'] = Order::where('user_id',$data->id)->paginate(10);
+            $data['data'] = $data;
+            return view('admin.user.show',$data);
         }
 
-        //*** GET Request
         public function ban($id1,$id2)
         {
             $user = User::findOrFail($id1);
-            $user->ban = $id2;
+            $user->is_banned = $id2;
             $user->update();
             $msg = 'Data Updated Successfully.';
             return response()->json($msg);
-
         }
 
-        //*** GET Request
         public function edit($id)
         {
             $data = User::findOrFail($id);
             return view('admin.user.edit',compact('data'));
         }
 
-        //*** POST Request
+
         public function update(Request $request, $id)
         {
-            //--- Validation Section
             $rules = [
                    'photo' => 'mimes:jpeg,jpg,png,svg',
                     ];
@@ -113,7 +107,6 @@ class UserController extends Controller
             if ($validator->fails()) {
               return response()->json(array('errors' => $validator->getMessageBag()->toArray()));
             }
-            //--- Validation Section Ends
 
             $user = User::findOrFail($id);
             $data = $request->all();
@@ -186,150 +179,66 @@ class UserController extends Controller
                               </div>';
                              })
                             ->rawColumns(['name','email','amount','action'])
-                            ->toJson(); //--- Returning Json Data To Client Side
+                            ->toJson();
           }
 
-           //*** GET Request
- public function withdrawdetails($id)
- {
 
-     $withdraw = Withdraw::findOrFail($id);
-     return view('admin.user.withdraw-details',compact('withdraw'));
- }
+    public function withdrawdetails($id)
+    {
+        $withdraw = Withdraw::findOrFail($id);
+        return view('admin.user.withdraw-details',compact('withdraw'));
+    }
 
- //*** GET Request
- public function accept($id)
- {
-     $withdraw = Withdraw::findOrFail($id);
-     $data['status'] = "completed";
-     $withdraw->update($data);
-     //--- Redirect Section
-     $msg = __('Withdraw Accepted Successfully.');
-     return response()->json($msg);
-     //--- Redirect Section Ends
- }
 
- //*** GET Request
- public function reject($id)
- {
-     $withdraw = Withdraw::findOrFail($id);
-     $account = User::findOrFail($withdraw->user->id);
-     $account->balance = $account->balance + $withdraw->amount + $withdraw->fee;
-     $account->update();
-     $data['status'] = "rejected";
-     $withdraw->update($data);
-     //--- Redirect Section
-     $msg = __('Withdraw Rejected Successfully.');
-     return response()->json($msg);
-     //--- Redirect Section Ends
- }
- public function destroy($id)
-		{
-		$user = User::findOrFail($id);
+    public function accept($id)
+    {
+        $withdraw = Withdraw::findOrFail($id);
+        $data['status'] = "completed";
+        $withdraw->update($data);
 
-        if(Rating::where('user_id',$user->id)->count() > 0)
+        $msg = __('Withdraw Accepted Successfully.');
+        return response()->json($msg);
+
+    }
+
+
+    public function reject($id)
+    {
+        $withdraw = Withdraw::findOrFail($id);
+        $account = User::findOrFail($withdraw->user->id);
+        $account->balance = $account->balance + $withdraw->amount + $withdraw->fee;
+        $account->update();
+        $data['status'] = "rejected";
+        $withdraw->update($data);
+
+        $msg = __('Withdraw Rejected Successfully.');
+        return response()->json($msg);
+    }
+
+    public function destroy($id)
         {
-            foreach (Rating::where('user_id',$user->id)->get() as $gal) {
-                $gal->delete();
-            }
-        }
+            $user = User::findOrFail($id);
 
-        if($user->comments->count() > 0)
-        {
-            foreach ($user->comments as $comment) {
-            if($comment->replies->count() > 0)
+            if($user->orders->count() > 0)
             {
-                foreach ($comment->replies as $key) {
-                    if($key->subreplies->count() > 0)
-                    {
-                        foreach ($key->subreplies as $key1) {
-                            $key1->delete();
-                        }
-                    }
-                    $key->delete();
-                }
-            }
-                $comment->delete();
-            }
-        }
-
-            if($user->replies->count() > 0)
-            {
-                foreach ($user->replies as $reply) {
-                    if($reply->subreplies->count() > 0)
-                    {
-                        foreach ($reply->subreplies as $key) {
-                            $key->delete();
-                        }
-                    }
-                    $reply->delete();
+                foreach ($user->orders as $gal) {
+                    $gal->delete();
                 }
             }
 
 
-        if(Wishlist::where('user_id',$user->id)->count() > 0)
-        {
-            foreach (Wishlist::where('user_id',$user->id)->get() as $wishlist) {
-                $wishlist->delete();
-            }
-        }
-
-        if(Withdraw::where('user_id',$user->id)->count() > 0)
-        {
-            foreach (Withdraw::where('user_id',$user->id) as $gal) {
-                $gal->delete();
-            }
-        }
-
-        if($user->items->count()>0){
-            foreach($user->items as $item){
-
-                $item->delete();
-            }
-        }
-
-
-        if(Order::where('user_id',$user->id)->count()>0){
-            foreach(Order::where('user_id',$user->id)->get() as $order){
-                OrderedItem::where('order_id',$order->id)->delete();
-                $order->delete();
+            if($user->socialProviders->count() > 0)
+            {
+                foreach ($user->socialProviders as $gal) {
+                    $gal->delete();
+                }
             }
 
-
+                @unlink('/assets/images/'.$user->photo);
+                $user->delete();
+                
+                $msg = 'Data Deleted Successfully.';
+                return response()->json($msg);       
         }
-        if(OrderedItem::where('author_id',$user->id)->count()>0){
-            foreach(OrderedItem::where('author_id',$user->id)->get() as $orderitem){
-                Order::where('id',$orderitem->order_id)->delete();
-                $orderitem->delete();
-            }
-        }
-
-        if(Follow::where('follower_id',$user->id)->count()>0){
-            Follow::where('follower_id',$user->id)->delete();
-        }
-        if(Follow::where('following_id',$user->id)->count()>0){
-            Follow::where('following_id',$user->id)->delete();
-        }
-
-
-
-		    //If Photo Doesn't Exist
-		    if($user->photo == null){
-		        $user->delete();
-			    //--- Redirect Section
-			    $msg = 'Data Deleted Successfully.';
-			    return response()->json($msg);
-			    //--- Redirect Section Ends
-		    }
-		    //If Photo Exist
-		    if (file_exists(public_path().'/assets/images/users/'.$user->photo)) {
-		            unlink(public_path().'/assets/images/users/'.$user->photo);
-		         }
-		    $user->delete();
-		    //--- Redirect Section
-		    $msg = 'Data Deleted Successfully.';
-		    return response()->json($msg);
-		    //--- Redirect Section Ends
-		}
 
 }
