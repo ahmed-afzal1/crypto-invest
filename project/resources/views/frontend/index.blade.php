@@ -5,35 +5,31 @@
 @endpush
 
 @section('contents')
-    <div id="main-slide" class="carousel slide carousel-fade" data-ride="carousel">
-        <ol class="carousel-indicators d-none d-lg-block d-xl-none d-none d-md-block d-lg-none">
-            @foreach ($sliders as $key=>$slider)
-                <li data-target="#main-slide" data-slide-to="{{$key}}" class="{{$loop->first ? 'active':''}}"></li>
-            @endforeach
-        </ol>
+    <div id="main-slide" class="carousel slide w-100 carousel-fade" data-ride="carousel">
         <div class="carousel-inner">
             @foreach ($sliders as $key=>$slider)
-            <div class="item active bg-parallax carousel-item" style="background: url({{ $slider->photo ? asset('assets/images/'.$slider->photo):asset('assets/images/noimage.png') }});">
-                <div class="slider-content">
-                    <div class="container">
-                        <div class="slider-text text-center">
-                            <h3 class="slide-title">{{$slider->title_text}}</h3>
-                            <h3 class="slide-title">{{$slider->subtitle_text}}</h3>
-                            <p>
-                                <a href="{{$slider->link}}" class="slider btn btn-primary">{{__('Learn more')}}</a>
-                            </p>
+                <div data-target="#main-slide" data-slide-to="{{$key}}" class="bg-parallax carousel-item item {{$loop->first ? 'active':''}}" style="background:url({{  $slider->photo ? asset('assets/images/'.$slider->photo):asset('assets/images/noimage.png') }} )">
+                    <div class="slider-content">
+                        <div class="container">
+                            <div class="slider-text text-center">
+                                <h3 class="slide-title">{{$slider->title_text}}</h3>
+                                <h3 class="slide-title">{{$slider->subtitle_text}}</h3>
+                                <p>
+                                    <a href="{{$slider->link}}" class="slider btn btn-primary">{{__('Learn more')}}</a>
+                                </p>
+                            </div>
                         </div>
                     </div>
                 </div>
-            </div>
             @endforeach
         </div>
-        <a class="left carousel-control" href="{{route('front.index')}}#main-slide" data-slide="prev">
-            <span><i class="fa fa-angle-left"></i></span>
+        <a class="carousel-control-prev" href="#main-slide" role="button" data-slide="prev">
+            <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+            <span class="sr-only">{{__('Previous')}}</span>
         </a>
-
-        <a class="right carousel-control" href="{{route('front.index')}}#main-slide" data-slide="next">
-            <span><i class="fa fa-angle-right"></i></span>
+        <a class="carousel-control-next" href="#main-slide" role="button" data-slide="next">
+            <span class="carousel-control-next-icon" aria-hidden="true"></span>
+            <span class="sr-only">{{__('Next')}}</span>
         </a>
     </div>
 

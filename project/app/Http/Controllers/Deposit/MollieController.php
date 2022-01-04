@@ -68,6 +68,7 @@ class MollieController extends Controller
                     'to' => $user->email,
                     'type' => "Deposti",
                     'cname' => $user->name,
+                    'oamount' => $input['amount'],
                     'aname' => "",
                     'aemail' => "",
                     'wtitle' => "",

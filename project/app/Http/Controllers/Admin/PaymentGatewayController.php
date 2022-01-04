@@ -6,7 +6,7 @@ use Datatables;
 use App\Models\PaymentGateway;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
-
+use Illuminate\Support\Str;
 use Validator;
 
 class PaymentGatewayController extends Controller
@@ -122,7 +122,7 @@ class PaymentGatewayController extends Controller
 
 
                     $paydata = $data->convertAutoData();
-                    $name = time().str_replace(' ', '', $file->getClientOriginalName());
+                    $name = Str::random(8).time().'.'.$file->getClientOriginalExtension();
                     $data->upload($name,$file,$paydata['photo']);
                     $info_data['photo']= $name;
                 }

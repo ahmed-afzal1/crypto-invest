@@ -13,8 +13,7 @@ use App\Models\User;
 use App\Models\Wishlist;
 use App\Models\Withdraw;
 use Illuminate\Support\Facades\Validator;
-
-
+use Illuminate\Support\Str;
 
 class UserController extends Controller
 {
@@ -37,7 +36,7 @@ class UserController extends Controller
                                 <div class="dropdown-menu" x-placement="bottom-start">
                                   <a href="' . route('admin-user-show',$data->id) . '"  class="dropdown-item">'.__("Details").'</a>
                                   <a href="' . route('admin-user-edit',$data->id) . '" class="dropdown-item" >'.__("Edit").'</a>
-                                  <a href="javascript:;" class="dropdown-item" data-email="'. $data->email .'" data-toggle="modal" data-target="#vendorform">'.__("Send").'</a>
+                                  <a href="javascript:;" class="dropdown-item send" data-email="'. $data->email .'" data-toggle="modal" data-target="#vendorform">'.__("Send").'</a>
                                   <a href="javascript:;" data-toggle="modal" data-target="#deleteModal" class="dropdown-item" data-href="'.  route('admin-user-delete',$data->id).'">'.__("Delete").'</a>
                                 </div>
                               </div>';
@@ -58,7 +57,23 @@ class UserController extends Controller
                                  </div>';
 
                                })
-                                ->rawColumns(['action','status'])
+
+                               ->addColumn('kyc', function(User $data) {
+                                    $status      = $data->is_kyc == 0 ? __('Not Approve') : __('Approve');
+                                    $status_sign = $data->is_kyc == 0 ? 'danger'   : 'success';
+
+                                    return '<div class="btn-group mb-1">
+                                    <button type="button" class="btn btn-'.$status_sign.' btn-sm btn-rounded dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                        '.$status .'
+                                    </button>
+                                    <div class="dropdown-menu" x-placement="bottom-start">
+                                        <a href="javascript:;" data-toggle="modal" data-target="#statusModal" class="dropdown-item" data-href="'. route('admin-user-kyc',['id1' => $data->id, 'id2' => 1]).'">'.__("Approve").'</a>
+                                        <a href="javascript:;" data-toggle="modal" data-target="#statusModal" class="dropdown-item" data-href="'. route('admin-user-kyc',['id1' => $data->id, 'id2' => 0 ]).'">'.__("Not Approve").'</a>
+                                    </div>
+                                    </div>';
+
+                                })
+                                ->rawColumns(['action','status','kyc'])
                                 ->toJson();
         }
 
@@ -89,6 +104,15 @@ class UserController extends Controller
             return response()->json($msg);
         }
 
+        public function kyc($id1,$id2)
+        {
+            $user = User::findOrFail($id1);
+            $user->is_kyc = $id2;
+            $user->update();
+            $msg = 'Data Updated Successfully.';
+            return response()->json($msg);
+        }
+
         public function edit($id)
         {
             $data = User::findOrFail($id);
@@ -112,7 +136,7 @@ class UserController extends Controller
             $data = $request->all();
             if ($file = $request->file('photo'))
             {
-                $name = time().str_replace(' ', '', $file->getClientOriginalName());
+                $name = Str::random(8).time().'.'.$file->getClientOriginalExtension();
                 $file->move('assets/images',$name);
                 if($user->photo != null)
                 {
@@ -206,7 +230,7 @@ class UserController extends Controller
     {
         $withdraw = Withdraw::findOrFail($id);
         $account = User::findOrFail($withdraw->user->id);
-        $account->balance = $account->balance + $withdraw->amount + $withdraw->fee;
+        $account->income = $account->income + $withdraw->amount + $withdraw->fee;
         $account->update();
         $data['status'] = "rejected";
         $withdraw->update($data);

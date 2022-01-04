@@ -24,6 +24,7 @@
                             @foreach ($pages as $key=>$data)
                                 <li><a href="{{route('front.page',$data->slug)}}">{{$data->title}}</a></li>
                             @endforeach
+                            <li><a href="{{route('front.faq')}}">{{__('FAQ')}}</a></li>
                         </ul>
                     </div>
                 </div>
@@ -40,14 +41,21 @@
 
                     <div class="social-footer">
                         <ul>
-                            <li><a href="{{$social->facebook}}" target="_blank"><i class="fa fa-facebook"></i></a>
-                            </li>
-                            <li><a href="{{$social->twitter}}" target="_blank"><i class="fa fa-twitter"></i></a>
-                            </li>
-                            <li><a href="{{$social->gplus}}" target="_blank"><i class="fa fa-google-plus"></i></a>
-                            </li>
-                            <li><a href="{{$social->linkedin}}" target="_blank"><i class="fa fa-linkedin"></i></a>
-                            </li>
+                            @if ($social->f_status)
+                                <li><a href="{{$social->facebook}}" target="_blank"><i class="fa fa-facebook"></i></a></li>
+                            @endif
+
+                            @if ($social->t_status)
+                                <li><a href="{{$social->twitter}}" target="_blank"><i class="fa fa-twitter"></i></a></li>
+                            @endif
+
+                            @if ($social->g_status)
+                                <li><a href="{{$social->gplus}}" target="_blank"><i class="fa fa-google-plus"></i></a></li> 
+                            @endif
+
+                            @if ($social->l_status)
+                                <li><a href="{{$social->linkedin}}" target="_blank"><i class="fa fa-linkedin"></i></a></li>   
+                            @endif
                         </ul>
                     </div>
                 </div>

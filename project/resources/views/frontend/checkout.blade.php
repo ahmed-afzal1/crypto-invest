@@ -5,7 +5,7 @@
 @endpush
 
 @section('contents')
-@includeIf('partials.front.perfect')
+
 <section class="banner-area" style="background: url({{ $gs->breadcumb_banner ? asset('assets/images/'.$gs->breadcumb_banner):asset('assets/images/noimage.png') }});">
     <div class="banner-overlay">
         <div class="banner-text text-center">
@@ -101,8 +101,7 @@
                                         <input type="hidden" name="PAYEE_NAME" value="{{$gs->title}}">
                                         <input type="hidden" name="PAYMENT_ID" value="{{Str::random(2).time().Str::random(2)}}">
                                         <input type="hidden" name="PAYMENT_UNITS" value="USD">
-                                        {{-- <input type="hidden" name="STATUS_URL" value="{{route('perfect.money.return')}}"> --}}
-                                        {{-- <input type="hidden" name="PAYMENT_URL" value="{{route('payment.return')}}"> --}}
+
                                         <input type="hidden" name="PAYMENT_URL_METHOD" value="LINK">
                                         <input type="hidden" name="NOPAYMENT_URL" value="{{url()->current()}}">
                                         <input type="hidden" name="NOPAYMENT_URL_METHOD" value="LINK">
@@ -111,12 +110,6 @@
                                         <input type="hidden" name="CUST_NUM" value="{{Auth::user()->email}}">
                                     </div>
 
-                                    {{-- <input type="hidden" name="m_shop" value="<?=$m_shop?>">
-                                    <input type="hidden" name="m_orderid" value="<?=$m_orderid?>">
-                                    <input type="hidden" name="m_amount" value="<?=$m_amount?>">
-                                    <input type="hidden" name="m_curr" value="<?=$m_curr?>">
-                                    <input type="hidden" name="m_desc" value="<?=$m_desc?>">
-                                    <input type="hidden" name="m_sign" value="<?=$sign?>"> --}}
 
 
                                     <div id="card-view" class="col-lg-12 pt-3 d-none">

@@ -197,7 +197,7 @@
 
 
         });
-        // after comment submitted by reviewer
+
                 $("#commentSubmit").on('click', function(e) {
                     if (admin_loader == 1) {
                         $('.gocover').show();

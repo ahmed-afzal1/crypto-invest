@@ -344,7 +344,11 @@
       <div class="row">
         <div class="col-lg-12">
               <div class="content">
-                <p>{!! $gs->copyright !!}</p>
+                <p>
+                  @php
+                     echo $gs->copyright;
+                  @endphp
+                </p>
             </div>
         </div>
       </div>
@@ -354,19 +358,15 @@
 
 <script type="text/javascript">
   var mainurl = "{{url('/')}}";
-  var gs      = {!! json_encode($gs) !!};
+  var gs      = @php echo json_encode($gs);  @endphp
 </script>
 
-<!-- Footer Area End -->
-
-<!--   Core JS Files   -->
 <script src="{{ asset('assets/user/js/core/jquery.min.js') }}" type="text/javascript"></script>
 <script src="{{ asset('assets/user/js/core/popper.min.js') }}" type="text/javascript"></script>
 <script src="{{ asset('assets/user/js/core/bootstrap-material-design.min.js') }}" type="text/javascript"></script>
 <script src="{{ asset('assets/user/js/plugins/jquery-ui.min.js') }}" type="text/javascript"></script>
-<!-- Place this tag in your head or just before your close body tag. -->
+
 <script async defer src="https://buttons.github.io/buttons.js"></script>
-<!-- Control Center for Material Kit: parallax effects, scripts for the example pages etc -->
 <script src="{{ asset('assets/user/js/material-kit.js?v=2.0.5') }}" type="text/javascript"></script></body>
 <script src="{{ asset('assets/front/js/notify.js') }}"></script>
 <script src="{{ asset('assets/user/js/plugins.js') }}" type="text/javascript"></script>
@@ -379,12 +379,12 @@
         var copyText = document.getElementById("referralURL");
         copyText.select();
         copyText.setSelectionRange(0, 99999);
-        /*For mobile devices*/
+
         document.execCommand("copy");
         alert('copied');
     }
 </script>
-{!! $seo->google_analytics !!}
+
 <script src="{{asset('assets/user/js/sweetalert2@9.js')}}"></script>
 
 @if($errors->any())

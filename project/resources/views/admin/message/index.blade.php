@@ -30,7 +30,6 @@
                 <tr>
                     <th>{{__('Name')}}</th>
                     <th>{{__('Subject')}}</th>
-                    <th>{{__('Message')}}</th>
                     <th>{{__('Date')}}</th>
                     <th>{{__('Options')}}</th>
                 </tr>
@@ -55,7 +54,7 @@
 			</div>
 
 			<div class="modal-body">
-				<p class="text-center">{{__("You are about to delete this Product.")}}</p>
+				<p class="text-center">{{__("You are about to delete this Message.")}}</p>
 				<p class="text-center">{{ __("Do you want to proceed?") }}</p>
 			</div>
 
@@ -83,9 +82,8 @@
                searching: false,
                ajax: '{{ route('admin.message.datatables') }}',
                columns: [
-                { data: 'name', name: 'name' },
+                  { data: 'name', name: 'name' },
                   { data: 'subject', name: 'subject' },
-                  { data: 'text', name: 'text' },
                   { data: 'created_at', name: 'created_at'},
                   { data: 'action', searchable: false, orderable: false }
 

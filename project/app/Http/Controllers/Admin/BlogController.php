@@ -79,7 +79,7 @@ class BlogController extends Controller
         $input = $request->all();
         if ($file = $request->file('photo'))
          {
-            $name = time().str_replace(' ', '', $file->getClientOriginalName());
+            $name = Str::random(8).time().'.'.$file->getClientOriginalExtension();
             $file->move('assets/images',$name);
             $input['photo'] = $name;
         }
@@ -146,7 +146,7 @@ class BlogController extends Controller
 
             if ($file = $request->file('photo'))
             {
-                $name = time().str_replace(' ', '', $file->getClientOriginalName());
+                $name = Str::random(8).time().'.'.$file->getClientOriginalExtension();
                 $file->move('assets/images',$name);
                 @unlink('assets/images/'.$data->photo);
             $input['photo'] = $name;

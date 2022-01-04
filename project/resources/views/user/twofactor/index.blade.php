@@ -15,7 +15,7 @@
               </h3>
             </div>
             <div class="content">
-            <!-- Pricing Area Starts -->
+
                 <section class="pricing">
                     <div class="container">
                         <div class="row">

@@ -17,6 +17,7 @@
                      <p class="info-form">{{__('Send, receive and securely store your coins in your wallet')}}</p>
                 </div>
                 <form id="loginform" action="{{ route('user.login.submit') }}" method="POST">
+                    @includeIf('includes.admin.form-both')
                     @csrf
                     <div class="form-group">
                         <input class="form-control" name="email" id="email" placeholder="{{__('EMAIL')}}" type="email" required>

@@ -169,7 +169,7 @@
 
 @endsection
 
-@section('scripts')
+@push('js')
 
 <script type="text/javascript">
   'use strict';
@@ -181,4 +181,4 @@
 
 </script>
 
-@endsection
+@endpush

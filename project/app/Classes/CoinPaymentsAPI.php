@@ -61,7 +61,7 @@ class CoinPaymentsAPI
     }
 
     public function CreateTransaction($req) {
-        // See https://www.coinpayments.net/apidoc-create-transaction for parameters
+
         return $this->api_call('create_transaction', $req);
     }
 
@@ -153,10 +153,7 @@ class CoinPaymentsAPI
 
         // Calculate the HMAC signature on the POST data
         $hmac = hash_hmac('sha512', $post_data, $this->private_key);
-        
-        
-        
-         // Create cURL handle and initialize (if needed)
+
     static $ch = NULL;
     if ($ch === NULL) {
         $ch = curl_init('https://www.coinpayments.net/api.php');

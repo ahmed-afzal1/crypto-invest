@@ -44,7 +44,7 @@ class InvestController extends Controller
          
         return Datatables::of($datas)
                             ->editColumn('customer_email', function(Order $data) {
-                                return '<a href="">'.$data->customer_email.'</a>';
+                                return $data->customer_email;
                             })
                             ->editColumn('pay_amount', function(Order $data) {
                                 $gs = Generalsetting::find(1);

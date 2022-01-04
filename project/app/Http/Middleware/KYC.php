@@ -20,7 +20,7 @@ class KYC
         $gs = Generalsetting::first();
         $user = auth()->user();
         if($gs->kyc && $user->is_kyc == 0){
-            return redirect()->route('kyc-form')->with('message','Update Your KYC First.');
+            return redirect()->route('user.kyc.form')->with('unsuccess','Update Your KYC First and wait for verification!');
         }
         return $next($request);
     }

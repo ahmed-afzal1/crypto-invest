@@ -20,12 +20,8 @@ class Authenticate extends Middleware
             if($request->is('admin') || $request->is('admin/*')){
                 return redirect('/admin/login');
             }elseif($request->is('user') || $request->is('user/*')){
-
-                if(url()->current() == route('front.checkout.index')){
-                    Session::put('checkout',url()->current());
-                }
                
-                return '/user/loginform';
+                return redirect('/user/login');
             }else{
                 return redirect()->guest(route('front.index'));
             }

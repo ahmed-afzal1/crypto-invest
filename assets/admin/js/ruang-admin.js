@@ -218,7 +218,7 @@
   });
 
   $(document).on('click','.send',function(){
-    $('.eml-val').val($(this).data('email'));
+    $('#eml1').val($(this).data('email'));
   });
   
   $(document).on("submit", "#emailreply1" , function(){
@@ -233,7 +233,7 @@
 
       $.ajax({
         type: 'post',
-        url: mainurl+'/admin/user/send/message',
+        url: mainurl+'/admin/send/message',
         data: {
             '_token': token,
             'subject'   : subject,

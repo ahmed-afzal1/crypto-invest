@@ -16,7 +16,7 @@
               <form id="userform" class="form-horizontal px-4" action="{{route('balance.transfer.store')}}" method="POST" enctype="multipart/form-data">
                   {{ csrf_field() }}
 
-                  @include('includes.admin.form-both') 
+                  @include('includes.admin.form-both')
 
                   <div class="row">
                       <div class="col-lg-12 mb-3">

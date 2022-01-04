@@ -84,6 +84,7 @@ class StripeController extends Controller
                             'to' => $user->email,
                             'type' => "Deposti",
                             'cname' => $user->name,
+                            'oamount' => $item_amount,
                             'aname' => "",
                             'aemail' => "",
                             'wtitle' => "",

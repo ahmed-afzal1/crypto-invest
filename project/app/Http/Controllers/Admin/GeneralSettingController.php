@@ -8,7 +8,7 @@ use App\Models\Currency;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Artisan;
 use Illuminate\Support\Facades\Validator;
-
+use Illuminate\Support\Str;
 
 class GeneralSettingController extends Controller
 {
@@ -35,16 +35,6 @@ class GeneralSettingController extends Controller
         $this->middleware('auth:admin');
     }
 
-
-    private function setEnv($key, $value,$prev)
-    {
-        file_put_contents(app()->environmentFilePath(), str_replace(
-            $key . '=' . $prev,
-            $key . '=' . $value,
-            file_get_contents(app()->environmentFilePath())
-        ));
-    }
-
     public function generalupdate(Request $request)
     {
         $validator =Validator::make($request->all(), $this->rules);
@@ -62,72 +52,73 @@ class GeneralSettingController extends Controller
 
             if ($file = $request->file('logo'))
             {
-                $name = time().str_replace(' ', '', $file->getClientOriginalName());
+                $name = Str::random(8).time().'.'.$file->getClientOriginalExtension();
                 $data->upload($name,$file,$data->logo);
                 $input['logo'] = $name;
             }
             if ($file = $request->file('favicon'))
             {
-                $name = time().str_replace(' ', '', $file->getClientOriginalName());
+                $name = Str::random(8).time().'.'.$file->getClientOriginalExtension();
                 $data->upload($name,$file,$data->favicon);
                 $input['favicon'] = $name;
             }
             if ($file = $request->file('loader'))
             {
-                $name = time().str_replace(' ', '', $file->getClientOriginalName());
+                $name = Str::random(8).time().'.'.$file->getClientOriginalExtension();
                 $data->upload($name,$file,$data->loader);
                 $input['loader'] = $name;
             }
             if ($file = $request->file('admin_loader'))
             {
-                $name = time().str_replace(' ', '', $file->getClientOriginalName());
+                $name = Str::random(8).time().'.'.$file->getClientOriginalExtension();
                 $data->upload($name,$file,$data->admin_loader);
                 $input['admin_loader'] = $name;
             }
 
              if ($file = $request->file('error_photo'))
             {
-                $name = time().str_replace(' ', '', $file->getClientOriginalName());
+                $name = Str::random(8).time().'.'.$file->getClientOriginalExtension();
                 $data->upload($name,$file,$data->error_photo);
                 $input['error_photo'] = $name;
             }
             if ($file = $request->file('popup_background'))
             {
-                $name = time().str_replace(' ', '', $file->getClientOriginalName());
+                $name = Str::random(8).time().'.'.$file->getClientOriginalExtension();
                 $data->upload($name,$file,$data->popup_background);
                 $input['popup_background'] = $name;
             }
 
             if ($file = $request->file('breadcumb_banner'))
             {
-                $name = time().str_replace(' ', '', $file->getClientOriginalName());
+                $name = Str::random(8).time().'.'.$file->getClientOriginalExtension();
                 $data->upload($name,$file,$data->breadcumb_banner);
                 $input['breadcumb_banner'] = $name;
             }
 
             if ($file = $request->file('footer_logo'))
             {
-                $name = time().str_replace(' ', '', $file->getClientOriginalName());
+                $name = Str::random(8).time().'.'.$file->getClientOriginalExtension();
                 $data->upload($name,$file,$data->footer_logo);
                 $input['footer_logo'] = $name;
             }
 
             if ($file = $request->file('cert_sign'))
             {
-                $name = time().str_replace(' ', '', $file->getClientOriginalName());
+                $name = Str::random(8).time().'.'.$file->getClientOriginalExtension();
                 $data->upload($name,$file,$data->cert_sign);
                 $input['cert_sign'] = $name;
             }
 
             if ($file = $request->file('affilate_banner'))
             {
-                $name = time().str_replace(' ', '', $file->getClientOriginalName());
+                $name = Str::random(8).time().'.'.$file->getClientOriginalExtension();
                 $data->upload($name,$file,$data->affilate_banner);
                 $input['affilate_banner'] = $name;
             }
 
         $data->update($input);
 
+        $this->emailConfig($input);
 
         if($request->ajax()){
             $msg = 'Data Updated Successfully.';
@@ -291,5 +282,32 @@ class GeneralSettingController extends Controller
         //--- Redirect Section Ends
 
     }
+
+    public function emailConfig($input)
+    {
+        
+         try {
+             $this->setEnv('MAIL_HOST',$input['smtp_host']);
+             $this->setEnv('MAIL_PORT',$input['smtp_port']);
+             $this->setEnv('MAIL_USERNAME',$input['smtp_user']);
+             $this->setEnv('MAIL_PASSWORD',$input['smtp_pass']);
+             $this->setEnv('MAIL_ENCRYPTION',$input['smtp_encryption']);
+             if(isset($input['molly_key'])){
+                $this->setEnv('MOLLIE_KEY',$input['molly_key']);
+             }
+             
+         } catch (\Throwable $e) {
+
+         }
+    }
+
+    private function setEnv($key, $value)
+     {
+         file_put_contents(app()->environmentFilePath(), str_replace(
+             $key . '=' . env($key),
+             $key . '=' . $value,
+             file_get_contents(app()->environmentFilePath())
+         ));
+     }
 
 }

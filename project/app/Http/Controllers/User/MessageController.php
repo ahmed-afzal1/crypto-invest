@@ -5,6 +5,7 @@ namespace App\Http\Controllers\User;
 use App\Classes\GeniusMailer;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
+use App\Models\Admin;
 use Auth;
 use App\Models\AdminUserConversation;
 use App\Models\AdminUserMessage;
@@ -21,21 +22,22 @@ class MessageController extends Controller
 
     public function adminmessages()
     {
-            $user = Auth::guard('web')->user();
-            $convs = AdminUserConversation::where('user_id','=',$user->id)->get();
-            return view('user.message.index',compact('convs'));            
+        $user = Auth::guard('web')->user();
+        $convs = AdminUserConversation::where('user_id','=',$user->id)->get();
+        return view('user.message.index',compact('convs'));            
     }
 
     public function messageload($id)
     {
-            $conv = AdminUserConversation::findOrfail($id);
-            return view('load.usermessage',compact('conv'));                 
+        $conv = AdminUserConversation::findOrfail($id);
+        return view('load.usermessage',compact('conv'));                 
     }   
 
     public function adminmessage($id)
     {
-            $conv = AdminUserConversation::findOrfail($id);
-            return view('user.message.create',compact('conv'));                 
+        $conv = AdminUserConversation::findOrfail($id);
+        $admin = Admin::where('id',1)->first();
+        return view('user.message.create',compact('conv','admin'));                 
     }   
 
 
@@ -57,6 +59,7 @@ class MessageController extends Controller
         $msg = new AdminUserMessage();
         $input = $request->all();  
         $msg->fill($input)->save();
+        
         $notification = new Notification;
         $notification->conversation_id = $msg->conversation->id;
         $notification->save();
@@ -89,7 +92,7 @@ class MessageController extends Controller
         else
         {
             $headers = "From: ".$gs->from_name."<".$gs->from_email.">";
-        mail($to,$subject,$msg,$headers);
+            mail($to,$subject,$msg,$headers);
         }
 
     $conv = AdminUserConversation::where('user_id','=',$user->id)->where('subject','=',$subject)->first();
@@ -107,9 +110,11 @@ class MessageController extends Controller
             $message->user_id= $user->id;
             $message->message = $request->message;
             $message->save();
-        $notification = new Notification;
-        $notification->conversation_id = $message->id;
-        $notification->save();
+
+            $notification = new Notification;
+            $notification->conversation_id = $message->id;
+            $notification->save();
+
             $msg = new AdminUserMessage();
             $msg->conversation_id = $message->id;
             $msg->message = $request->message;

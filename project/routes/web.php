@@ -142,9 +142,19 @@ Route::get('/cache/clear', function() {
     Route::get('/users/delete/{id}', 'Admin\UserController@destroy')->name('admin-user-delete');
     Route::get('/user/{id}/show', 'Admin\UserController@show')->name('admin-user-show');
     Route::get('/users/ban/{id1}/{id2}', 'Admin\UserController@ban')->name('admin-user-ban');
+    Route::get('/users/kyc/{id1}/{id2}', 'Admin\UserController@kyc')->name('admin-user-kyc');
     Route::get('/user/default/image', 'Admin\UserController@image')->name('admin-user-image');
     Route::get('/users/deposit/{id}', 'Admin\UserController@deposit')->name('admin-user-deposit');
     Route::post('/user/deposit/{id}', 'Admin\UserController@depositUpdate')->name('admin-user-deposit-update');
+
+
+      Route::get('/withdraw-method/datatables', 'Admin\WithdrawMethodController@datatables')->name('admin-withdraw-method-datatables'); //JSON REQUEST
+  Route::get('/withdraw-method', 'Admin\WithdrawMethodController@index')->name('admin-withdraw-method-index');
+  Route::get('/withdraw-method/create', 'Admin\WithdrawMethodController@create')->name('admin-withdraw-method-create');
+  Route::post('/withdraw-method/store', 'Admin\WithdrawMethodController@store')->name('admin-withdraw-method-store');
+  Route::get('/withdraw-method/edit/{id}', 'Admin\WithdrawMethodController@edit')->name('admin-withdraw-method-edit');
+  Route::post('/withdraw-method/update/{id}', 'Admin\WithdrawMethodController@update')->name('admin-withdraw-method-update');
+  Route::get('/withdraw-method/delete/{id}', 'Admin\WithdrawMethodController@destroy')->name('admin-withdraw-method-delete');
   });
 
   Route::group(['middleware'=>'permissions:Manage Blog'],function(){
@@ -241,7 +251,7 @@ Route::get('/cache/clear', function() {
   });
 
   Route::group(['middleware'=>'permissions:Message'],function(){
-    Route::post('/user/send/message', 'Admin\MessageController@usercontact')->name('admin.send.message');
+    Route::post('/send/message', 'Admin\MessageController@usercontact')->name('admin.send.message');
     Route::get('/user/ticket','Admin\MessageController@index')->name('admin.user.message');
     Route::get('/messages/datatables/', 'Admin\MessageController@datatables')->name('admin.message.datatables');
     Route::get('/message/{id}', 'Admin\MessageController@message')->name('admin.message.show');

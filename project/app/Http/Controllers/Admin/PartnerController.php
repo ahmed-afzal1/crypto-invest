@@ -7,6 +7,7 @@ use App\Models\Partner;
 use Illuminate\Http\Request;
 use Datatables;
 use Illuminate\Support\Facades\Validator;
+use Illuminate\Support\Str;
 
 class PartnerController extends Controller
 {
@@ -69,7 +70,7 @@ class PartnerController extends Controller
         $input = $request->all();
         if ($file = $request->file('photo'))
          {
-            $name = time().str_replace(' ', '', $file->getClientOriginalName());
+            $name = Str::random(8).time().'.'.$file->getClientOriginalExtension();
             $file->move('assets/images',$name);
             $input['photo'] = $name;
         }
@@ -108,7 +109,7 @@ class PartnerController extends Controller
         $input = $request->all();
             if ($file = $request->file('photo'))
             {
-                $name = time().str_replace(' ', '', $file->getClientOriginalName());
+                $name = Str::random(8).time().'.'.$file->getClientOriginalExtension();
                 $file->move('assets/images',$name);
                 if($data->photo != null)
                 {

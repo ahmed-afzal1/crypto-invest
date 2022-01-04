@@ -7,7 +7,7 @@
           <div class="transaction-area p-3">
             <div class="heading-area">
               <h3 class="title">
-                {{ $langg->lang397 }} {{$conv->subject}} <a href="{{ route('user-message-index') }}" class="btn btn-round btn-base ml-2">Back</a>
+                {{ __('Subject') }} : {{$conv->subject}} <a href="{{ route('user-message-index') }}" class="btn btn-round btn-base ml-2">Back</a>
               </h3>
             </div>
             <div class="content">
@@ -26,7 +26,7 @@
                                             <p>{{$message->message}}</p>
                                         </div>
                                         <div class="right">
-                                            <img class="img-circle" src="{{$message->conversation->user->photo != null ? asset('assets/images/users/'.$message->conversation->user->photo) : asset('assets/images/noimage.png')}}" alt="">
+                                            <img class="img-circle" src="{{$message->conversation->user->photo != null ? asset('assets/images/'.$message->conversation->user->photo) : asset('assets/images/noimage.png')}}" alt="">
                                             <p class="ticket-date">{{$message->conversation->user->name}}</p>
                                         </div>
                                     </div>
@@ -41,8 +41,8 @@
                                 <div class="col-lg-12">
                                     <div class="reply-area">
                                         <div class="left">
-                                            <img class="img-circle" src="{{ asset('assets/images/admin.jpg')}}" alt="">
-                                            <p class="ticket-date">{{ $langg->lang399 }}</p>
+                                            <img class="img-circle" src="{{ asset('assets/images/'.$admin->photo)}}" alt="">
+                                            <p class="ticket-date">{{ __('Admin') }}</p>
                                         </div>
                                         <div class="right">
                                             <p>{{$message->message}}</p>
@@ -62,11 +62,11 @@
                             <div class="form-group">
                                 <input type="hidden" name="conversation_id" value="{{$conv->id}}">
                                 <input type="hidden" name="user_id" value="{{$conv->user->id}}">
-                                <textarea class="form-control" name="message" id="wrong-invoice" rows="5" style="resize: vertical;" required="" placeholder="{{ $langg->lang400 }}"></textarea>
+                                <textarea class="form-control" name="message" id="wrong-invoice" rows="5" style="resize: vertical;" required="" placeholder="{{ __('Your Message') }}"></textarea>
                             </div>
                             <div class="form-group">
-                                <button class="mybtn1">
-                                    {{ $langg->lang401 }}
+                                <button class="mybtn1 btn btn-primary">
+                                    {{ __('Send') }}
                                 </button>
                             </div>
                         </form>

@@ -20,7 +20,6 @@ class WishlistController extends Controller
         $sort = '';
         $user = Auth::guard('web')->user();
 
-        // Search By Sort
 
         if(!empty($request->sort))
         {

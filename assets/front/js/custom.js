@@ -389,7 +389,6 @@
 		/* ----------------------------------------------------------- */
 		
 		$(".navbar-nav .fa-search").on("click", function() {
-			//$("html, body").animate({ }, "slow");
 			$(".site-search .container").toggleClass("open");
 		})
 
@@ -807,6 +806,7 @@
 	  $(document).on('submit','#messageform',function(e){
 		e.preventDefault();
 		var href = $(this).data('href');
+		alert(href);
 		$('.gocover').show();
 		$('button.mybtn1').prop('disabled',true);
 			$.ajax({

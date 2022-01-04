@@ -19,7 +19,7 @@
                 <div class="gocover" style="background: url({{ asset('assets/images/'.$gs->loader) }}) no-repeat scroll center center rgba(45, 45, 45, 0.5);"></div>
             
                 {{ csrf_field() }}
-                @include('includes.admin.form-both') 
+                @include('includes.admin.form-flash') 
                 <div class="row">
                     <div class="col-lg-12">
                         <div class="form-group bmd-form-group">

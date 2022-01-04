@@ -7,6 +7,7 @@ use App\Models\Slider;
 use Illuminate\Http\Request;
 use Validator;
 use Datatables;
+use Illuminate\Support\Str;
 
 class SliderController extends Controller
 {
@@ -73,7 +74,7 @@ class SliderController extends Controller
         $input = $request->all();
         if ($file = $request->file('photo')) 
          {      
-            $name = time().str_replace(' ', '', $file->getClientOriginalName());
+            $name = Str::random(8).time().'.'.$file->getClientOriginalExtension();
             $file->move('assets/images',$name);           
             $input['photo'] = $name;
         } 
@@ -108,7 +109,7 @@ class SliderController extends Controller
         $input = $request->all();
         if ($file = $request->file('photo')) 
         {              
-            $name = time().str_replace(' ', '', $file->getClientOriginalName());
+          $name = Str::random(8).time().'.'.$file->getClientOriginalExtension();
             $file->move('assets/images',$name);
             @unlink('assets/images/'.$data->photo);            
             $input['photo'] = $name;

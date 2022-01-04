@@ -79,7 +79,7 @@ class ForgotController extends Controller
         $length = strlen($allowed_letters);
         $letter = $allowed_letters[rand(0, $length-1)];
         $word='';
-        //$text_color = imagecolorallocate($image, 8, 186, 239);
+ 
         $text_color = imagecolorallocate($image, 0, 0, 0);
         $cap_length=6;// No. of character in image
         for ($i = 0; $i< $cap_length;$i++)

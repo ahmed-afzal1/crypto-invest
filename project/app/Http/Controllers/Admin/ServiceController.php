@@ -116,7 +116,7 @@ class ServiceController extends Controller
         } 
         $data->update($input);
     
-        $msg = 'Data Updated Successfully.'.'<a href="'.route("admin.feature.index").'">View Service Lists</a>';
+        $msg = 'Data Updated Successfully.'.'<a href="'.route("admin.service.index").'">View Service Lists</a>';
         return response()->json($msg);               
     }
 

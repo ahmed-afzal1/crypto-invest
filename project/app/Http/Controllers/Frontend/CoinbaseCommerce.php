@@ -155,7 +155,7 @@ class CoinbaseCommerce extends Controller{
         $notification->order_id = $order->id;
         $notification->save();
         } catch (\Throwable $th) {
-            //throw $th;
+ 
         }
        
     }

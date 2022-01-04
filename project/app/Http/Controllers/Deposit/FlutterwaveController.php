@@ -2,7 +2,9 @@
 
 namespace App\Http\Controllers\Deposit;
 
+use App\Classes\GeniusMailer;
 use App\Http\Controllers\Controller;
+use App\Models\Currency;
 use App\Models\Deposit;
 use App\Models\Generalsetting;
 use App\Models\PaymentGateway;
@@ -27,7 +29,7 @@ class FlutterwaveController extends Controller
         $curl = curl_init();
 
         $item_number = Str::random(4).time();
-        $customer_email =  auth()->user()->emai;
+        $customer_email =  auth()->user()->email;
         $currency = $request->currency_code;
         $txref = $item_number;
         $PBFPubKey = $this->public_key;
@@ -146,6 +148,7 @@ class FlutterwaveController extends Controller
                           'to' => $user->email,
                           'type' => "Deposti",
                           'cname' => $user->name,
+                          'oamount' => $deposit_data['amount'],
                           'aname' => "",
                           'aemail' => "",
                           'wtitle' => "",

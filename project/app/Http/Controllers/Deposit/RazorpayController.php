@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\Deposit;
 
+use App\Classes\GeniusMailer;
 use App\Http\Controllers\Controller;
 use App\Models\Currency;
 use App\Models\Deposit;
@@ -167,6 +168,7 @@ class RazorpayController extends Controller
                     'to' => $user->email,
                     'type' => "Deposti",
                     'cname' => $user->name,
+                    'oamount' => $input['amount'],
                     'aname' => "",
                     'aemail' => "",
                     'wtitle' => "",

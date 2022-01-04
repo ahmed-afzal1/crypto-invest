@@ -636,6 +636,9 @@ body.light .shop-checkout .table tbody > tr {
 }
 
 /*** Logo ***/
+div#carouselExampleControls {
+  height: 560px;
+}
 
 .main-logo {
   position: relative;
@@ -781,6 +784,7 @@ ul.bitcoin-stats li .btcwdgt.btcwdgt .arrow.down {
 ul.user {
   text-align: right;
   padding-top: 13px;
+  display: flex;
 }
 
 ul.user li {
@@ -1129,7 +1133,7 @@ ul.nav.nav-tabs li a:hover, ul.nav.nav-tabs li.active a:hover {
   left: 0;
 }
 
-#main-slide .item .slider-content {
+#main-slide  .slider-content {
   z-index: 1;
   opacity: 0;
   -webkit-transition: opacity 500ms;
@@ -1138,7 +1142,7 @@ ul.nav.nav-tabs li a:hover, ul.nav.nav-tabs li.active a:hover {
   transition: opacity 500ms;
 }
 
-#main-slide .item.active .slider-content {
+#main-slide .slider-content {
   opacity: 1;
   -webkit-transition: opacity 100ms;
   -moz-transition: opacity 100ms;
@@ -2473,6 +2477,54 @@ ul.nav.nav-tabs li a:hover, ul.nav.nav-tabs li.active a:hover {
   top: 49%;
 }
 
+
+.modal-dialog {
+  position: fixed;
+  bottom: 0;
+  right: 0;
+  width: 600px;
+  margin: 0px;
+}
+.modal-dialog .modal-content {
+  box-shadow: 0 27px 24px 0 rgba(132, 130, 130, 0.2), 0 40px 77px 0 rgba(127, 124, 124, 0.22);
+  border-radius: 6px;
+  border: none;
+}
+.message-modal .modal .modal-dialog .modal-header {
+  background: #e78a1a;
+  padding: 9px 20px 15px;
+  color: white;
+  
+}
+h5#vendorformLabel {
+  font-size: 20px;
+  font-weight: 600px;
+}
+.modal-body {
+    background: #201e1e;
+    border: 1px solid #e78a1a;
+}
+
+.message-modal .modal .contact-form .submit-btn {
+  width: 100%;
+  height: 50px;
+  background: #e78a1a;
+  color: #fff;
+  font-size: 14px;
+  line-height: 50px;
+  font-weight: 600;
+  text-align: center;
+  border: 0px;
+  border-radius: 5px;
+  cursor: pointer;
+  -webkit-transition: all 0.3s ease-in;
+  -o-transition: all 0.3s ease-in;
+  transition: all 0.3s ease-in;
+  margin-top: 30px;
+}
+.close{
+  color: #fff !important;
+}
 /*** Team ***/
 
 .team-members {
@@ -4748,9 +4800,6 @@ h4.panel-title a.collapsed:before {
     border-bottom: 1px solid #ddd;
   }
 
-  .header {
-    margin-top: 63px;
-  }
 
   section.blog {
     padding-bottom: 10px;
@@ -5212,6 +5261,58 @@ h4.panel-title a.collapsed:before {
   }
 }
 
+.cookie-bar-wrap.show {
+  opacity: 1;
+  visibility: visible;
+  -webkit-transform: translateY(-200px);
+  transform: translateY(-200px);
+}
+
+.cookie-bar-wrap {
+  position: fixed;
+  left: 0;
+  right: 0;
+  bottom: -200px;
+  background: #3b4045;
+  -webkit-box-shadow: 0 -1px 3px rgba(0, 0, 0, 0.1);
+          box-shadow: 0 -1px 3px rgba(0, 0, 0, 0.1);
+  opacity: 0;
+  visibility: hidden;
+  -webkit-transform: translateY(0);
+  transform: translateY(0);
+  z-index: 50;
+  -webkit-transition: .6s ease;
+  transition: .6s ease;
+}
+
+.cookie-bar {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -ms-flex-wrap: nowrap;
+      flex-wrap: nowrap;
+  -webkit-box-pack: center;
+  -ms-flex-pack: center;
+      justify-content: center;
+  -webkit-box-align: center;
+  -ms-flex-align: center;
+      align-items: center;
+  padding: 15px 0;
+}
+
+.cookie-bar .cookie-bar-text {
+  font-size: 14px;
+  margin-right: 100px;
+  color: #f9f9f9;
+}
+
+.cookie-bar .cookie-bar-action {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  white-space: nowrap;
+}
+
 /*-------------------------------
 Pricing Area Start
 --------------------------------*/
@@ -5338,7 +5439,8 @@ Pricing Area Start
   background: rgba(rgb(239, 150, 26, 0.3);
   outline: none;
   padding: 0;
-  margin: 0; }
+  margin: 0; 
+}
 
 .range-slider__range::-webkit-slider-thumb {
   -webkit-appearance: none;
@@ -5388,6 +5490,7 @@ Pricing Area Start
 /*-------------------------------
 Pricing Area End
 --------------------------------*/
+
 
 p {
   margin: 0 0 10px;

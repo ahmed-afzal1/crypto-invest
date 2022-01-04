@@ -7,6 +7,7 @@ use Illuminate\Support\Facades\Session;
 use App\Http\Controllers\Controller;
 use App\Models\HomepageSetting;
 use Illuminate\Support\Facades\Validator as FacadesValidator;
+use Illuminate\Support\Str;
 use Validator;
 
 
@@ -25,7 +26,7 @@ class PageSettingController extends Controller
 
             if ($file = $request->file('newsletter_photo'))
             {
-                $name = time().str_replace(' ', '', $file->getClientOriginalName());
+                $name = Str::random(8).time().'.'.$file->getClientOriginalExtension();
                 $file->move('assets/images',$name);
                 @unlink('assets/images/'.$data->newsletter_photo);
                 $input['newsletter_photo'] = $name;
@@ -33,7 +34,7 @@ class PageSettingController extends Controller
 
             if ($file = $request->file('about_photo'))
             {
-                $name = time().str_replace(' ', '', $file->getClientOriginalName());
+                $name = Str::random(8).time().'.'.$file->getClientOriginalExtension();
                 $file->move('assets/images',$name);
                 @unlink('assets/images/'.$data->about_photo);
                 $input['about_photo'] = $name;
@@ -41,7 +42,7 @@ class PageSettingController extends Controller
 
             if ($file = $request->file('service_photo'))
             {
-                $name = time().str_replace(' ', '', $file->getClientOriginalName());
+                $name = Str::random(8).time().'.'.$file->getClientOriginalExtension();
                 $file->move('assets/images',$name);
                 @unlink('assets/images/'.$data->service_photo);
                 $input['service_photo'] = $name;
@@ -49,7 +50,7 @@ class PageSettingController extends Controller
 
             if ($file = $request->file('footer_top_photo'))
             {
-                $name = time().str_replace(' ', '', $file->getClientOriginalName());
+                $name = Str::random(8).time().'.'.$file->getClientOriginalExtension();
                 $file->move('assets/images',$name);
                 @unlink('assets/images/'.$data->footer_top_photo);
                 $input['footer_top_photo'] = $name;
@@ -179,9 +180,7 @@ class PageSettingController extends Controller
         return view('admin.pagesetting.newsletter_section',compact('ps'));
     }
 
-    //Upadte About Page Section Settings
 
-    //Upadte FAQ Page Section Settings
     public function faqupdate($status)
     {
         $page = Pagesetting::findOrFail(1);

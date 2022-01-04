@@ -22,7 +22,7 @@
                 <table id="geniustable" class="table table-hover dt-responsive" cellspacing="0" width="100%">
 				<thead class="thead-light">
 				  <tr>
-					<th>{{ __('Name') }}</th>
+					<th>{{ __('Code') }}</th>
 					<th>{{ __('Sign') }}</th>
 					<th>{{ __('Value') }}</th>
 					<th>{{ __('Options') }}</th>

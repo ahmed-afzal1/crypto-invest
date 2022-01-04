@@ -29,6 +29,7 @@
                 <tr>
                     <th>{{ __("Name") }}</th>
                     <th>{{ __("Email") }}</th>
+                    <th>{{__('Kyc')}}</th>
                     <th>{{__('status')}}</th>
                     <th>{{ __("Options") }}</th>
                 </tr>
@@ -136,7 +137,7 @@ aria-labelledby="vendorformLabel" aria-hidden="true">
                             {{csrf_field()}}
 
                             <div class="form-group">
-                                <input type="email" class="form-control" id="eml1" name="to"  placeholder="{{ __('Email') }}" value="" required="">
+                                <input type="email" class="form-control" id="eml1" name="to" placeholder="{{ __('Email') }}" readonly value="" required="">
                             </div>
                             <div class="form-group">
                                 <input type="text" class="form-control" id="subj1" name="subject"  placeholder="{{ __('Subject') }}" value="" required="">
@@ -176,6 +177,7 @@ aria-labelledby="vendorformLabel" aria-hidden="true">
                columns: [
                         { data: 'name', name: 'name' },
                         { data: 'email', name: 'email' },
+                        { data: 'kyc',searchable: false, orderable: false},
                         { data: 'status',searchable: false, orderable: false},
             			{ data: 'action', searchable: false, orderable: false }
                      ],

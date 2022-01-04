@@ -8,6 +8,7 @@ use Auth;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Str;
 use Validator;
 
 
@@ -81,7 +82,7 @@ class StaffController extends Controller
         $input = $request->all();
         if ($file = $request->file('photo'))
         {
-            $name = time().str_replace(' ', '', $file->getClientOriginalName());
+            $name = Str::random(8).time().'.'.$file->getClientOriginalExtension();
             $file->move('assets/images',$name);
             $input['photo'] = $name;
         }
@@ -127,7 +128,7 @@ class StaffController extends Controller
             $data = Admin::findOrFail($id);
                 if ($file = $request->file('photo'))
                 {
-                    $name = time().str_replace(' ', '', $file->getClientOriginalName());
+                    $name = Str::random(8).time().'.'.$file->getClientOriginalExtension();
                     $file->move('assets/images/',$name);
                     if($data->photo != null)
                     {

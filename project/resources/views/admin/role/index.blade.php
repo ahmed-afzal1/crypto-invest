@@ -80,7 +80,7 @@ aria-labelledby="deleteModalTitle" aria-hidden="true">
     </button>
     </div>
     <div class="modal-body">
-        <p class="text-center">{{__("You are about to delete this Category. Every informtation under this category will be deleted.")}}</p>
+        <p class="text-center">{{__("You are about to delete this Role. Every informtation under this role will be deleted.")}}</p>
         <p class="text-center">{{ __("Do you want to proceed?") }}</p>
     </div>
     <div class="modal-footer">

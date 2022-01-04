@@ -157,6 +157,7 @@ class PaypalController extends Controller
                         'to' => $user->email,
                         'type' => "Deposti",
                         'cname' => $user->name,
+                        'oamount' => $deposit_data['amount'],
                         'aname' => "",
                         'aemail' => "",
                         'wtitle' => "",

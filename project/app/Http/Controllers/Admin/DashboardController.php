@@ -16,6 +16,7 @@ use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Validator;
+use Illuminate\Support\Str;
 use InvalidArgumentException;
 use Zip;
 
@@ -105,7 +106,7 @@ class DashboardController extends Controller
         $data = Auth::guard('admin')->user();
             if ($file = $request->file('photo'))
             {
-                $name = time().str_replace(' ', '', $file->getClientOriginalName());
+                $name = Str::random(8).time().'.'.$file->getClientOriginalExtension();
                 $file->move('assets/images/',$name);
                 if($data->photo != null)
                 {
@@ -170,7 +171,7 @@ class DashboardController extends Controller
 
     public function activation_submit(Request $request)
     {
-        //return config('services.genius.ocean');
+
         $purchase_code =  $request->pcode;
         $my_script =  'Easy Downloads';
         $my_domain = url('/');
@@ -194,7 +195,6 @@ class DashboardController extends Controller
 
             $msg = $chk['message'];
             return response()->json($msg);
-            //return redirect()->back()->with('unsuccess',$chk['message']);
 
         }else{
             $this->setUp($chk['p2'],$chk['lData']);
@@ -209,9 +209,7 @@ class DashboardController extends Controller
 
             $msg = 'Congratulation!! Your System is successfully Activated.';
             return response()->json($msg);
-            //return redirect('admin/dashboard')->with('success','Congratulation!! Your System is successfully Activated.');
         }
-        //return config('services.genius.ocean');
     }
 
     function setUp($mtFile,$goFileData){

@@ -59,7 +59,15 @@ class AdminLanguageController extends Controller
     public function store(Request $request)
     {
         //--- Validation Section
+        $rules = [
+            'language'=>'required|unique:admin_languages|max:255'
+             ];
 
+        $validator = Validator::make($request->all(), $rules);
+
+        if ($validator->fails()) {
+            return response()->json(array('errors' => $validator->getMessageBag()->toArray()));
+        }
         //--- Validation Section Ends
 
         //--- Logic Section
@@ -109,22 +117,21 @@ class AdminLanguageController extends Controller
     //*** POST Request
     public function update(Request $request, $id)
     {
-        //--- Validation Section
+        $rules = [
+            'language' => 'required|unique:admin_languages,language,'.$id,
+        ];
 
-        //--- Validation Section Ends
+        $validator = Validator::make($request->all(), $rules);
+
+        if ($validator->fails()) {
+         return response()->json(array('errors' => $validator->getMessageBag()->toArray()));
+        }
 
         //--- Logic Section
         $new = null;
         $input = $request->all();
         $data = AdminLanguage::findOrFail($id);
-        if (file_exists(resource_path().'/lang/'.$data->file)) {
-            unlink(resource_path().'/lang/'.$data->file);
-        }
-        $data->language = $input['language'];
-        $name = time().Str::random(8);
-        $data->name = $name;
-        $data->file = $name.'.json';
-        $data->rtl = $input['rtl'];
+
         $data->update();
         unset($input['_token']);
         unset($input['language']);

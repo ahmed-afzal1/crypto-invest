@@ -32,7 +32,7 @@
             <div class="row mb-2">
               <label class="control-label col-sm-3" for="facebook">{{ __('Facebook') }} *</label>
               <div class="col-sm-6">
-                <input class="form-control" name="facebook" id="facebook" placeholder="{{ __('http://facebook.com/') }}" required="" type="text" value="{{$data->facebook}}">
+                <input class="form-control" name="facebook" id="facebook" placeholder="{{ __('http://facebook.com/') }}" type="text" value="{{$data->facebook}}">
               </div>
               <div class="col-sm-3">
                 <label class="switch">
@@ -45,7 +45,7 @@
             <div class="row mb-2">
               <label class="control-label col-sm-3" for="gplus">{{ __('Google Plus') }} *</label>
               <div class="col-sm-6">
-                <input class="form-control" name="gplus" id="gplus" placeholder="{{ __('http://google.com/') }}" required="" type="text" value="{{$data->gplus}}">
+                <input class="form-control" name="gplus" id="gplus" placeholder="{{ __('http://google.com/') }}" type="text" value="{{$data->gplus}}">
               </div>
               <div class="col-sm-3">
                 <label class="switch">
@@ -58,7 +58,7 @@
             <div class="row mb-2">
               <label class="control-label col-sm-3" for="twitter">{{ __('Twitter') }} *</label>
               <div class="col-sm-6">
-                <input class="form-control" name="twitter" id="twitter" placeholder="{{ __('http://twitter.com/') }}" required="" type="text" value="{{$data->twitter}}">
+                <input class="form-control" name="twitter" id="twitter" placeholder="{{ __('http://twitter.com/') }}" type="text" value="{{$data->twitter}}">
               </div>
               <div class="col-sm-3">
                 <label class="switch">
@@ -71,7 +71,7 @@
             <div class="row mb-2">
               <label class="control-label col-sm-3" for="linkedin">{{ __('Linkedin') }} *</label>
               <div class="col-sm-6">
-                <input class="form-control" name="linkedin" id="linkedin" placeholder="{{ __('http://linkedin.com/') }}" required="" type="text" value="{{$data->linkedin}}">
+                <input class="form-control" name="linkedin" id="linkedin" placeholder="{{ __('http://linkedin.com/') }}" type="text" value="{{$data->linkedin}}">
               </div>
               <div class="col-sm-3">
                 <label class="switch">

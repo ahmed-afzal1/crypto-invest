@@ -38,8 +38,8 @@
                                         <p>{{ $message->message }}</p>
                                     </div>
                                     <div class="right">
-                                @if($message->conversation->user->is_author == 1)
-                                <img class="img-circle" src="{{$message->conversation->user->photo != null ? $message->conversation->user->photo : asset('assets/images/noimage.png')}}" alt="">
+                                @if($message->conversation->user)
+                                <img class="img-circle" src="{{$message->conversation->user->photo != null ? asset('assets/images/'.$message->conversation->user->photo) : asset('assets/images/noimage.png')}}" alt="">
                                 @else
 
                                 <img class="img-circle" src="{{Auth::guard('admin')->user()->photo != null ? asset('assets/images/'.Auth::guard('admin')->user()->photo) : asset('assets/images/noimage.png')}}" alt="">

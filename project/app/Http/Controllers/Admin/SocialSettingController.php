@@ -15,18 +15,12 @@ class SocialSettingController extends Controller
         $this->middleware('auth:admin');
     }
 
-    // Spcial Settings All post requests will be done in this method
     public function socialupdate(Request $request)
     {
-        //--- Validation Section
 
-        //--- Validation Section Ends
-
-        //--- Logic Section
         $input = $request->all(); 
         $data = Socialsetting::findOrFail(1);   
         $data->update($input);
-        //--- Logic Section Ends
         
         //--- Redirect Section        
         $msg = 'Data Updated Successfully.';
@@ -36,14 +30,9 @@ class SocialSettingController extends Controller
     }
 
 
-    // Spcial Settings All post requests will be done in this method
     public function socialupdateall(Request $request)
     {
-        //--- Validation Section
 
-        //--- Validation Section Ends
-
-        //--- Logic Section
         $input = $request->all(); 
         $data = Socialsetting::findOrFail(1);   
         if ($request->f_status == ""){

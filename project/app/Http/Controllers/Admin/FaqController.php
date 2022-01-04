@@ -44,15 +44,10 @@ class FaqController extends Controller
 
     public function store(Request $request)
     {
-        //--- Validation Section
 
-        //--- Validation Section Ends
-
-        //--- Logic Section
         $data = new Faq();
         $input = $request->all();
         $data->fill($input)->save();
-        //--- Logic Section Ends
 
         //--- Redirect Section
         $msg = 'New Data Added Successfully.'.'<a href="'.route("admin.faq.index").'">View Faq Lists</a>';
@@ -66,11 +61,7 @@ class FaqController extends Controller
     }
     public function update(Request $request, $id)
     {
-        //--- Validation Section
 
-        //--- Validation Section Ends
-
-        //--- Logic Section
         $data = Faq::findOrFail($id);
         $input = $request->all();
         $data->update($input);

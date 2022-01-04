@@ -27,8 +27,9 @@
               @if($activation_data != "")
                         <div class="row">
                             <div class="col-lg-12 text-center" style="color:darkgreen">
-
-                                {!! $activation_data !!}
+                                @php
+                                    echo $activation_data;
+                                @endphp
 
                             </div>
                         </div>

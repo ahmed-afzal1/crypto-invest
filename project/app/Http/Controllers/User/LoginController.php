@@ -38,6 +38,12 @@ class LoginController extends Controller
 
         if (Auth::attempt(['email' => $request->email, 'password' => $request->password], $request->remember)) {
 
+            if(Auth::guard('web')->user()->is_banned == 1)
+            {
+              Auth::guard('web')->logout();
+              return response()->json(array('errors' => [ 0 => 'You are Banned From this system!' ]));   
+            }
+
             if(Auth::guard('web')->user()->email_verified == 'No')
             {
               Auth::guard('web')->logout();
@@ -90,7 +96,7 @@ class LoginController extends Controller
         $length = strlen($allowed_letters);
         $letter = $allowed_letters[rand(0, $length-1)];
         $word='';
-        //$text_color = imagecolorallocate($image, 8, 186, 239);
+
         $text_color = imagecolorallocate($image, 0, 0, 0);
         $cap_length=6;// No. of character in image
         for ($i = 0; $i< $cap_length;$i++)

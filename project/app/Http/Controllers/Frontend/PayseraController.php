@@ -49,8 +49,7 @@ public function isPaymentValid(array $order, array $response)
         );
     
         if ($response['status'] === '1' || $response['status'] === '3') {
-            //@ToDo: Validate payment amount and currency, example provided in isPaymentValid method.
-            //@ToDo: Validate order status by $response['orderid']. If it is not already approved, approve it.
+
     
             echo 'OK';
         } else {

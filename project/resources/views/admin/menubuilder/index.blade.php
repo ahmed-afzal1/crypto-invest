@@ -94,7 +94,7 @@
             <h6 class="m-0 font-weight-bold text-primary">{{ __('Website Menus') }}</h6>
          </div>
          <div class="card-body">
-            <form class="admin-form" id="geniusformUpdate" action="{{ route('admin.gs.update') }}" method="POST" enctype="multipart/form-data">
+            <form class="admin-form geniusform" action="{{ route('admin.gs.update') }}" method="POST" enctype="multipart/form-data">
                @csrf
                @include('includes.admin.form-both')
                <input type="hidden" name="menu" value="menu">

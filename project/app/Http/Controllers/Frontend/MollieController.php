@@ -59,7 +59,6 @@ class MollieController extends Controller
         $success_url = route('payment.return');
         $cancel_url = route('payment.cancle');
         $payment = Mollie::api()->payments()->get(Session::get('payment_id'));
-        dd($payment);
       
         if($payment->status == 'paid'){
             $order = new Order();
@@ -80,7 +79,6 @@ class MollieController extends Controller
             $order['title'] = $input['title'];
             $order['details'] = $input['details'];
             $order['status'] = "pending";
-            // $order['txnid'] = $payment_id;
 
             $date = Carbon::now();
             $date = $date->addDays($request->days);

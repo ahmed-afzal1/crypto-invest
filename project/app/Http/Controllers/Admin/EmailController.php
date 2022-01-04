@@ -59,7 +59,7 @@ class EmailController extends Controller
         $config = Generalsetting::findOrFail(1);
         if($request->type == "User")
         {
-        $users = User::where('is_author',0)->get();
+        $users = User::whereIsBanned(0)->get();
         //Sending Email To Users
         foreach($users as $user)
         {

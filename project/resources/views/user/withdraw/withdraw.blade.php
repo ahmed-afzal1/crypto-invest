@@ -50,11 +50,6 @@
                             </div>
                         </div>
     
-                        <div id="resp" class="col-md-12">
-                            <span class="help-block">
-                                <strong>{{ __('Withdraw') }} ${{ $gs->withdraw_fee }} {{ __('Fee') }} {{ $gs->withdraw_charge }}% {{ __('will deduct from your account') }}</strong>
-                            </span>
-                        </div>
     
                         <div class="col-lg-12">
                             <button type="submit" class="btn btn-primary btn-round">{{ __('Withdraw') }}</button>

@@ -506,8 +506,7 @@ class BlockKey
                          ),
                          $p
                 );
-        // nPtX = slope^2 - 2 * ptX
-        // Equals slope^2 - ptX - ptX
+
         $nPt = array();
         $nPt['x'] = gmp_mod(
                             gmp_sub(
@@ -519,7 +518,7 @@ class BlockKey
                             ),
                             $p
                     );
-        // nPtY = slope * (ptX - nPtx) - ptY
+
         $nPt['y'] = gmp_mod(
                             gmp_sub(
                                     gmp_mul(
@@ -555,8 +554,7 @@ class BlockKey
         {
             throw new \Exception('This library doesn\'t yet supports point at infinity. See https://github.com/BitcoinPHP/BitcoinECDSA.php/issues/9');
         }
-        // SLOPE = (pt1Y - pt2Y)/( pt1X - pt2X )
-        // Equals (pt1Y - pt2Y) * ( pt1X - pt2X )^-1
+
         $slope      = gmp_mod(
                               gmp_mul(
                                       gmp_sub(
@@ -573,7 +571,7 @@ class BlockKey
                               ),
                               $p
                       );
-        // nPtX = slope^2 - ptX1 - ptX2
+
         $nPt = array();
         $nPt['x']   = gmp_mod(
                               gmp_sub(
@@ -585,7 +583,7 @@ class BlockKey
                               ),
                               $p
                       );
-        // nPtX = slope * (ptX1 - nPtX) - ptY1
+
         $nPt['y']   = gmp_mod(
                               gmp_sub(
                                       gmp_mul(
@@ -660,9 +658,7 @@ class BlockKey
                             ),
                             $p
                     );
-            // there are always 2 results for a square root
-            // In an infinite number field you have -2^2 = 2^2 = 4
-            // In a finite number field you have a^2 = (p-a)^2
+
             $sqrt2 = gmp_mod(gmp_sub($p, $sqrt1), $p);
             return array($sqrt1, $sqrt2);
         }
@@ -695,7 +691,7 @@ class BlockKey
                       $p
               );
         $y = $this->sqrt($y2);
-        if(!$y) //if there is no result
+        if(!$y) 
         {
             return null;
         }
@@ -703,7 +699,7 @@ class BlockKey
         {
             return $y;
         }
-        else if($derEvenOrOddCode == '02') // even
+        else if($derEvenOrOddCode == '02')
         {
             $resY = null;
             if(false == gmp_strval(gmp_mod($y[0], gmp_init(2, 10)), 10))
@@ -1058,9 +1054,7 @@ class BlockKey
         {
 		// use a deterministic nonce
 		$nonce = $this->deterministicGenerateK($hash, $this->k);
-//            $random     = openssl_random_pseudo_bytes(256, $cStrong);
-//            $random     = $random . microtime(true).rand(100000000000, 1000000000000);
-//            $nonce      = gmp_strval(gmp_mod(gmp_init(hash('sha256',$random), 16), $n), 16);
+
         }
         //first part of the signature (R).
         $rPt = $this->mulPoint($nonce, $this->G);
@@ -1068,8 +1062,7 @@ class BlockKey
 	// fix DER encoding -- pad it so we don't confuse overflow with being negative
 	if (strlen($R)%2) { $R = '0' . $R; }
 	else if (hexdec(substr($R, 0, 1)) >= 8) { $R = '00' . $R; }
-        //second part of the signature (S).
-        //S = nonce^-1 (hash + privKey * R) mod p
+        
         $S = gmp_strval(
                         gmp_mod(
                                 gmp_mul(
@@ -1226,8 +1219,7 @@ class BlockKey
         if(null == $y)
             return null;
         $Rpt = array('x' => $x, 'y' => $y);
-        //step 1.6.1
-        //calculate r^-1 (S*Rpt - eG)
+
         $eG = $this->mulPoint($hash, $this->G);
         $eG['y'] = gmp_mod(gmp_neg($eG['y']), $this->p);
         $SR = $this->mulPoint($S, $Rpt);
@@ -1263,8 +1255,7 @@ class BlockKey
     {
         $G = $this->G;
         $pubKeyPts = $this->getPubKeyPointsWithDerPubKey($pubKey);
-        // S^-1* hash * G + S^-1 * R * Qa
-        // S^-1* hash
+
         $exp1 =  gmp_strval(
                             gmp_mul(
                                     gmp_invert(
@@ -1275,9 +1266,9 @@ class BlockKey
                             ),
                             16
                  );
-        // S^-1* hash * G
+
         $exp1Pt = $this->mulPoint($exp1, $G);
-        // S^-1 * R
+
         $exp2 =  gmp_strval(
                             gmp_mul(
                                     gmp_invert(
@@ -1288,7 +1279,7 @@ class BlockKey
                             ),
                             16
                  );
-        // S^-1 * R * Qa
+
         $pubKeyPts['x'] = gmp_init($pubKeyPts['x'], 16);
         $pubKeyPts['y'] = gmp_init($pubKeyPts['y'], 16);
         $exp2Pt = $this->mulPoint($exp2,$pubKeyPts);
@@ -1347,7 +1338,7 @@ class BlockKey
     public function checkSignatureForMessage($address, $encodedSignature, $message)
     {
         $hash = $this->hash256("\x18Bitcoin Signed Message:\n" . $this->numToVarIntString(strlen($message)) . $message);
-        //recover flag
+
         $signature = base64_decode($encodedSignature);
         $flag = hexdec(bin2hex(substr($signature, 0, 1)));
         $R = bin2hex(substr($signature, 1, 64));

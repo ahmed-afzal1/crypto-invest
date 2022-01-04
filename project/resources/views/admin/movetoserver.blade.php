@@ -48,7 +48,7 @@
 @section('scripts')
 <script type="text/javascript">
 
-    $("#generateBkup").click(function(){
+    $("#generateBkup").on('click',function(){
         $('#bkupData').html('<img style="height:100px;" src="{{asset("assets/images/".$gs->loader)}}"><br>{{ __('Generating Backup... Please wait....') }}');
         $.ajax({
             url: "{{url('admin/check/movescript')}}",

@@ -97,7 +97,7 @@ class MessageController extends Controller
         }
 
 
-            $conv = AdminUserConversation::where('user_id','=',$user->id)->where('subject','=',$subject)->first();
+        $conv = AdminUserConversation::where('user_id','=',$user->id)->where('subject','=',$subject)->first();
 
 
         if(isset($conv)){
@@ -111,14 +111,15 @@ class MessageController extends Controller
             $message = new AdminUserConversation();
             $message->subject = $subject;
             $message->user_id= $user->id;
-            $message->text=$request->message;
-            $message->admin_id=1;
+            $message->message=$request->message;
             $message->save();
+
             $msg = new AdminUserMessage();
             $msg->conversation_id = $message->id;
             $msg->message = $request->message;
             $msg->user_id=$user->id;
             $msg->save();
+
             return response()->json($data);
         }
     }

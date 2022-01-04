@@ -65,7 +65,7 @@
                                 @if(Auth::user()->is_provider == 1)
                                     <img src="{{ Auth::user()->photo ? asset(Auth::user()->photo):asset('assets/images/noimage.png') }}">
                                 @else
-                                    <img src="https://royalscripts.com/product/crypto/assets/images/users/1634703855mysterious-mafia-man-smoking-cigarette_52683-34828.jpg">
+                                    <img src="{{asset('assets/images/'.auth()->user()->photo)}}">
                                 @endif
 
                             </div>
@@ -135,9 +135,11 @@
                                 <a href="{{route('user.plan')}}" class="nav-link"><i class="material-icons">payment</i>{{ __('Invest Now') }}</a>
                                 </li>
 
-                                <li class="nav-item user-item">
-                                <a href="{{ route('user-affilate-code') }}" class="nav-link"><i class="material-icons">account_balance</i>{{ __('Referral Code') }}</a>
-                                </li>
+                                @if ($gs->is_affilate)
+                                    <li class="nav-item user-item">
+                                        <a href="{{ route('user-affilate-code') }}" class="nav-link"><i class="material-icons">account_balance</i>{{ __('Referral Code') }}</a>
+                                    </li>
+                                @endif
 
                                 @if ($gs->two_factor)
                                 <li class="nav-item user-item">

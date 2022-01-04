@@ -15,8 +15,8 @@ class DepositController extends Controller
     }
 
     public function create(){
-        $data['availableGatways'] = ['flutterwave','authorize.net','razorpay','mollie','paytm','paystack','instamojo','stripe','paypal'];
-        $data['gateways'] = PaymentGateway::OrderBy('id','desc')->get();
+        $data['availableGatways'] = ['flutterwave','authorize.net','razorpay','mollie','paytm','instamojo','stripe','paypal'];
+        $data['gateways'] = PaymentGateway::OrderBy('id','desc')->whereStatus(1)->get();
         return view('user.deposit.create',$data);
     }
 }

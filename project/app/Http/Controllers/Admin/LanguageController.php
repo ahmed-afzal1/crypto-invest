@@ -55,6 +55,18 @@ class LanguageController extends Controller
     //*** POST Request
     public function store(Request $request)
     {
+        //--- Validation Section
+        $rules = [
+            'language'=>'required|unique:languages|max:255'
+                ];
+
+        $validator = Validator::make($request->all(), $rules);
+
+        if ($validator->fails()) {
+            return response()->json(array('errors' => $validator->getMessageBag()->toArray()));
+        }
+        //--- Validation Section Ends
+
         //--- Logic Section
         $new = null;
         $input = $request->all();
@@ -102,17 +114,21 @@ class LanguageController extends Controller
     //*** POST Request
     public function update(Request $request, $id)
     {
+        $rules = [
+            'language' => 'required|unique:languages,language,'.$id,
+        ];
+
+        $validator = Validator::make($request->all(), $rules);
+
+        if ($validator->fails()) {
+         return response()->json(array('errors' => $validator->getMessageBag()->toArray()));
+        }
+
          //--- Logic Section
          $new = null;
          $input = $request->all();
          $data = Language::findOrFail($id);
-         @unlink(resource_path().'/lang/'.$data->file);
 
-         $data->language = $input['language'];
-         $name = time().Str::random(8);
-         $data->name = $name;
-         $data->file = $name.'.json';
-         $data->rtl = $input['rtl'];
          $data->update();
          unset($input['_token']);
          unset($input['language']);
@@ -125,9 +141,7 @@ class LanguageController extends Controller
          }
          $mydata = json_encode($new);
          file_put_contents(resource_path().'/lang/'.$data->file, $mydata);
-         //--- Logic Section Ends
 
-         //--- Redirect Section
          $msg = 'Data Updated Successfully.'.' '.'<a href="'.route('admin.lang.index').'"> '.__('View Lists.').'</a>';
          return response()->json($msg);
          //--- Redirect Section Ends

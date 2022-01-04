@@ -56,8 +56,6 @@ class LoginController extends Controller
 
     public function logout()
     {
-        // Autoload::airlog('Logout user');
-        // Autoload::logoutAgent();
         Auth::guard('admin')->logout();
         return redirect()->route('admin.login');
     }

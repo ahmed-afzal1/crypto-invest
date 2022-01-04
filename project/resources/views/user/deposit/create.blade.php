@@ -95,7 +95,7 @@
                         <div class="col-lg-12">
                             <div class="form-group bmd-form-group">
                                 <label for="amount" class="bmd-label-floating">{{ __('Deposit Amount') }}*</label>
-                                <input name="amount" id="amount" class="form-control" autocomplete="off"  type="text" value="{{ old('amount') }}" required>
+                                <input name="amount" id="amount" class="form-control" autocomplete="off"  type="number" value="{{ old('amount') }}" min="1" required>
                                 <span class="bmd-help">{{ __('Deposit Amount') }}</span>
                             </div>
                         </div>

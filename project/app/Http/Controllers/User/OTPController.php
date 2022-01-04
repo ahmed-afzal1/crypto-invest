@@ -39,7 +39,7 @@ class OTPController extends Controller
         if ($oneCode == $userOtp) {
             $user->verified = 1;
             $user->save();
-            return redirect()->route('user-dashboard');
+            return redirect()->route('user.dashboard');
         } else {
           return redirect()->back()->with('error','OTP not match!');
         }    
